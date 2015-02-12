@@ -1,0 +1,13 @@
+
+/**
+ * A simple int enum
+ */
+[name="number"]
+enum NumberEnum {
+	first = 1,
+	second = 2,
+	
+	[name="patru"]
+	[hey="hello"]
+	forth = 4
+}
