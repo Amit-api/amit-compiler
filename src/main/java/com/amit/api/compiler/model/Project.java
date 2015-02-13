@@ -19,10 +19,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class Project {
-	private UniqueCollection<Type> types = new UniqueCollection<Type>( "type,enum,interface" );
+	private UniqueCollection<Type> types = new UniqueCollection<Type>( "type" );
 	private UniqueCollection<Module> modules = new UniqueCollection<Module>( "module" );
+	private UniqueCollection<Interface> interfaces = new UniqueCollection<Interface>( "interface" );
+	
 	private List<TypeEnum> enums = new ArrayList<TypeEnum>();
 	private List<CompositeType> compositeTypes = new ArrayList<CompositeType>();
+	
 	private Module currentModule;
 
 	/**
@@ -70,6 +73,21 @@ public class Project {
 		CompositeType type = new CompositeType( name, context );
 		type.setAttributeList( attr );
 		return addCompositeType( type );
+	}
+	
+	/**
+	 * create an interface
+	 * @param name
+	 * @param attr
+	 * @param context
+	 * @return
+	 * @throws ModuleElementException
+	 */
+	public Interface createInterface( String name, AttributeList attr, Context context ) throws ModuleElementException {
+		Interface interf = new Interface( name, context );
+		interfaces.add( interf );
+		currentModule.add( interf );
+		return interf;
 	}
 	
 	/**

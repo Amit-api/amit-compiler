@@ -23,6 +23,7 @@ import java.util.List;
 public class Module extends ProjectElement {
 	private ModuleType type;
 	private List<Type> types = new ArrayList<Type>();
+	private List<Interface> interfaces = new ArrayList<Interface>();
 	
 	/**
 	 * 
@@ -58,5 +59,18 @@ public class Module extends ProjectElement {
 		}
 		
 		types.add( type );
+	}
+
+	/**
+	 * add interface to the module
+	 * @param type
+	 * @throws ModuleElementException
+	 */
+	public void add( Interface iinterface ) throws ModuleElementException {
+		if( iinterface == null ) {
+			throw new IllegalArgumentException( "iinterface must be not null" );			
+		}
+		
+		interfaces.add( iinterface );
 	}
 }

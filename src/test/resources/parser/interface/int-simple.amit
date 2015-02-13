@@ -1,0 +1,6 @@
+
+project test;
+
+interface ICall {
+	void fun();
+}

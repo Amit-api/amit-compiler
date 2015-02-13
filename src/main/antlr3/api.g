@@ -27,15 +27,15 @@ module [Project project]
 statment [Project project] 
 	: enum_statment [project]
 	| type_statment [project]
-	| service_statment
+	| interface_statment [project]
 	;
 
-service_statment
+interface_statment [Project project]
 @init {
 	AttributeList attrList = new AttributeList();
 }
-	: attributes [attrList] SERVICE
-	  ID
+	: attributes [attrList] INTERFACE
+	  ID { Interface interf = project.createInterface( $ID.text, attrList, new Context( $ID ) ); }
 	  START
 	  ( function )*  
 	  END
@@ -66,8 +66,7 @@ type_statment[Project project]
 
 type_end [CompositeType type]
 	: START ( type_item [type] )* END
-	| COLON ARRAY ID
-	| COLON ID START ( type_item [type] )* END
+	| COLON ID START ( type_item [type] )* END { type.setBaseType( $ID.text ); }
 	;
 	
 type_item [CompositeType type] 
@@ -145,6 +144,9 @@ PROJECT : 'project'
 	; 
 	
 SERVICE : 'service'
+	;
+	
+INTERFACE : 'interface'
 	;
 	
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*

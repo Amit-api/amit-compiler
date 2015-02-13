@@ -18,6 +18,7 @@ import java.util.List;
 
 public class CompositeType extends Type {
 	private UniqueCollection<CompositeTypeMember> members = new UniqueCollection<CompositeTypeMember>( "type member" );
+	private String baseType;
 	
 	public CompositeType( String name, Context context ) {
 		super( TYPE, name, context);
@@ -40,5 +41,21 @@ public class CompositeType extends Type {
 	 */
 	public List<CompositeTypeMember> getMembers() {
 		return members.readonlyList();
+	}
+	
+	/**
+	 * set base type
+	 * @param baseType
+	 */
+	public void setBaseType( String baseType ) {
+		this.baseType = baseType;
+	}
+	
+	/**
+	 * return base type
+	 * @return
+	 */
+	public String getBaseType() {
+		return baseType;
 	}
 }

@@ -3,7 +3,10 @@
  */
 project test;
 
-type Point {
-	int x;
-	int y;
+type T1 {
+	int a;
+}
+
+type T2 : T1 {
+	int b;
 }
