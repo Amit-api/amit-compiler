@@ -15,42 +15,48 @@
 package com.amit.api.compiler.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
- * [TO DO]
+ * the module, only one module can be per file
  */
-public class Module {
-	private TypeCollection types = new TypeCollection();
-	private List<TypeEnum> enums = new ArrayList<TypeEnum>();
-		
+public class Module extends ProjectElement {
+	private ModuleType type;
+	private List<Type> types = new ArrayList<Type>();
+	
 	/**
-	 * return all the types in the module
-	 * @return
+	 * 
+	 * @param name
+	 * @param context
 	 */
-	public TypeCollection getTypes() {
-		return types;
+	protected Module( String name, ModuleType type, Context context ) {
+		super( name, context );
+		
+		if( type == null ) {
+			throw new IllegalArgumentException( "type must be not null" );
+		}
+		
+		this.type = type;
 	}
 	
 	/**
-	 * creates the enum
-	 * @param name
+	 * returns module type
 	 * @return
-	 * @throws ModuleElementException 
 	 */
-	public TypeEnum createEnum( String name, Context context ) throws ModuleElementException {
-		TypeEnum type = new TypeEnum( name, context );
-		types.add( type );
-		enums.add( type );
+	public ModuleType getType() {
 		return type;
 	}
 	
 	/**
-	 * returns enum list
-	 * @return
+	 * add type to the module
+	 * @param type
+	 * @throws ModuleElementException
 	 */
-	public List<TypeEnum> getEnums() {
-		return Collections.unmodifiableList( enums );
+	public void add( Type type ) throws ModuleElementException {
+		if( type == null ) {
+			throw new IllegalArgumentException( "type must be not null" );			
+		}
+		
+		types.add( type );
 	}
 }

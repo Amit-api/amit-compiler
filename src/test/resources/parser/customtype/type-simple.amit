@@ -1,0 +1,9 @@
+/**
+ * test basic type
+ */
+project simpleType;
+
+type Point {
+	int x;
+	int y;
+}

@@ -14,7 +14,7 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-public class TypeEnumValue extends ModuleElement {
+public class TypeEnumValue extends ProjectElement {
 	private Integer intValue;
 	private String stringValue;
 	

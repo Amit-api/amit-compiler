@@ -1,0 +1,10 @@
+/**
+ * Test enum with integer values
+ */
+project testenum;
+
+enum NumberEnum {
+	first = 1,
+	second = 2,	
+	forth = 4
+}

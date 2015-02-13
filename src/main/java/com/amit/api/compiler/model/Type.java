@@ -17,12 +17,12 @@ package com.amit.api.compiler.model;
 /**
  * the base class for all Amit types 
  */
-public class Type extends ModuleElement {
-	
+public class Type extends ProjectElement {
 	/**
 	 * type names
 	 */
 	protected final static String ENUM = "enum";
+	protected final static String TYPE = "type";
 	
 	private String type;
 	
@@ -47,5 +47,5 @@ public class Type extends ModuleElement {
 	 */
 	public String getType() {
 		return type;
-	}	
+	}
 }

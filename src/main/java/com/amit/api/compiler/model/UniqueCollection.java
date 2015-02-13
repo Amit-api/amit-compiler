@@ -14,53 +14,52 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-public class ModuleElement {
-	private String name;
-	private Context context;
-	private AttributeList attributes;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 
+ */
+public class UniqueCollection<T extends ProjectElement> {
+	private Map<String,T> elements = new HashMap<String,T>();
+	private List<T> elementList = new ArrayList<T>();
+	private String typeName;
 	
-	public ModuleElement( String name, Context context ) {
-		if( name == null || name.isEmpty() ) {
-			throw new IllegalArgumentException( "type must be not null or empty" );
+	public UniqueCollection( String typeName ) {
+		if( typeName == null || typeName.isEmpty() ) {
+			throw new IllegalArgumentException( "typeName must be not null or empty" );
 		}
 		
-		this.name = name;
-		this.context = context;
+		this.typeName = typeName;
 	}
 	
 	/**
-	 * returns the name
+	 * adds a element to the collection and exception is thrown when 
+	 * element 
+	 * @param type
+	 * @throws ModuleElementException 
+	 */
+	public void add( T element ) throws ModuleElementException {
+		if( element == null ) {
+			throw new IllegalArgumentException( "type must not be null" );
+		}
+		
+		if( elements.containsKey( element.getName() ) ) {
+			throw new ModuleElementException( String.format( "%s name is in use", typeName ), element );
+		}
+		
+		elements.put( element.getName() , element );
+		elementList.add( element );
+	}
+	
+	/**
+	 * returns the read only list
 	 * @return
 	 */
-	public String getName() {
-		return name;
+	public List<T> readonlyList() {
+		return Collections.unmodifiableList( elementList );
 	}
-	
-	/**
-	 * return context
-	 * @return
-	 */
-	public Context getContext() {
-		return context;
-	}
-	
-	/**
-	 * set attributes
-	 * @param attributes
-	 */
-	public void setAttributeList( AttributeList attributes ) {
-		this.attributes = attributes;
-	}
-	
-	/**
-	 * return attributes
-	 * @return
-	 */
-	public AttributeList getAttributes() {
-		return attributes;
-	}
-	
-	public static String fromParsedString( String str ) {
-		return str.substring( 1, str.length() - 1 ).replace("\\\"", "\"").replace("\\\\", "\\" );
-	}	
 }

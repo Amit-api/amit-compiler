@@ -14,17 +14,31 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-public class ModuleElementException extends IllegalArgumentException {
-	private static final long serialVersionUID = 1L;
+import java.util.List;
 
-	private ProjectElement element;
+public class CompositeType extends Type {
+	private UniqueCollection<CompositeTypeMember> members = new UniqueCollection<CompositeTypeMember>( "type member" );
 	
-	public ModuleElementException( String message, ProjectElement element ) {
-		super( message );
-		this.element = element;
+	public CompositeType( String name, Context context ) {
+		super( TYPE, name, context);
 	}
 	
-	public ProjectElement getModuleElement() {
-		return element;
+	/**
+	 * adds composite type member
+	 * @param type
+	 * @param name
+	 * @param context
+	 */
+	public void addMember( String type, String name, boolean isArray, Context context ) {
+		CompositeTypeMember member = new CompositeTypeMember( type, name, isArray, context );
+		members.add( member );
+	}
+	
+	/**
+	 * retuns composite type members
+	 * @return
+	 */
+	public List<CompositeTypeMember> getMembers() {
+		return members.readonlyList();
 	}
 }

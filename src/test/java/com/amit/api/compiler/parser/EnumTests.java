@@ -8,20 +8,19 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
-import com.amit.api.compiler.model.Module;
+import com.amit.api.compiler.model.Project;
 import com.amit.api.compiler.model.TypeEnum;
 
-public class AmitParserTest {
-
+public class EnumTests {
 			
 	@Test
 	public void testEnumInt() throws Exception {
 		AmitParser parser = AmitParser.fromFile( path( "enum-int.amit" ) );
-		Module module = parser.parse();
+		Project project = parser.parse();
 		
-		assertEquals( 1, module.getEnums().size() );
+		assertEquals( 1, project.getEnums().size() );
 		
-		TypeEnum e = module.getEnums().get( 0 );
+		TypeEnum e = project.getEnums().get( 0 );
 		assertEquals( "NumberEnum", e.getName() );
 		
 		assertEquals( 3, e.getValues().size() );
@@ -36,11 +35,11 @@ public class AmitParserTest {
 	@Test
 	public void testEnumString() throws Exception {
 		AmitParser parser = AmitParser.fromFile( path( "enum-string.amit" ) );
-		Module module = parser.parse();
+		Project project = parser.parse();
 		
-		assertEquals( 1, module.getEnums().size() );
+		assertEquals( 1, project.getEnums().size() );
 		
-		TypeEnum e = module.getEnums().get( 0 );
+		TypeEnum e = project.getEnums().get( 0 );
 		assertEquals( "StringEnum", e.getName() );
 		
 		assertEquals( 3, e.getValues().size() );
@@ -52,9 +51,8 @@ public class AmitParserTest {
 		assertEquals( "4", e.getValues().get( 2 ).getStringValue() );
 	}
 	
-	
 	private String path( String name ) throws URISyntaxException {
-		URL resourceUrl = getClass().getResource("/parser/" + name );
+		URL resourceUrl = getClass().getResource("/parser/enum/" + name );
 		return Paths.get( resourceUrl.toURI() ).toString();
 
 	}

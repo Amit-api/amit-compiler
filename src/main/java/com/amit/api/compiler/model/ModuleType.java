@@ -14,17 +14,7 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-public class ModuleElementException extends IllegalArgumentException {
-	private static final long serialVersionUID = 1L;
-
-	private ProjectElement element;
-	
-	public ModuleElementException( String message, ProjectElement element ) {
-		super( message );
-		this.element = element;
-	}
-	
-	public ProjectElement getModuleElement() {
-		return element;
-	}
+public enum ModuleType {
+	PROJECT,
+	LIB
 }

@@ -11,13 +11,22 @@ package com.amit.api.compiler.parser;
 
 }
    
-start [Module module] 	
-	:	statment [module] +;
+start [Project project] 	
+	: header [project] statment [ project ] +;
 	
 
-statment [Module module] 
-	: enum_statment [module]
-	| type_statment
+header [Project project]
+	: module [project]
+	;
+	
+module [Project project]
+	: PROJECT ID SEMICOLON { project.createModule( $ID.text, ModuleType.PROJECT, new Context( $ID ) ); }
+	| LIB ID SEMICOLON { project.createModule( $ID.text, ModuleType.PROJECT, new Context( $ID ) ); }
+	;
+
+statment [Project project] 
+	: enum_statment [project]
+	| type_statment [project]
 	| service_statment
 	;
 
@@ -48,34 +57,40 @@ function_arg
 	| ARRAY ID ID
 	;	
 			
-type_statment
+type_statment[Project project]
 @init {
 	AttributeList attrList = new AttributeList();
 }
-	: attributes [attrList] TYPE ID START ( type_value )* END
-	| attributes [attrList] TYPE ID COLON ARRAY ID
-	| attributes [attrList] TYPE ID COLON ID START ( type_value )* END
+	: attributes [attrList] TYPE ID { CompositeType type = project.creatCompositeType( $ID.text, attrList, new Context( $ID ) ); } type_end [type]
 	;
 
+type_end [CompositeType type]
+	: START ( type_item [type] )* END
+	| COLON ARRAY ID
+	| COLON ID START ( type_item [type] )* END
+	;
 	
-type_value 
+type_item [CompositeType type] 
 @init {
 	AttributeList attrList = new AttributeList();
 }
-	: attributes [attrList] ID ID SEMICOLON
-	| attributes [attrList] REQUIRED ID ID SEMICOLON
-	| attributes [attrList] ARRAY ID ID SEMICOLON
+	: attributes [attrList] ID type_value[false, $ID.text, type]
+	| attributes [attrList] REQUIRED ID type_value[false, $ID.text, type]
+	| attributes [attrList] ARRAY ID type_value[true, $ID.text, type]
 	;
-	
+
+type_value [boolean isArray, String memberType, CompositeType type]
+	: ID SEMICOLON { type.addMember( memberType, $ID.text, isArray, new Context( $ID ) ); }
+	;
 			
-enum_statment [Module module]
+enum_statment [Project project]
 @init {
 	AttributeList attrList = new AttributeList();
 }
 	: attributes [attrList]
 	  ENUM
 	  ID {
-	  	TypeEnum type_enum = module.createEnum( $ID.text, new Context( $ID ) );
+	  	TypeEnum type_enum = project.createEnum( $ID.text, new Context( $ID ) );
 	  }
 	  START
 	  enum_values [type_enum]
@@ -88,7 +103,7 @@ enum_value [TypeEnum type_enum]
 	AttributeList attrList = new AttributeList();
 }
 	: attributes [attrList] ID	EQUAL number_value { type_enum.createValue( $ID.text, Integer.valueOf( $number_value.text ), new Context( $ID ), attrList  ); }
-	| attributes [attrList] ID	EQUAL STRING { type_enum.createValue( $ID.text, ModuleElement.fromParsedString( $STRING.text ), new Context( $ID ), attrList  ); }
+	| attributes [attrList] ID	EQUAL STRING { type_enum.createValue( $ID.text, ParseUtils.parseString( $STRING.text ), new Context( $ID ), attrList  ); }
 	;
 	
 enum_values [TypeEnum type_enum]
@@ -97,7 +112,7 @@ enum_values [TypeEnum type_enum]
 	;
 		
 attribute [AttributeList attrList]
-	: ASTART ID EQUAL STRING ASTOP { attrList.createAttribute( $ID.text, ModuleElement.fromParsedString( $STRING.text ), new Context( $ID ) ); }
+	: ASTART ID EQUAL STRING ASTOP { attrList.createAttribute( $ID.text, ParseUtils.parseString( $STRING.text ), new Context( $ID ) ); }
 	;
 	
 attributes [AttributeList attrList]
@@ -122,6 +137,12 @@ ENUM	: 'enum'
 
 TYPE	: 'type'
 	;
+	
+LIB : 'lib'
+	;
+
+PROJECT : 'project'
+	; 
 	
 SERVICE : 'service'
 	;

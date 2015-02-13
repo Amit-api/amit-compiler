@@ -1,6 +1,8 @@
 /**
- * A simple string enum
+ * test enum with string value
  */
+project testenum;
+
 enum StringEnum {
 	first = "1\"\\2",
 	second = "2",

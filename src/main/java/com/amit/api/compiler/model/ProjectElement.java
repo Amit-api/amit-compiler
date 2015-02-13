@@ -14,29 +14,49 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * 
- */
-public class TypeCollection {
-	private Map<String,Type> types = new HashMap<String,Type>();
+public class ProjectElement {
+	private String name;
+	private Context context;
+	private AttributeList attributes;
+	
+	protected ProjectElement( String name, Context context ) {
+		if( name == null || name.isEmpty() ) {
+			throw new IllegalArgumentException( "type must be not null or empty" );
+		}
+		
+		this.name = name;
+		this.context = context;
+	}
 	
 	/**
-	 * adds a type to the collection
-	 * @param type
-	 * @throws ModuleElementException 
+	 * returns the name
+	 * @return
 	 */
-	public void add( Type type ) throws ModuleElementException {
-		if( type == null ) {
-			throw new IllegalArgumentException( "type must not be null" );
-		}
-		
-		if( types.containsKey( type.getName() ) ) {
-			throw new ModuleElementException( "duplicate type", type  );
-		}
-		
-		types.put( type.getName() , type );
+	public String getName() {
+		return name;
+	}
+	
+	/**
+	 * return context
+	 * @return
+	 */
+	public Context getContext() {
+		return context;
+	}
+	
+	/**
+	 * sets element attributes
+	 * @param attributes
+	 */
+	public void setAttributeList( AttributeList attributes ) {
+		this.attributes = attributes;
+	}
+	
+	/**
+	 * return element attributes
+	 * @return
+	 */
+	public AttributeList getAttributes() {
+		return attributes;
 	}
 }
