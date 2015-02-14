@@ -59,4 +59,25 @@ public class ProjectElement {
 	public AttributeList getAttributes() {
 		return attributes;
 	}
+
+	/**
+	 * returns attribute value
+	 * @param name
+	 * @return
+	 */
+	public String getAttributeValue( String name ) {
+		return attributes.get( name );
+	}
+	
+	/**
+	 * returns attribute value
+	 * @param name
+	 * @param defaultValue
+	 * @return
+	 */
+	public String getAttributeValue( String name, String defaultValue ) {
+		String attr = attributes.get( name );
+
+		return attr == null ? defaultValue : attr;
+	}
 }

@@ -20,8 +20,10 @@ header [Project project]
 	;
 	
 module [Project project]
-	: PROJECT ID SEMICOLON { project.createModule( $ID.text, ModuleType.PROJECT, new Context( $ID ) ); }
-	| LIB ID SEMICOLON { project.createModule( $ID.text, ModuleType.PROJECT, new Context( $ID ) ); }
+@init {
+	AttributeList attrList = new AttributeList();
+}	: attributes [attrList] PROJECT ID SEMICOLON { project.createModule( $ID.text, ModuleType.PROJECT, attrList, new Context( $ID ) ); }
+	| LIB ID SEMICOLON { project.createModule( $ID.text, ModuleType.PROJECT, null, new Context( $ID ) ); }
 	;
 
 statment [Project project] 

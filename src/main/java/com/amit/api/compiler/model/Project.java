@@ -27,6 +27,7 @@ public class Project {
 	private List<CompositeType> compositeTypes = new ArrayList<CompositeType>();
 	
 	private Module currentModule;
+	private Module projectModule;
 
 	/**
 	 * creates an enum
@@ -36,7 +37,9 @@ public class Project {
 	 * @throws ModuleElementException
 	 */
 	public TypeEnum createEnum( String name, Context context ) throws ModuleElementException {
-		return addEnum(  new TypeEnum( name, context ) );
+		TypeEnum type = new TypeEnum( name, context ); 
+		addEnum( type );
+		return type;
 	}
 	
 	/**
@@ -54,10 +57,10 @@ public class Project {
 	 * @return
 	 * @throws ModuleElementException
 	 */
-	public Module createModule( String name, ModuleType type, Context context ) throws ModuleElementException {
+	public Module createModule( String name, ModuleType type, AttributeList attr, Context context ) throws ModuleElementException {
 		Module module = new Module( name, type, context );
-		modules.add( module );
-		currentModule = module;
+		module.setAttributeList( attr );
+		addModule( module );
 		return module;
 	}
 	
@@ -72,7 +75,8 @@ public class Project {
 	public CompositeType creatCompositeType( String name, AttributeList attr, Context context ) throws ModuleElementException {
 		CompositeType type = new CompositeType( name, context );
 		type.setAttributeList( attr );
-		return addCompositeType( type );
+		addCompositeType( type );
+		return type;
 	}
 	
 	/**
@@ -85,9 +89,17 @@ public class Project {
 	 */
 	public Interface createInterface( String name, AttributeList attr, Context context ) throws ModuleElementException {
 		Interface interf = new Interface( name, context );
-		interfaces.add( interf );
-		currentModule.add( interf );
+		interf.setAttributeList( attr );
+		addInterface( interf );
 		return interf;
+	}
+	
+	/**
+	 * returns project module
+	 * @return
+	 */
+	public Module getProjectModule() {
+		return projectModule;
 	}
 	
 	/**
@@ -98,20 +110,36 @@ public class Project {
 		return Collections.unmodifiableList( compositeTypes );
 	}
 	
-	private CompositeType addCompositeType( CompositeType type ) {
+	private void addCompositeType( CompositeType type ) {
 		addType( type );
 		compositeTypes.add( type );
-		return type;
 	}
 	
-	private TypeEnum addEnum( TypeEnum type ) {
+	private void addEnum( TypeEnum type ) {
 		addType( type );
 		enums.add( type );
-		return type;
+	}
+	
+	private void addInterface( Interface interf ) {
+		interfaces.add( interf );
+		currentModule.add( interf );		
 	}
 	
 	private void addType( Type type ) {
 		types.add( type );
 		currentModule.add( type );		
+	}
+	
+	private void addModule( Module module ) throws ModuleElementException {
+		modules.add( module );
+		currentModule = module;
+		
+		if( module.getType().equals( ModuleType.PROJECT ) ) {
+			if( projectModule != null ) {
+				throw new ModuleElementException( "Project module can't be included", module );
+			}
+			
+			projectModule = module;
+		}
 	}
 }

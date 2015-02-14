@@ -34,4 +34,12 @@ public class AttributeList {
 		
 		attributeMap.put( attr.getName(), attr );		
 	}
+	
+	public String get( String name ) {
+		if( name == null || name.isEmpty() ) {
+			throw new IllegalArgumentException( "name must be not empty or null" );
+		}
+		
+		return attributeMap.get( name ).getValue();
+	}
 }

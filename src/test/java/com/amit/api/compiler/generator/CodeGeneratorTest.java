@@ -19,13 +19,13 @@ public class CodeGeneratorTest {
 
 	@Test
 	public void test() throws URISyntaxException, IllegalArgumentException, IOException, RecognitionException, TemplateException {		
-		AmitParser parser = AmitParser.fromFile( path( "parser/customtype/type-with-base.amit" ) );
+		/*AmitParser parser = AmitParser.fromFile( path( "parser/customtype/type-with-base.amit" ) );
 		Project project = parser.parse();
 
 		CodeGenerator generator = new CodeGenerator( project, path( "generate/test1"), path( "generate/out" ) );
 		
 		generator.generate();
-		
+		*/
 	}
 
 	private String path( String name ) throws URISyntaxException {
