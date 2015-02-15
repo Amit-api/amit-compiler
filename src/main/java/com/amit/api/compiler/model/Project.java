@@ -22,7 +22,6 @@ public class Project {
 	private UniqueCollection<Type> types = new UniqueCollection<Type>( "type" );
 	private UniqueCollection<Module> modules = new UniqueCollection<Module>( "module" );
 	private UniqueCollection<Interface> interfaces = new UniqueCollection<Interface>( "interface" );
-	
 	private List<TypeEnum> enums = new ArrayList<TypeEnum>();
 	private List<CompositeType> compositeTypes = new ArrayList<CompositeType>();
 	
@@ -63,9 +62,18 @@ public class Project {
 		addModule( module );
 		return module;
 	}
+
+	/**
+	 * returns module associated to the project
+	 * only one module of this type can be per project
+	 * @return
+	 */
+	public Module getProjectModule() {
+		return projectModule;
+	}
 	
 	/**
-	 * create a composite type
+	 * creates a composite type
 	 * @param name
 	 * @param attr
 	 * @param context
@@ -77,6 +85,14 @@ public class Project {
 		type.setAttributeList( attr );
 		addCompositeType( type );
 		return type;
+	}
+	
+	/**
+	 * returns all composite types from project
+	 * @return
+	 */
+	public List<CompositeType> getCompositeTypes() {
+		return Collections.unmodifiableList( compositeTypes );
 	}
 	
 	/**
@@ -93,21 +109,13 @@ public class Project {
 		addInterface( interf );
 		return interf;
 	}
-	
+			
 	/**
-	 * returns project module
+	 * returns all interfaces from the project
 	 * @return
 	 */
-	public Module getProjectModule() {
-		return projectModule;
-	}
-	
-	/**
-	 * returns composite types
-	 * @return
-	 */
-	public List<CompositeType> getCompositeTypes() {
-		return Collections.unmodifiableList( compositeTypes );
+	public List<Interface> getInterfaces() {
+		return interfaces.readonlyList();
 	}
 	
 	private void addCompositeType( CompositeType type ) {

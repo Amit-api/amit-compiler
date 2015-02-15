@@ -40,6 +40,7 @@ public class AttributeList {
 			throw new IllegalArgumentException( "name must be not empty or null" );
 		}
 		
-		return attributeMap.get( name ).getValue();
+		Attribute attr = attributeMap.get( name );
+		return attr == null ? null : attr.getValue();
 	}
 }

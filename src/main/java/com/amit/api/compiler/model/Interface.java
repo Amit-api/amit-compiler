@@ -14,8 +14,34 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+import java.util.List;
+
 public class Interface extends ProjectElement {
+	private UniqueCollection<Function> functions = new UniqueCollection<Function>( "function" );
+	
 	protected Interface( String name, Context context ) {
 		super( name, context );
+	}
+	
+	/**
+	 * creates a function in the interface
+	 * @param name
+	 * @param attr
+	 * @param context
+	 * @return
+	 */
+	public Function createFunction( String name, AttributeList attr, Context context ) {
+		Function fun = new Function( name, context );
+		fun.setAttributeList( attr );
+		functions.add( fun );
+		return fun;
+	}
+	
+	/**
+	 * returns interface functions
+	 * @return
+	 */
+	public List<Function> getFunctions() {
+		return functions.readonlyList();
 	}
 }

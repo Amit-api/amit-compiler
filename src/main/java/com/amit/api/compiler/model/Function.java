@@ -1,3 +1,4 @@
+
 /******************************************************************************
  * Copyright 20014-2015 Alexandru Motriuc                                     *
  *                                                                            *
@@ -14,10 +15,9 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-public class CompositeTypeMember extends TypeArgument {
+public class Function extends ProjectElement {
 
-	protected CompositeTypeMember( String type, String name, boolean isArray,
-			Context context ) {
-		super( type, name, isArray, context );
+	protected Function( String name, Context context ) {
+		super( name, context );
 	}
 }

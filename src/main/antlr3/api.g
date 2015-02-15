@@ -39,16 +39,28 @@ interface_statment [Project project]
 	: attributes [attrList] INTERFACE
 	  ID { Interface interf = project.createInterface( $ID.text, attrList, new Context( $ID ) ); }
 	  START
-	  ( function )*  
+	  ( function [interf] )*  
 	  END
 	;
 	
-function 
+function [Interface interf]
 @init {
 	AttributeList attrList = new AttributeList();
 }
-	: attributes [attrList] function_arg OPEN function_args CLOSE SEMICOLON
+	: attributes [attrList] function_ret 
+	  ID { Function fun = interf.createFunction( $ID.text, attrList, new Context( $ID ) ); } 
+	  function_end
 	; 
+
+function_end
+	: POPEN function_args PCLOSE SEMICOLON
+	| POPEN PCLOSE SEMICOLON
+	;
+
+function_ret
+	: ID
+	| ARRAY ID
+	;
 		
 function_args 
 	: function_arg ( COMMA function_arg )*
@@ -176,10 +188,10 @@ START 	: '{'
 END	: '}'
 	;
 	
-OPEN	: '('
+POPEN	: '('
 	;
 	
-CLOSE	: ')'
+PCLOSE	: ')'
 	;
 	
 EQUAL	: '='

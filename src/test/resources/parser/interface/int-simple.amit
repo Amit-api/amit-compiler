@@ -1,6 +1,10 @@
 
 project test;
 
+[path="hello"]
 interface ICall {
+
+	[public_name="do something"]
 	void fun();
 }
+

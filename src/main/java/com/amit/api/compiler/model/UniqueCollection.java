@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ * collection that ensures 
+ * unique by name list of the ProjectElements
  */
 public class UniqueCollection<T extends ProjectElement> {
 	private Map<String,T> elements = new HashMap<String,T>();
