@@ -65,9 +65,20 @@ function [Interface interf]
 	; 
 
 function_end [Function fun]
-	: POPEN function_args [fun] PCLOSE SEMICOLON
-	| POPEN PCLOSE SEMICOLON
+	: POPEN function_args [fun] PCLOSE function_throws [fun] SEMICOLON
+	| POPEN PCLOSE function_throws [fun] SEMICOLON
 	;
+
+function_throws [Function fun]
+	:
+	| THROWS ID { fun.addThrowsExcepton( $ID.text ); }
+	  ( function_throws_more [fun] )*
+	;
+
+function_throws_more [Function fun]
+	: COMMA ID { fun.addThrowsExcepton( $ID.text ); }
+	;	
+	
 
 function_ret [ReturnValue<FunctionReturn> returnType]
 	: ID { returnType.set( new FunctionReturn( $ID.text, false, new Context( $ID ) ) ); }
@@ -195,6 +206,9 @@ EXCEPTION : 'exception'
 
 	
 INTERFACE : 'interface'
+	;
+	
+THROWS : 'throws'
 	;
 	
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*

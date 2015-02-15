@@ -107,7 +107,27 @@ public class InterfaceTests extends TestBase {
 		assertEquals( "IntA", interf.getBaseInterfaceNames().get( 0 ) );
 		assertEquals( "IntB", interf.getBaseInterfaceNames().get( 1 ) );
 	}
-	
+
+	@Test
+	public void testExceptions() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "int-except.amit" ) );
+		Project project = parser.parse();
+		
+		assertEquals( 1, project.getInterfaces().size() );
+		
+		Interface interf = project.getInterfaces().get( 0 );
+		assertEquals( "ICall", interf.getName() );
+		assertEquals( 0, interf.getBaseInterfaceNames().size() );
+		assertEquals( 1, interf.getFunctions().size() );
+		
+		Function fun = interf.getFunctions().get( 0 );
+		assertEquals( "doStuf", fun.getName() );
+		assertEquals( "void", fun.getReturn().getType() );
+		assertEquals( 2, fun.getThrowsExceptionNames().size() );
+		assertEquals( "Exception1", fun.getThrowsExceptionNames().get( 0 ) );
+		assertEquals( "Exception2", fun.getThrowsExceptionNames().get( 1 ) );
+	}
+
 	private String path( String name ) throws URISyntaxException {
 		return pathGlobal( "parser/interface/" + name );
 	}	

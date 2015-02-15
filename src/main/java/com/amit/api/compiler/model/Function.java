@@ -14,11 +14,17 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Function extends ProjectElement {
 	private UniqueCollection<FunctionArgument> arguments =  new UniqueCollection<FunctionArgument>( "argument" );
 	private FunctionReturn returnType;
+	private Set<String> throwsExceptions = new HashSet<String>();
+	private List<String> throwsExceptionsList = new ArrayList<String>();
 	
 	protected Function( String name, Context context ) {
 		super( name, context );
@@ -64,5 +70,30 @@ public class Function extends ProjectElement {
 	 */
 	public FunctionReturn getReturn() {
 		return returnType;
+	}
+	
+	/**
+	 * adds throws exception
+	 * @param exceptionName
+	 */
+	public void addThrowsExcepton( String exceptionName ) {
+		if( exceptionName == null || exceptionName.isEmpty() ) {
+			throw new IllegalArgumentException( "exceptionName must be not null or empty" );
+		}
+		
+		if( throwsExceptions.contains( exceptionName ) ) {
+			throw new ModuleElementException( String.format( "duplicate throws exception for name '%s'", exceptionName ), this );
+		}
+		
+		throwsExceptions.add( exceptionName );
+		throwsExceptionsList.add( exceptionName );		
+	}
+	
+	/**
+	 * returns throws exception name list
+	 * @return
+	 */
+	public List<String> getThrowsExceptionNames() {
+		return Collections.unmodifiableList( throwsExceptionsList );
 	}
 }

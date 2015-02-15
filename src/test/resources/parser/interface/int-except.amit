@@ -1,0 +1,11 @@
+project test;
+
+exception Exception1 {
+}
+
+exception Exception2 {
+}
+
+interface ICall {
+	void doStuf() throws Exception1, Exception2; 
+}
