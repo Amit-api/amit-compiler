@@ -68,12 +68,15 @@ function_args [Function fun]
 	; 
 			
 function_arg [Function fun]
-	: ID function_arg_end [$ID.text, false, fun] 
-	| ARRAY ID function_arg_end [$ID.text, true, fun]
+@init {
+	AttributeList attrList = new AttributeList();
+}
+	: attributes [attrList] ID function_arg_end [$ID.text, false, attrList, fun] 
+	| attributes [attrList] ARRAY ID function_arg_end [$ID.text, true, attrList, fun]
 	;	
 			
-function_arg_end [String type, boolean isArray, Function fun]
-	: ID
+function_arg_end [String type, boolean isArray, AttributeList attrList, Function fun]
+	: ID { fun.createArgument( type, $ID.text, isArray, attrList, new Context( $ID ) ); }
 	;
 			
 type_statment[Project project]

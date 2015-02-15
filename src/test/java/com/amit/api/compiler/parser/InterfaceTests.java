@@ -21,6 +21,7 @@ import java.net.URISyntaxException;
 import org.junit.Test;
 
 import com.amit.api.compiler.model.Function;
+import com.amit.api.compiler.model.FunctionArgument;
 import com.amit.api.compiler.model.Interface;
 import com.amit.api.compiler.model.Project;
 
@@ -47,6 +48,42 @@ public class InterfaceTests extends TestBase {
 		assertEquals( "void", fun.getReturn().getType() );
 		assertEquals( "*return*", fun.getReturn().getName() );
 		assertFalse( fun.getReturn().isArray() );
+	}
+	
+	@Test
+	public void testArgAttributes() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "int-arg-attr.amit" ) );
+		Project project = parser.parse();
+		
+		assertEquals( 1, project.getInterfaces().size() );
+		
+		Interface interf = project.getInterfaces().get( 0 );
+		
+		assertEquals( 2, interf.getFunctions().size() );
+		
+		Function fun = interf.getFunctions().get( 0 );
+		assertEquals( "doStuf", fun.getName() );
+		assertEquals( "int", fun.getReturn().getType() );	
+		assertEquals( 2, fun.getArguments().size() );
+		
+		FunctionArgument arg = fun.getArguments().get( 0 );
+		assertEquals( "p1", arg.getName() );
+		assertEquals( "int", arg.getType() );
+		assertEquals( "unknown", arg.getAttributeValue( "public_name" ) );
+
+		arg = fun.getArguments().get( 1 );
+		assertEquals( "p2", arg.getName() );
+		assertEquals( "string", arg.getType() );
+		assertEquals( "i whish i knew", arg.getAttributeValue( "public_name" ) );
+		
+		fun = interf.getFunctions().get( 1 );
+		assertEquals( "doMoreStuf", fun.getName() );
+		assertEquals( "string", fun.getReturn().getType() );
+		assertEquals( 1, fun.getArguments().size() );
+		
+		arg = fun.getArguments().get( 0 );
+		assertEquals( "input", arg.getName() );
+		assertEquals( "int", arg.getType() );		
 	}
 	
 	private String path( String name ) throws URISyntaxException {

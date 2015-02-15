@@ -1,0 +1,18 @@
+
+project test;
+
+interface ICall {
+
+	/**
+	 * first function
+	 */
+	int doStuf( 
+		[public_name="unknown"] int p1,
+		[public_name="i whish i knew"] string p2 
+	);
+	
+	/**
+	 * second function
+	 */
+	string doMoreStuf( int input );
+}
