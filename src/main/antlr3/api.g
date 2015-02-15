@@ -46,30 +46,35 @@ interface_statment [Project project]
 function [Interface interf]
 @init {
 	AttributeList attrList = new AttributeList();
+	ReturnValue<FunctionReturn> returnType = new ReturnValue<FunctionReturn>(); 
 }
-	: attributes [attrList] function_ret 
-	  ID { Function fun = interf.createFunction( $ID.text, attrList, new Context( $ID ) ); } 
-	  function_end
+	: attributes [attrList] function_ret [returnType] 
+	  ID { Function fun = interf.createFunction( $ID.text, returnType.get(), attrList, new Context( $ID ) ); } 
+	  function_end [fun]
 	; 
 
-function_end
-	: POPEN function_args PCLOSE SEMICOLON
+function_end [Function fun]
+	: POPEN function_args [fun] PCLOSE SEMICOLON
 	| POPEN PCLOSE SEMICOLON
 	;
 
-function_ret
-	: ID
-	| ARRAY ID
+function_ret [ReturnValue<FunctionReturn> returnType]
+	: ID { returnType.set( new FunctionReturn( $ID.text, false, new Context( $ID ) ) ); }
+	| ARRAY ID { returnType.set( new FunctionReturn( $ID.text, true, new Context( $ID ) ) ); }
 	;
 		
-function_args 
-	: function_arg ( COMMA function_arg )*
+function_args [Function fun] 
+	: function_arg [fun] ( COMMA function_arg [fun] )*
 	; 
 			
-function_arg 
-	: ID ID
-	| ARRAY ID ID
+function_arg [Function fun]
+	: ID function_arg_end [$ID.text, false, fun] 
+	| ARRAY ID function_arg_end [$ID.text, true, fun]
 	;	
+			
+function_arg_end [String type, boolean isArray, Function fun]
+	: ID
+	;
 			
 type_statment[Project project]
 @init {

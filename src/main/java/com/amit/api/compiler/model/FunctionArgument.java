@@ -12,16 +12,12 @@
  * See the License for the specific language governing permissions and        *
  * limitations under the License.                                             *
  ******************************************************************************/
-package com.amit.api.compiler.parser;
+package com.amit.api.compiler.model;
 
-public final class ParseUtils {
+public class FunctionArgument extends TypeArgument {
 
-	/**
-	 * parses string from parser format to string format
-	 * @param str
-	 * @return
-	 */
-	public static String parseString( String str ) {
-		return str.substring( 1, str.length() - 1 ).replace("\\\"", "\"").replace("\\\\", "\\" );
+	protected FunctionArgument( String type, String name, boolean isArray,
+			Context context ) {
+		super( type, name, isArray, context );
 	}
 }

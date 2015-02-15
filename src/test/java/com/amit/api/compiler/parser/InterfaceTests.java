@@ -43,6 +43,10 @@ public class InterfaceTests extends TestBase {
 		Function fun = interf.getFunctions().get( 0 );
 		assertEquals( "fun", fun.getName() );
 		assertEquals( "do something", fun.getAttributeValue( "public_name" ) );
+		assertEquals( 0, fun.getArguments().size() );
+		assertEquals( "void", fun.getReturn().getType() );
+		assertEquals( "*return*", fun.getReturn().getName() );
+		assertFalse( fun.getReturn().isArray() );
 	}
 	
 	private String path( String name ) throws URISyntaxException {

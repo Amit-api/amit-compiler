@@ -1,4 +1,3 @@
-
 /******************************************************************************
  * Copyright 20014-2015 Alexandru Motriuc                                     *
  *                                                                            *
@@ -15,9 +14,55 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-public class Function extends ProjectElement {
+import java.util.List;
 
+public class Function extends ProjectElement {
+	private UniqueCollection<FunctionArgument> arguments =  new UniqueCollection<FunctionArgument>( "argument" );
+	private FunctionReturn returnType;
+	
 	protected Function( String name, Context context ) {
 		super( name, context );
+	}
+	
+	/**
+	 * creates a function argument
+	 * @param type
+	 * @param name
+	 * @param isArray
+	 * @param attr
+	 * @param context
+	 * @return
+	 */
+	public FunctionArgument createArgument( String type, String name, boolean isArray,
+			AttributeList attr, Context context ) {
+		
+		FunctionArgument arg = new FunctionArgument( type, name, isArray, context );
+		arg.setAttributeList( attr );
+		arguments.add( arg );
+		return arg;
+	}
+	
+	/**
+	 * returns function arguments
+	 * @return
+	 */
+	public List<FunctionArgument> getArguments() {
+		return arguments.readonlyList();
+	}
+	
+	/**
+	 * set function return type
+	 * @param returnType
+	 */
+	public void setReturn( FunctionReturn returnType ) {
+		this.returnType = returnType;
+	}
+	
+	/**
+	 * get function return type
+	 * @return
+	 */
+	public FunctionReturn getReturn() {
+		return returnType;
 	}
 }

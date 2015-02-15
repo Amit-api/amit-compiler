@@ -30,9 +30,10 @@ public class Interface extends ProjectElement {
 	 * @param context
 	 * @return
 	 */
-	public Function createFunction( String name, AttributeList attr, Context context ) {
+	public Function createFunction( String name, FunctionReturn functionReturn, AttributeList attr, Context context ) {
 		Function fun = new Function( name, context );
 		fun.setAttributeList( attr );
+		fun.setReturn( functionReturn );
 		functions.add( fun );
 		return fun;
 	}
