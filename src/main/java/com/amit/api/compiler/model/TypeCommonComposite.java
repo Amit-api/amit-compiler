@@ -16,12 +16,12 @@ package com.amit.api.compiler.model;
 
 import java.util.List;
 
-public class CompositeType extends Type {
-	private UniqueCollection<CompositeTypeMember> members = new UniqueCollection<CompositeTypeMember>( "type member" );
+public class TypeCommonComposite extends Type {
+	private UniqueCollection<TypeCompositeMember> members = new UniqueCollection<TypeCompositeMember>( "type member" );
 	private String baseType;
 	
-	public CompositeType( String name, Context context ) {
-		super( TYPE, name, context);
+	public TypeCommonComposite( String type, String name, Context context ) {
+		super( type, name, context);
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public class CompositeType extends Type {
 	 * @param context
 	 */
 	public void addMember( String type, String name, boolean isArray, Context context ) {
-		CompositeTypeMember member = new CompositeTypeMember( type, name, isArray, context );
+		TypeCompositeMember member = new TypeCompositeMember( type, name, isArray, context );
 		members.add( member );
 	}
 	
@@ -39,7 +39,7 @@ public class CompositeType extends Type {
 	 * retuns composite type members
 	 * @return
 	 */
-	public List<CompositeTypeMember> getMembers() {
+	public List<TypeCompositeMember> getMembers() {
 		return members.readonlyList();
 	}
 	

@@ -21,9 +21,11 @@ import java.util.List;
 public class Project {
 	private UniqueCollection<Type> types = new UniqueCollection<Type>( "type" );
 	private UniqueCollection<Module> modules = new UniqueCollection<Module>( "module" );
-	private UniqueCollection<Interface> interfaces = new UniqueCollection<Interface>( "interface" );
+	
+	private List<Interface> interfaces = new ArrayList<Interface>();
 	private List<TypeEnum> enums = new ArrayList<TypeEnum>();
-	private List<CompositeType> compositeTypes = new ArrayList<CompositeType>();
+	private List<TypeComposite> compositeTypes = new ArrayList<TypeComposite>();
+	private List<TypeException> exceptions = new ArrayList<TypeException>();
 	
 	private Module currentModule;
 	private Module projectModule;
@@ -80,10 +82,10 @@ public class Project {
 	 * @return
 	 * @throws ModuleElementException
 	 */
-	public CompositeType creatCompositeType( String name, AttributeList attr, Context context ) throws ModuleElementException {
-		CompositeType type = new CompositeType( name, context );
+	public TypeComposite creatCompositeType( String name, AttributeList attr, Context context ) throws ModuleElementException {
+		TypeComposite type = new TypeComposite( name, context );
 		type.setAttributeList( attr );
-		addCompositeType( type );
+		addComposite( type );
 		return type;
 	}
 	
@@ -91,7 +93,7 @@ public class Project {
 	 * returns all composite types from project
 	 * @return
 	 */
-	public List<CompositeType> getCompositeTypes() {
+	public List<TypeComposite> getCompositeTypes() {
 		return Collections.unmodifiableList( compositeTypes );
 	}
 	
@@ -115,12 +117,40 @@ public class Project {
 	 * @return
 	 */
 	public List<Interface> getInterfaces() {
-		return interfaces.readonlyList();
+		return Collections.unmodifiableList( interfaces );
 	}
 	
-	private void addCompositeType( CompositeType type ) {
+	/**
+	 * create an exception type
+	 * @param name
+	 * @param attr
+	 * @param context
+	 * @return
+	 * @throws ModuleElementException
+	 */
+	public TypeException createException( String name, AttributeList attr, Context context ) throws ModuleElementException {
+		TypeException exception = new TypeException( name, context );
+		exception.setAttributeList( attr );
+		addException( exception );
+		return exception;
+	}
+	
+	/**
+	 * returns all exceptions from the project
+	 * @return
+	 */
+	public List<TypeException> getExceptions() {
+		return Collections.unmodifiableList( exceptions );
+	}
+	
+	private void addComposite( TypeComposite type ) {
 		addType( type );
 		compositeTypes.add( type );
+	}
+	
+	private void addException( TypeException exception ) {
+		addType( exception );
+		exceptions.add( exception );
 	}
 	
 	private void addEnum( TypeEnum type ) {
@@ -129,8 +159,8 @@ public class Project {
 	}
 	
 	private void addInterface( Interface interf ) {
+		addType( interf );	
 		interfaces.add( interf );
-		currentModule.add( interf );		
 	}
 	
 	private void addType( Type type ) {

@@ -1,0 +1,8 @@
+project test;
+
+exception BaseException {
+}
+
+exception DerivedException : BaseException {
+
+}

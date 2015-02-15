@@ -19,8 +19,8 @@ import static org.junit.Assert.*;
 import java.net.URISyntaxException;
 import org.junit.Test;
 
-import com.amit.api.compiler.model.CompositeType;
-import com.amit.api.compiler.model.CompositeTypeMember;
+import com.amit.api.compiler.model.TypeComposite;
+import com.amit.api.compiler.model.TypeCompositeMember;
 import com.amit.api.compiler.model.Project;
 
 public class CustomTypesTests extends TestBase {
@@ -31,14 +31,14 @@ public class CustomTypesTests extends TestBase {
 		Project project = parser.parse();
 		
 		assertEquals( 1, project.getCompositeTypes().size() );
-		CompositeType type = project.getCompositeTypes().get( 0 );
+		TypeComposite type = project.getCompositeTypes().get( 0 );
 		
 		assertEquals( "Point", type.getName() );
 		assertNull( type.getBaseType() );
 		
 		assertEquals( 2, type.getMembers().size() );
 		
-		CompositeTypeMember m = type.getMembers().get( 0 );
+		TypeCompositeMember m = type.getMembers().get( 0 );
 		assertEquals( "int", m.getType() );
 		assertEquals( "x", m.getName() );
 		
@@ -53,7 +53,7 @@ public class CustomTypesTests extends TestBase {
 		Project project = parser.parse();
 		
 		assertEquals( 2, project.getCompositeTypes().size() );
-		CompositeType type = project.getCompositeTypes().get( 0 );
+		TypeComposite type = project.getCompositeTypes().get( 0 );
 		
 		assertEquals( "T1", type.getName() );
 		assertNull( type.getBaseType() );

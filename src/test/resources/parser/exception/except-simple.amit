@@ -1,0 +1,6 @@
+project test;
+
+exception InvalidArgException {
+	string argumentName;
+	int argumentType;
+}

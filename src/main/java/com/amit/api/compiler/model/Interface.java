@@ -20,13 +20,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Interface extends ProjectElement {
+public class Interface extends Type {
 	private UniqueCollection<Function> functions = new UniqueCollection<Function>( "function" );
 	private Set<String> baseInterfaces = new HashSet<String>();
 	private List<String> baseInterfacesList = new ArrayList<String>();
 	
 	protected Interface( String name, Context context ) {
-		super( name, context );
+		super( INTERFACE, name, context );
 	}
 	
 	/**

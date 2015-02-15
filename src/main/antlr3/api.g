@@ -30,6 +30,7 @@ statment [Project project]
 	: enum_statment [project]
 	| type_statment [project]
 	| interface_statment [project]
+	| exception_statment [project]
 	;
 
 interface_statment [Project project]
@@ -88,20 +89,31 @@ function_arg [Function fun]
 function_arg_end [String type, boolean isArray, AttributeList attrList, Function fun]
 	: ID { fun.createArgument( type, $ID.text, isArray, attrList, new Context( $ID ) ); }
 	;
-			
+
+exception_statment[Project project]
+@init {
+	AttributeList attrList = new AttributeList();
+}
+	: attributes [attrList] EXCEPTION
+	  ID { TypeCommonComposite type = project.createException( $ID.text, attrList, new Context( $ID ) ); }
+	  type_end [type]
+	;
+				
 type_statment[Project project]
 @init {
 	AttributeList attrList = new AttributeList();
 }
-	: attributes [attrList] TYPE ID { CompositeType type = project.creatCompositeType( $ID.text, attrList, new Context( $ID ) ); } type_end [type]
+	: attributes [attrList] TYPE
+	  ID { TypeCommonComposite type = project.creatCompositeType( $ID.text, attrList, new Context( $ID ) ); }
+	  type_end [type]
 	;
 
-type_end [CompositeType type]
+type_end [TypeCommonComposite type]
 	: START ( type_item [type] )* END
 	| COLON ID START ( type_item [type] )* END { type.setBaseType( $ID.text ); }
 	;
 	
-type_item [CompositeType type] 
+type_item [TypeCommonComposite type] 
 @init {
 	AttributeList attrList = new AttributeList();
 }
@@ -110,7 +122,7 @@ type_item [CompositeType type]
 	| attributes [attrList] ARRAY ID type_value[true, $ID.text, type]
 	;
 
-type_value [boolean isArray, String memberType, CompositeType type]
+type_value [boolean isArray, String memberType, TypeCommonComposite type]
 	: ID SEMICOLON { type.addMember( memberType, $ID.text, isArray, new Context( $ID ) ); }
 	;
 			
@@ -177,6 +189,10 @@ PROJECT : 'project'
 	
 SERVICE : 'service'
 	;
+	
+EXCEPTION : 'exception'
+	;
+
 	
 INTERFACE : 'interface'
 	;

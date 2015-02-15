@@ -14,40 +14,9 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-/**
- * the base class for all Amit types 
- */
-public class Type extends ProjectElement {
-	/**
-	 * type names
-	 */
-	protected final static String ENUM = "enum";
-	protected final static String TYPE = "type";
-	protected final static String EXCEPTION = "exception";
-	protected final static String INTERFACE = "interface";
-	
-	private String type;
-	
-	/**
-	 * creates a new type
-	 * @param type
-	 * @param name
-	 */
-	public Type( String type, String name, Context context ) {
-		super( name, context );
-		
-		if( type == null || type.isEmpty() ) {
-			throw new IllegalArgumentException( "type must be not null or empty" );
-		}
-		
-		this.type = type;
-	}
-	
-	/**
-	 * returns the type type
-	 * @return
-	 */
-	public String getType() {
-		return type;
+public class TypeCompositeMember extends TypeArgument {
+	protected TypeCompositeMember( String type, String name, boolean isArray,
+			Context context ) {
+		super( type, name, isArray, context );
 	}
 }

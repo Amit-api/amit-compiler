@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.amit.api.compiler.model.CompositeType;
+import com.amit.api.compiler.model.TypeComposite;
 import com.amit.api.compiler.model.Project;
 
 import freemarker.template.Configuration;
@@ -49,7 +49,7 @@ public class CodeGenerator {
 		}
 		
 		private void processTypes( List<String> ret, String templateName, String outFile ) throws IOException, TemplateException {
-			for( CompositeType type : project.getCompositeTypes() ) {
+			for( TypeComposite type : project.getCompositeTypes() ) {
 				String fileName = String.format( outFile, type.getName() );
 				process( type, templateName, fileName );
 				ret.add( String.format( "type: %s, file: %s", type.getName(), fileName ) );
