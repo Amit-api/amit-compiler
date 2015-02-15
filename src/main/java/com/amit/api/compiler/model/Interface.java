@@ -14,10 +14,16 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Interface extends ProjectElement {
 	private UniqueCollection<Function> functions = new UniqueCollection<Function>( "function" );
+	private Set<String> baseInterfaces = new HashSet<String>();
+	private List<String> baseInterfacesList = new ArrayList<String>();
 	
 	protected Interface( String name, Context context ) {
 		super( name, context );
@@ -44,5 +50,30 @@ public class Interface extends ProjectElement {
 	 */
 	public List<Function> getFunctions() {
 		return functions.readonlyList();
+	}
+	
+	/**
+	 * add base interfaces
+	 * @param interfaceName
+	 */
+	public void addBaseInterface( String interfaceName ) {
+		if( interfaceName == null || interfaceName.isEmpty() ) {
+			throw new IllegalArgumentException( "interfaceName must be not null or empty" );
+		}
+		
+		if( baseInterfaces.contains( interfaceName ) ) {
+			throw new ModuleElementException( String.format( "duplicate inheritance for name '%s'", interfaceName ), this );
+		}
+		
+		baseInterfaces.add( interfaceName );
+		baseInterfacesList.add( interfaceName );
+	}
+	
+	/**
+	 * returns the list of base interface names 
+	 * @return
+	 */
+	public List<String> getBaseInterfaceNames() {
+		return Collections.unmodifiableList( baseInterfacesList );
 	}
 }

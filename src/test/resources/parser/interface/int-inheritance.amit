@@ -1,0 +1,14 @@
+
+project test;
+
+interface IntA {
+
+}
+
+interface IntB {
+
+}
+
+interface IntC : IntA, IntB {
+
+}

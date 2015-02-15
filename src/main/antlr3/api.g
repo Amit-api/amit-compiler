@@ -38,11 +38,21 @@ interface_statment [Project project]
 }
 	: attributes [attrList] INTERFACE
 	  ID { Interface interf = project.createInterface( $ID.text, attrList, new Context( $ID ) ); }
+	  interface_inh [interf]
 	  START
 	  ( function [interf] )*  
 	  END
 	;
 	
+interface_inh [Interface interf]
+	:
+	| COLON ID { interf.addBaseInterface( $ID.text); } interface_inh_end [interf]
+	;
+	
+interface_inh_end [Interface interf]
+	: ( COMMA ID )* { interf.addBaseInterface( $ID.text); }
+	;	
+		
 function [Interface interf]
 @init {
 	AttributeList attrList = new AttributeList();

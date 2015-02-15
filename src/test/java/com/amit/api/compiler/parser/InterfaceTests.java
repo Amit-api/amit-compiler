@@ -86,6 +86,28 @@ public class InterfaceTests extends TestBase {
 		assertEquals( "int", arg.getType() );		
 	}
 	
+	@Test
+	public void testInheritance() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "int-inheritance.amit" ) );
+		Project project = parser.parse();
+		
+		assertEquals( 3, project.getInterfaces().size() );
+		
+		Interface interf = project.getInterfaces().get( 0 );
+		assertEquals( "IntA", interf.getName() );
+		assertEquals( 0, interf.getBaseInterfaceNames().size() );
+	
+		interf = project.getInterfaces().get( 1 );
+		assertEquals( "IntB", interf.getName() );
+		assertEquals( 0, interf.getBaseInterfaceNames().size() );
+
+		interf = project.getInterfaces().get( 2 );
+		assertEquals( "IntC", interf.getName() );
+		assertEquals( 2, interf.getBaseInterfaceNames().size() );
+		assertEquals( "IntA", interf.getBaseInterfaceNames().get( 0 ) );
+		assertEquals( "IntB", interf.getBaseInterfaceNames().get( 1 ) );
+	}
+	
 	private String path( String name ) throws URISyntaxException {
 		return pathGlobal( "parser/interface/" + name );
 	}	
