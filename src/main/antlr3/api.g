@@ -16,14 +16,19 @@ start [Project project]
 	
 
 header [Project project]
-	: module [project]
+	: include 
+	  module [project]
+	;
+	
+include 
+	: ( INCLUDE STRING ) *
 	;
 	
 module [Project project]
 @init {
 	AttributeList attrList = new AttributeList();
 }	: attributes [attrList] PROJECT ID SEMICOLON { project.createModule( $ID.text, ModuleType.PROJECT, attrList, new Context( $ID ) ); }
-	| LIB ID SEMICOLON { project.createModule( $ID.text, ModuleType.PROJECT, null, new Context( $ID ) ); }
+	| LIB ID SEMICOLON { project.createModule( $ID.text, ModuleType.LIB, null, new Context( $ID ) ); }
 	;
 
 statment [Project project] 
@@ -31,7 +36,18 @@ statment [Project project]
 	| type_statment [project]
 	| interface_statment [project]
 	| exception_statment [project]
+	| service_statment [project]
 	;
+
+service_statment [Project project]
+@init {
+	AttributeList attrList = new AttributeList();
+}
+	: attributes [attrList] SERVICE
+	  ID { Service service = project.createService( $ID.text, attrList, new Context( $ID ) ); }
+	  interface_inh [service]
+	  SEMICOLON 
+	  ;
 
 interface_statment [Project project]
 @init {
@@ -205,6 +221,8 @@ SERVICE : 'service'
 EXCEPTION : 'exception'
 	;
 
+INCLUDE : 'include'
+	;
 	
 INTERFACE : 'interface'
 	;
@@ -255,8 +273,7 @@ SEMICOLON
 	
 COLON	: ':'
 	;
-	
-	
+		
 COMMENT
     :   '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
     |   '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}

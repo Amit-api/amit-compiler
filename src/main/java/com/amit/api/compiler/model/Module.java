@@ -24,6 +24,7 @@ public class Module extends ProjectElement {
 	private ModuleType type;
 	private List<Type> types = new ArrayList<Type>();
 	private List<Interface> interfaces = new ArrayList<Interface>();
+	private List<Service> services = new ArrayList<Service>();
 	
 	/**
 	 * 
@@ -72,5 +73,20 @@ public class Module extends ProjectElement {
 		}
 		
 		interfaces.add( iinterface );
+	}
+	
+	/**
+	 * adds service to the module
+	 * @param service
+	 */
+	public void add( Service service ) throws ModuleElementException {
+		if( service == null ) {
+			throw new IllegalArgumentException( "service must be not null" );			
+		}
+		
+		if( ! getType().equals( ModuleType.PROJECT ) ) {
+			throw new ModuleElementException( "service is allowed only in the project file", service );
+		}
+		services.add( service );
 	}
 }

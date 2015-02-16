@@ -21,6 +21,7 @@ import java.util.List;
 public class Project {
 	private UniqueCollection<Type> types = new UniqueCollection<Type>( "type" );
 	private UniqueCollection<Module> modules = new UniqueCollection<Module>( "module" );
+	private UniqueCollection<Service> services = new UniqueCollection<Service>( "service" );
 	
 	private List<Interface> interfaces = new ArrayList<Interface>();
 	private List<TypeEnum> enums = new ArrayList<TypeEnum>();
@@ -143,6 +144,30 @@ public class Project {
 		return Collections.unmodifiableList( exceptions );
 	}
 	
+	/**
+	 * creates an service
+	 * @param name
+	 * @param attr
+	 * @param context
+	 * @return
+	 * @throws ModuleElementException
+	 */
+	public Service createService( String name, AttributeList attr, Context context ) throws ModuleElementException {
+		Service service = new Service( name, context );
+		service.setAttributeList( attr );
+		addService( service );
+		
+		return service;
+	}
+	
+	/**
+	 * returns all services from the project
+	 * @return
+	 */
+	public List<Service> getServices() {
+		return services.readonlyList();
+	}
+	
 	private void addComposite( TypeComposite type ) {
 		addType( type );
 		compositeTypes.add( type );
@@ -161,11 +186,17 @@ public class Project {
 	private void addInterface( Interface interf ) {
 		addType( interf );	
 		interfaces.add( interf );
+		currentModule.add( interf );
 	}
 	
 	private void addType( Type type ) {
 		types.add( type );
 		currentModule.add( type );		
+	}
+	
+	private void addService( Service service ) {
+		services.add( service );
+		currentModule.add( service );
 	}
 	
 	private void addModule( Module module ) throws ModuleElementException {

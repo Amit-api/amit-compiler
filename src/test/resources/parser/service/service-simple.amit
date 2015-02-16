@@ -1,0 +1,10 @@
+project test;
+
+interface I1 {
+}
+
+interface I2 {
+}
+
+[path="/hello/me"]
+service MyService : I1, I2;
