@@ -23,7 +23,7 @@ import org.junit.Test;
 import com.amit.api.compiler.model.Module;
 import com.amit.api.compiler.model.Project;
 
-public class ModuleTests extends TestBase {
+public class ModuleTest extends TestBase {
 
 	@Test
 	public void tesProjecttAttributes() throws Exception {

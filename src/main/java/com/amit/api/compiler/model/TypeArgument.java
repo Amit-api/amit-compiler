@@ -17,8 +17,9 @@ package com.amit.api.compiler.model;
 public class TypeArgument extends ProjectElement {
 	private String type;
 	private boolean isArray = false;
+	private boolean isRequired = false;
 
-	protected TypeArgument( String type, String name, boolean isArray, Context context ) {
+	protected TypeArgument( String type, String name, Context context ) {
 		super( name, context );
 		
 		if( type == null || type.isEmpty() ) {
@@ -26,6 +27,21 @@ public class TypeArgument extends ProjectElement {
 		}
 		
 		this.type = type;
+	}
+
+	/**
+	 * sets the isRequired flag
+	 * @param isRequired
+	 */
+	public void setIsRequired( boolean isRequired ) {
+		this.isRequired = isRequired;
+	}
+	
+	/**
+	 * sets is array flag
+	 * @param isArray
+	 */
+	public void setIsArray( boolean isArray ) {
 		this.isArray = isArray;
 	}
 	
@@ -43,5 +59,13 @@ public class TypeArgument extends ProjectElement {
 	 */
 	public boolean isArray() {
 		return isArray;
+	}
+	
+	/**
+	 * return true if member is required
+	 * @return
+	 */
+	public boolean isRequired() {
+		return isRequired;
 	}
 }

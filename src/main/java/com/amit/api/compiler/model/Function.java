@@ -40,10 +40,13 @@ public class Function extends ProjectElement {
 	 * @return
 	 */
 	public FunctionArgument createArgument( String type, String name, boolean isArray,
-			AttributeList attr, Context context ) {
+			boolean isRequired, AttributeList attr, Context context ) {
 		
-		FunctionArgument arg = new FunctionArgument( type, name, isArray, context );
+		FunctionArgument arg = new FunctionArgument( type, name, context );
 		arg.setAttributeList( attr );
+		arg.setIsArray( isArray );
+		arg.setIsRequired( isRequired );
+		
 		arguments.add( arg );
 		return arg;
 	}

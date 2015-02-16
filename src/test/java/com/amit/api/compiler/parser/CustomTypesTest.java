@@ -23,7 +23,7 @@ import com.amit.api.compiler.model.TypeComposite;
 import com.amit.api.compiler.model.TypeCompositeMember;
 import com.amit.api.compiler.model.Project;
 
-public class CustomTypesTests extends TestBase {
+public class CustomTypesTest extends TestBase {
 
 	@Test
 	public void testSimple() throws Exception {
@@ -64,6 +64,38 @@ public class CustomTypesTests extends TestBase {
 		assertEquals( "T1",type.getBaseType() );		
 	}
 
+	@Test
+	public void testArgumentModifiers() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "type-member-modifiers.amit" ) );
+		Project project = parser.parse();
+		
+		assertEquals( 1, project.getCompositeTypes().size() );
+		TypeComposite type = project.getCompositeTypes().get( 0 );
+		
+		assertEquals( "Modfiers", type.getName() );
+		assertNull( type.getBaseType() );
+
+		assertEquals( 3, type.getMembers().size() );
+		
+		TypeCompositeMember member = type.getMembers().get( 0 );
+		assertEquals( "a", member.getName() );
+		assertEquals( "int", member.getType() );
+		assertFalse( member.isArray() );
+		assertTrue( member.isRequired() );
+		
+		member = type.getMembers().get( 1 );
+		assertEquals( "b", member.getName() );
+		assertEquals( "int", member.getType() );
+		assertFalse( member.isArray() );
+		assertFalse( member.isRequired() );
+
+		member = type.getMembers().get( 2 );
+		assertEquals( "c", member.getName() );
+		assertEquals( "string", member.getType() );
+		assertTrue( member.isArray() );
+		assertFalse( member.isRequired() );
+	}
+	
 	private String path( String name ) throws URISyntaxException {
 		return pathGlobal( "parser/customtype/" + name );
 	}

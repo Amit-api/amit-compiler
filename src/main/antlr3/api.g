@@ -12,7 +12,7 @@ package com.amit.api.compiler.parser;
 }
    
 start [Project project] 	
-	: header [project] statment [ project ] +;
+	: header [project] ( statment [ project ] )*;
 	
 
 header [Project project]
@@ -93,12 +93,13 @@ function_arg [Function fun]
 @init {
 	AttributeList attrList = new AttributeList();
 }
-	: attributes [attrList] ID function_arg_end [$ID.text, false, attrList, fun] 
-	| attributes [attrList] ARRAY ID function_arg_end [$ID.text, true, attrList, fun]
-	;	
-			
-function_arg_end [String type, boolean isArray, AttributeList attrList, Function fun]
-	: ID { fun.createArgument( type, $ID.text, isArray, attrList, new Context( $ID ) ); }
+	: attributes [attrList] ID function_arg_end [$ID.text, false, false, attrList, fun] 
+	| attributes [attrList] ARRAY ID function_arg_end [$ID.text, true, false, attrList, fun]
+	| attributes [attrList] REQUIRED ID function_arg_end [$ID.text, false, true, attrList, fun]
+	;
+
+function_arg_end [String type, boolean isArray, boolean isRequired, AttributeList attrList, Function fun]
+	: ID { fun.createArgument( type, $ID.text, isArray, isRequired, attrList, new Context( $ID ) ); }
 	;
 
 exception_statment[Project project]
@@ -128,13 +129,13 @@ type_item [TypeCommonComposite type]
 @init {
 	AttributeList attrList = new AttributeList();
 }
-	: attributes [attrList] ID type_value[false, $ID.text, type]
-	| attributes [attrList] REQUIRED ID type_value[false, $ID.text, type]
-	| attributes [attrList] ARRAY ID type_value[true, $ID.text, type]
+	: attributes [attrList] ID type_value[false, false, $ID.text, type]
+	| attributes [attrList] REQUIRED ID type_value[false, true, $ID.text, type]
+	| attributes [attrList] ARRAY ID type_value[true, false, $ID.text, type]
 	;
 
-type_value [boolean isArray, String memberType, TypeCommonComposite type]
-	: ID SEMICOLON { type.addMember( memberType, $ID.text, isArray, new Context( $ID ) ); }
+type_value [boolean isArray, boolean isRequired, String memberType, TypeCommonComposite type]
+	: ID SEMICOLON { type.addMember( memberType, $ID.text, isArray, isRequired, new Context( $ID ) ); }
 	;
 			
 enum_statment [Project project]

@@ -17,8 +17,9 @@ package com.amit.api.compiler.model;
 public class FunctionReturn extends TypeArgument {
 	public static final String NAME = "*return*";
 	
-	public FunctionReturn( String type, boolean isArray,
-			Context context ) {
-		super( type, NAME, isArray, context );
+	public FunctionReturn( String type, boolean isArray, Context context ) {
+		super( type, NAME, context );
+		
+		setIsArray( isArray );
 	}
 }

@@ -30,8 +30,11 @@ public class TypeCommonComposite extends Type {
 	 * @param name
 	 * @param context
 	 */
-	public void addMember( String type, String name, boolean isArray, Context context ) {
-		TypeCompositeMember member = new TypeCompositeMember( type, name, isArray, context );
+	public void addMember( String type, String name, boolean isArray, boolean isRequred, Context context ) {
+		TypeCompositeMember member = new TypeCompositeMember( type, name, context );
+		member.setIsArray( isArray );
+		member.setIsRequired( isRequred );
+		
 		members.add( member );
 	}
 	

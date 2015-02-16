@@ -1,0 +1,6 @@
+
+project test;
+
+interface ITest {
+	void doStuf( int a, required int c, array int d );
+}

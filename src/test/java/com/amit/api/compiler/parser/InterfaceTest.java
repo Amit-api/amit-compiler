@@ -25,7 +25,7 @@ import com.amit.api.compiler.model.FunctionArgument;
 import com.amit.api.compiler.model.Interface;
 import com.amit.api.compiler.model.Project;
 
-public class InterfaceTests extends TestBase {
+public class InterfaceTest extends TestBase {
 
 	@Test
 	public void testSimpe() throws Exception {
@@ -128,6 +128,41 @@ public class InterfaceTests extends TestBase {
 		assertEquals( "Exception2", fun.getThrowsExceptionNames().get( 1 ) );
 	}
 
+	@Test
+	public void testArgModifiers() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "int-arg-modifiers.amit" ) );
+		Project project = parser.parse();
+		
+		assertEquals( 1, project.getInterfaces().size() );
+		
+		Interface interf = project.getInterfaces().get( 0 );
+		assertEquals( "ITest", interf.getName() );
+		assertEquals( 0, interf.getBaseInterfaceNames().size() );
+		assertEquals( 1, interf.getFunctions().size() );
+		
+		Function fun = interf.getFunctions().get( 0 );
+		assertEquals( "doStuf", fun.getName() );
+		
+		assertEquals( 3, fun.getArguments().size() );
+
+		FunctionArgument arg = fun.getArguments().get( 0 );
+		assertEquals( "int", arg.getType() );
+		assertEquals( "a", arg.getName() );
+		assertFalse( arg.isArray() );
+		assertFalse( arg.isRequired() );
+
+		arg = fun.getArguments().get( 1 );
+		assertEquals( "int", arg.getType() );
+		assertEquals( "c", arg.getName() );
+		assertFalse( arg.isArray() );
+		assertTrue( arg.isRequired() );
+		
+		arg = fun.getArguments().get( 2 );
+		assertEquals( "int", arg.getType() );
+		assertEquals( "d", arg.getName() );
+		assertTrue( arg.isArray() );
+		assertFalse( arg.isRequired() );
+	}
 	private String path( String name ) throws URISyntaxException {
 		return pathGlobal( "parser/interface/" + name );
 	}	

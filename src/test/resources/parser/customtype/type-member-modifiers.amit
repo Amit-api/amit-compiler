@@ -1,0 +1,8 @@
+project test;
+
+type Modfiers {
+
+	required int a;
+	int b;
+	array string c;
+}

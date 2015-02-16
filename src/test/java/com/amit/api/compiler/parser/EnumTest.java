@@ -23,7 +23,7 @@ import org.junit.Test;
 import com.amit.api.compiler.model.Project;
 import com.amit.api.compiler.model.TypeEnum;
 
-public class EnumTests extends TestBase {
+public class EnumTest extends TestBase {
 			
 	@Test
 	public void testEnumInt() throws Exception {
