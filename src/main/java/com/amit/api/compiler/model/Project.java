@@ -32,6 +32,15 @@ public class Project {
 	private Module projectModule;
 
 	/**
+	 * returns a type from the project by name
+	 * @param name
+	 * @return
+	 */
+	public Type getType( String name ) {
+		return types.get( name );
+	}
+	
+	/**
 	 * creates an enum
 	 * @param name
 	 * @param context

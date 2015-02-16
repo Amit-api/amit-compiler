@@ -22,7 +22,7 @@ public class Type extends ProjectElement {
 	 * type names
 	 */
 	protected final static String ENUM = "enum";
-	protected final static String TYPE = "type";
+	protected final static String COMPOSITE = "type";
 	protected final static String EXCEPTION = "exception";
 	protected final static String INTERFACE = "interface";
 	

@@ -39,11 +39,11 @@ public class CustomTypesTest extends TestBase {
 		assertEquals( 2, type.getMembers().size() );
 		
 		TypeCompositeMember m = type.getMembers().get( 0 );
-		assertEquals( "int", m.getType() );
+		assertEquals( "int", m.getTypeName() );
 		assertEquals( "x", m.getName() );
 		
 		m = type.getMembers().get( 1 );
-		assertEquals( "int", m.getType() );
+		assertEquals( "int", m.getTypeName() );
 		assertEquals( "y", m.getName() );
 	}
 
@@ -79,19 +79,19 @@ public class CustomTypesTest extends TestBase {
 		
 		TypeCompositeMember member = type.getMembers().get( 0 );
 		assertEquals( "a", member.getName() );
-		assertEquals( "int", member.getType() );
+		assertEquals( "int", member.getTypeName() );
 		assertFalse( member.isArray() );
 		assertTrue( member.isRequired() );
 		
 		member = type.getMembers().get( 1 );
 		assertEquals( "b", member.getName() );
-		assertEquals( "int", member.getType() );
+		assertEquals( "int", member.getTypeName() );
 		assertFalse( member.isArray() );
 		assertFalse( member.isRequired() );
 
 		member = type.getMembers().get( 2 );
 		assertEquals( "c", member.getName() );
-		assertEquals( "string", member.getType() );
+		assertEquals( "string", member.getTypeName() );
 		assertTrue( member.isArray() );
 		assertFalse( member.isRequired() );
 	}

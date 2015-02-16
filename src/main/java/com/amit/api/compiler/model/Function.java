@@ -99,4 +99,22 @@ public class Function extends ProjectElement {
 	public List<String> getThrowsExceptionNames() {
 		return Collections.unmodifiableList( throwsExceptionsList );
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void validate( Project project ) throws ModuleElementException {
+		super.validate( project );
+		
+		returnType.validate( project );
+		
+		for( FunctionArgument arg : arguments ) {
+			arg.validate( project );
+		}
+	}
+	
+	private void validateException( Project project ) throws ModuleElementException {
+		// [to do]
+	}
 }

@@ -17,6 +17,7 @@ package com.amit.api.compiler.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ import java.util.Map;
  * collection that ensures 
  * unique by name list of the ProjectElements
  */
-public class UniqueCollection<T extends ProjectElement> {
+public class UniqueCollection<T extends ProjectElement> implements Iterable<T> {
 	private Map<String,T> elements = new HashMap<String,T>();
 	private List<T> elementList = new ArrayList<T>();
 	private String typeName;
@@ -57,10 +58,27 @@ public class UniqueCollection<T extends ProjectElement> {
 	}
 	
 	/**
+	 * gets the element by name
+	 * @param name
+	 * @return
+	 */
+	public T get( String name ) {
+		if( name == null || name.isEmpty() ) {
+			throw new IllegalArgumentException( "name must be not null or empty" );
+		}
+		
+		return elements.get( name );
+	}
+	
+	/**
 	 * returns the read only list
 	 * @return
 	 */
 	public List<T> readonlyList() {
 		return Collections.unmodifiableList( elementList );
+	}
+
+	public Iterator<T> iterator() {
+		return elementList.iterator();
 	}
 }

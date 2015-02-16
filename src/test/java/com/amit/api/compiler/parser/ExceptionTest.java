@@ -42,12 +42,12 @@ public class ExceptionTest extends TestBase {
 		
 		TypeCompositeMember member = except.getMembers().get( 0 );
 		assertEquals( "argumentName", member.getName() );
-		assertEquals( "string", member.getType() );
+		assertEquals( "string", member.getTypeName() );
 		assertFalse( member.isArray() );
 		
 		member = except.getMembers().get( 1 );
 		assertEquals( "argumentType", member.getName() );
-		assertEquals( "int", member.getType() );
+		assertEquals( "int", member.getTypeName() );
 		assertFalse( member.isArray() );
 	}
 

@@ -45,7 +45,7 @@ public class InterfaceTest extends TestBase {
 		assertEquals( "fun", fun.getName() );
 		assertEquals( "do something", fun.getAttributeValue( "public_name" ) );
 		assertEquals( 0, fun.getArguments().size() );
-		assertEquals( "void", fun.getReturn().getType() );
+		assertEquals( "void", fun.getReturn().getTypeName() );
 		assertEquals( "*return*", fun.getReturn().getName() );
 		assertFalse( fun.getReturn().isArray() );
 	}
@@ -63,27 +63,27 @@ public class InterfaceTest extends TestBase {
 		
 		Function fun = interf.getFunctions().get( 0 );
 		assertEquals( "doStuf", fun.getName() );
-		assertEquals( "int", fun.getReturn().getType() );	
+		assertEquals( "int", fun.getReturn().getTypeName() );	
 		assertEquals( 2, fun.getArguments().size() );
 		
 		FunctionArgument arg = fun.getArguments().get( 0 );
 		assertEquals( "p1", arg.getName() );
-		assertEquals( "int", arg.getType() );
+		assertEquals( "int", arg.getTypeName() );
 		assertEquals( "unknown", arg.getAttributeValue( "public_name" ) );
 
 		arg = fun.getArguments().get( 1 );
 		assertEquals( "p2", arg.getName() );
-		assertEquals( "string", arg.getType() );
+		assertEquals( "string", arg.getTypeName() );
 		assertEquals( "i whish i knew", arg.getAttributeValue( "public_name" ) );
 		
 		fun = interf.getFunctions().get( 1 );
 		assertEquals( "doMoreStuf", fun.getName() );
-		assertEquals( "string", fun.getReturn().getType() );
+		assertEquals( "string", fun.getReturn().getTypeName() );
 		assertEquals( 1, fun.getArguments().size() );
 		
 		arg = fun.getArguments().get( 0 );
 		assertEquals( "input", arg.getName() );
-		assertEquals( "int", arg.getType() );		
+		assertEquals( "int", arg.getTypeName() );		
 	}
 	
 	@Test
@@ -122,7 +122,7 @@ public class InterfaceTest extends TestBase {
 		
 		Function fun = interf.getFunctions().get( 0 );
 		assertEquals( "doStuf", fun.getName() );
-		assertEquals( "void", fun.getReturn().getType() );
+		assertEquals( "void", fun.getReturn().getTypeName() );
 		assertEquals( 2, fun.getThrowsExceptionNames().size() );
 		assertEquals( "Exception1", fun.getThrowsExceptionNames().get( 0 ) );
 		assertEquals( "Exception2", fun.getThrowsExceptionNames().get( 1 ) );
@@ -146,19 +146,19 @@ public class InterfaceTest extends TestBase {
 		assertEquals( 3, fun.getArguments().size() );
 
 		FunctionArgument arg = fun.getArguments().get( 0 );
-		assertEquals( "int", arg.getType() );
+		assertEquals( "int", arg.getTypeName() );
 		assertEquals( "a", arg.getName() );
 		assertFalse( arg.isArray() );
 		assertFalse( arg.isRequired() );
 
 		arg = fun.getArguments().get( 1 );
-		assertEquals( "int", arg.getType() );
+		assertEquals( "int", arg.getTypeName() );
 		assertEquals( "c", arg.getName() );
 		assertFalse( arg.isArray() );
 		assertTrue( arg.isRequired() );
 		
 		arg = fun.getArguments().get( 2 );
-		assertEquals( "int", arg.getType() );
+		assertEquals( "int", arg.getTypeName() );
 		assertEquals( "d", arg.getName() );
 		assertTrue( arg.isArray() );
 		assertFalse( arg.isRequired() );

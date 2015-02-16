@@ -80,4 +80,13 @@ public class ProjectElement {
 
 		return attr == null ? defaultValue : attr;
 	}
+	
+	/**
+	 * validates the project element if the validation fails
+	 * the exception is thrown
+	 * @param project
+	 * @throws ModuleElementException
+	 */
+	public void validate( Project project ) throws ModuleElementException {
+	}
 }

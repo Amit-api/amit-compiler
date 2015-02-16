@@ -16,6 +16,6 @@ package com.amit.api.compiler.model;
 
 public class TypeComposite extends TypeCommonComposite {
 	public TypeComposite( String name, Context context ) {
-		super( TYPE, name, context);
+		super( COMPOSITE, name, context);
 	}	
 }

@@ -15,7 +15,7 @@
 package com.amit.api.compiler.model;
 
 public class TypeArgument extends ProjectElement {
-	private String type;
+	private String typeName;
 	private boolean isArray = false;
 	private boolean isRequired = false;
 
@@ -26,7 +26,7 @@ public class TypeArgument extends ProjectElement {
 			throw new IllegalArgumentException( "type must be not null or empty" );
 		}
 		
-		this.type = type;
+		this.typeName = type;
 	}
 
 	/**
@@ -49,8 +49,8 @@ public class TypeArgument extends ProjectElement {
 	 * returns the item type
 	 * @return
 	 */
-	public String getType() {
-		return type;
+	public String getTypeName() {
+		return typeName;
 	}	
 	
 	/**
@@ -67,5 +67,23 @@ public class TypeArgument extends ProjectElement {
 	 */
 	public boolean isRequired() {
 		return isRequired;
+	}
+	
+	/***
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void validate( Project project ) throws ModuleElementException {
+		super.validate( project );
+		
+		Type type = project.getType( getTypeName() );
+		if( type == null ) {
+			throw new ModuleElementException( String.format( "unknown type '%s'", getTypeName() ), this );
+		}
+		
+		if( !type.getType().equals( Type.ENUM ) && !type.getType().equals( Type.COMPOSITE ) ) {
+			throw new ModuleElementException( 
+					String.format( "unsuported type '%s' which is '%s' ", getTypeName(), type.getType() ), this );			
+		}
 	}
 }
