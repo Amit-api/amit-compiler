@@ -1,0 +1,6 @@
+
+project test;
+
+type T1 {
+	unknown_type a;
+}

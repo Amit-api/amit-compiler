@@ -112,9 +112,5 @@ public class Function extends ProjectElement {
 		for( FunctionArgument arg : arguments ) {
 			arg.validate( project );
 		}
-	}
-	
-	private void validateException( Project project ) throws ModuleElementException {
-		// [to do]
-	}
+	}	
 }

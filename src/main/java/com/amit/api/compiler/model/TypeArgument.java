@@ -18,8 +18,13 @@ public class TypeArgument extends ProjectElement {
 	private String typeName;
 	private boolean isArray = false;
 	private boolean isRequired = false;
+	private boolean canBeVoid = false;
 
 	protected TypeArgument( String type, String name, Context context ) {
+		this( type, name, context, false );
+	}
+
+	protected TypeArgument( String type, String name, Context context, boolean canBeVoid ) {
 		super( name, context );
 		
 		if( type == null || type.isEmpty() ) {
@@ -27,6 +32,7 @@ public class TypeArgument extends ProjectElement {
 		}
 		
 		this.typeName = type;
+		this.canBeVoid = canBeVoid;
 	}
 
 	/**
@@ -76,14 +82,10 @@ public class TypeArgument extends ProjectElement {
 	public void validate( Project project ) throws ModuleElementException {
 		super.validate( project );
 		
-		Type type = project.getType( getTypeName() );
-		if( type == null ) {
-			throw new ModuleElementException( String.format( "unknown type '%s'", getTypeName() ), this );
-		}
+		project.validateType( this, getTypeName(), Type.PRIMITIVE, Type.ENUM, Type.COMPOSITE );
 		
-		if( !type.getType().equals( Type.ENUM ) && !type.getType().equals( Type.COMPOSITE ) ) {
-			throw new ModuleElementException( 
-					String.format( "unsuported type '%s' which is '%s' ", getTypeName(), type.getType() ), this );			
+		if( !canBeVoid && getTypeName().equals( PrimitiveTypeNames.VOID ) ) {
+			throw new ModuleElementException( "the type can't be void ", this );
 		}
 	}
 }

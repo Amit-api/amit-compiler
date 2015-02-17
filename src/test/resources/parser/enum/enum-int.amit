@@ -6,5 +6,5 @@ project test;
 enum NumberEnum {
 	first = 1,
 	second = 2,	
-	forth = 4
+	forth = 0x4
 }

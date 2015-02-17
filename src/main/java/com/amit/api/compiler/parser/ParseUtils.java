@@ -24,4 +24,17 @@ public final class ParseUtils {
 	public static String parseString( String str ) {
 		return str.substring( 1, str.length() - 1 ).replace("\\\"", "\"").replace("\\\\", "\\" );
 	}
+	
+	/**
+	 * parses int number to a string
+	 * @param str
+	 * @return
+	 */
+	public static Integer parseNumber( String str ) {
+		if( str.startsWith( "0x" ) ) {
+			return Integer.parseInt( str.substring( 2 ), 16 ); 
+		} else {
+			return Integer.valueOf( str );
+		}
+	}
 }

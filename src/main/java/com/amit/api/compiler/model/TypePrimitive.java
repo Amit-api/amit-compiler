@@ -14,17 +14,8 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-public class TypeException extends TypeCommonComposite {
-	public TypeException( String name, Context context ) {
-		super( EXCEPTION, name, context );
+public class TypePrimitive extends Type {
+	public TypePrimitive( String name ) {
+		super( PRIMITIVE, name, null );
 	}
-
-	@Override
-	public void validate( Project project ) throws ModuleElementException {
-		super.validate( project );
-		
-		if( getBaseTypeName() != null ) {
-			project.validateType( this, getBaseTypeName(), Type.EXCEPTION );
-		}
-	}	
 }

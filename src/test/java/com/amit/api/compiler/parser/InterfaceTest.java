@@ -23,6 +23,7 @@ import org.junit.Test;
 import com.amit.api.compiler.model.Function;
 import com.amit.api.compiler.model.FunctionArgument;
 import com.amit.api.compiler.model.Interface;
+import com.amit.api.compiler.model.ModuleElementException;
 import com.amit.api.compiler.model.Project;
 
 public class InterfaceTest extends TestBase {
@@ -163,6 +164,19 @@ public class InterfaceTest extends TestBase {
 		assertTrue( arg.isArray() );
 		assertFalse( arg.isRequired() );
 	}
+	
+	@Test( expected = ModuleElementException.class )
+	public void testBadBaseType() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "int-bad-base-type.amit" ) );
+		parser.parse();
+	}
+
+	@Test( expected = ModuleElementException.class )
+	public void testCircularBaseType() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "int-circular.amit" ) );
+		parser.parse();
+	}
+	
 	private String path( String name ) throws URISyntaxException {
 		return pathGlobal( "parser/interface/" + name );
 	}	

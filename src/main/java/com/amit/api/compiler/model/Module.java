@@ -89,4 +89,17 @@ public class Module extends ProjectElement {
 		}
 		services.add( service );
 	}
+
+	@Override
+	public void validate( Project project ) throws ModuleElementException {
+		super.validate( project );
+		
+		for( Type type: types ) {
+			type.validate( project );
+		}
+		
+		for( Service service : services ) {
+			service.validate( project );
+		}
+	}
 }

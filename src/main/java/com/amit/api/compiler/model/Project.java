@@ -16,7 +16,9 @@ package com.amit.api.compiler.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Project {
 	private UniqueCollection<Type> types = new UniqueCollection<Type>( "type" );
@@ -31,6 +33,10 @@ public class Project {
 	private Module currentModule;
 	private Module projectModule;
 
+	public Project() {
+		addPrimitiveTypes( PrimitiveTypeNames.ALL );
+	}
+	
 	/**
 	 * returns a type from the project by name
 	 * @param name
@@ -170,6 +176,20 @@ public class Project {
 	}
 	
 	/**
+	 * validates the project
+	 * @throws ModuleElementException
+	 */
+	public void validate() throws ModuleElementException {
+		for( Module module : modules ) {
+			module.validate( this );
+		}
+		
+		validateTypeCircularDependency( compositeTypes );
+		validateTypeCircularDependency( exceptions );
+		validateInterfaceCircularDependency( interfaces );
+	}
+	
+	/**
 	 * returns all services from the project
 	 * @return
 	 */
@@ -220,4 +240,112 @@ public class Project {
 			projectModule = module;
 		}
 	}
+		
+	private void addPrimitiveTypes( String... names ) {
+		for( String name : names ) {
+			types.add( new TypePrimitive( name ) );
+		}
+	}
+	
+	/**
+	 * validates if the typeName has acceptedTypeTypes
+	 * @param where
+	 * @param typeName
+	 * @param acceptedTypeTypes
+	 * @throws ModuleElementException
+	 */
+	protected void validateType( ProjectElement where, String typeName, String... acceptedTypeTypes ) throws ModuleElementException {
+		Type type = getType( typeName );
+		if( type == null ) {
+			throw new ModuleElementException( String.format( "unknown type '%s'", typeName ), where );
+		}
+		
+		for( String typeType: acceptedTypeTypes ) {
+			if( type.getType().equals( typeType ) ) {
+				return;
+			}
+		}
+		
+		throw new ModuleElementException( 
+				String.format( "unsuported type '%s' which is '%s' ", typeName, type.getType() ), where );			
+	}
+	
+	private void validateTypeCircularDependency( List<? extends TypeCommonComposite> elements ) throws ModuleElementException {
+		Set<String> notCircularElements = new HashSet<String>();
+		Set<String> circularElements = new HashSet<String>();
+		
+		int lastSize = -1;
+		
+		while( lastSize != notCircularElements.size() ) {
+			lastSize = notCircularElements.size();
+			
+			for( TypeCommonComposite element : elements ) {
+				if( notCircularElements.contains( element.getName() ) ) {
+					continue;
+				}
+				if( element.getBaseTypeName() == null ) {
+					notCircularElements.add( element.getName() );
+				} else {
+					if( notCircularElements.contains( element.getBaseTypeName() ) ) {
+						notCircularElements.add( element.getName() );
+						circularElements.remove( element.getName() );
+					} else {
+						circularElements.add( element.getName() );
+					}
+				}
+			}
+		}
+		
+		if( circularElements.size() > 0 ) {
+			StringBuffer sb = new StringBuffer();
+			sb.append( "Circular dependencies for types: " );
+			for( String type : circularElements ) {
+				sb.append( type );
+				sb.append( ";" );
+			}
+			
+			throw new ModuleElementException( sb.toString(), null );
+		}
+	}
+
+	private void validateInterfaceCircularDependency( List<Interface> elements ) throws ModuleElementException {
+		Set<String> notCircularElements = new HashSet<String>();
+		Set<String> circularElements = new HashSet<String>();
+		
+		int lastSize = -1;
+		
+		while( lastSize != notCircularElements.size() ) {
+			lastSize = notCircularElements.size();
+			
+			for( Interface element : elements ) {
+				if( notCircularElements.contains( element.getName() ) ) {
+					continue;
+				}
+				
+				if( element.getBaseInterfaceNames().size() <= 0 ) {
+					notCircularElements.add( element.getName() );
+				} else {
+
+					if( notCircularElements.containsAll( element.getBaseInterfaceNames() ) ) {
+						notCircularElements.add( element.getName() );
+						circularElements.remove( element.getName() );
+					} else {
+						circularElements.add( element.getName() );
+					}
+				}
+			}
+		}
+		
+		if( circularElements.size() > 0 ) {
+			StringBuffer sb = new StringBuffer();
+			sb.append( "Circular dependencies for interfaces: " );
+			for( String type : circularElements ) {
+				sb.append( type );
+				sb.append( ";" );
+			}
+			
+			throw new ModuleElementException( sb.toString(), null );
+		}
+	}
+	
 }

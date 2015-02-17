@@ -67,7 +67,7 @@ interface_inh [Interface interf]
 	;
 	
 interface_inh_end [Interface interf]
-	: ( COMMA ID )* { interf.addBaseInterface( $ID.text); }
+	: ( COMMA ID { interf.addBaseInterface( $ID.text); } )*
 	;	
 		
 function [Interface interf]
@@ -138,7 +138,7 @@ type_statment[Project project]
 
 type_end [TypeCommonComposite type]
 	: START ( type_item [type] )* END
-	| COLON ID START ( type_item [type] )* END { type.setBaseType( $ID.text ); }
+	| COLON ID START ( type_item [type] )* END { type.setBaseTypeName( $ID.text ); }
 	;
 	
 type_item [TypeCommonComposite type] 
@@ -173,7 +173,7 @@ enum_value [TypeEnum type_enum]
 @init {
 	AttributeList attrList = new AttributeList();
 }
-	: attributes [attrList] ID	EQUAL number_value { type_enum.createValue( $ID.text, Integer.valueOf( $number_value.text ), new Context( $ID ), attrList  ); }
+	: attributes [attrList] ID	EQUAL number_value { type_enum.createValue( $ID.text, ParseUtils.parseNumber( $number_value.text ), new Context( $ID ), attrList  ); }
 	| attributes [attrList] ID	EQUAL STRING { type_enum.createValue( $ID.text, ParseUtils.parseString( $STRING.text ), new Context( $ID ), attrList  ); }
 	;
 	

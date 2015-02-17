@@ -22,6 +22,7 @@ import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
+import com.amit.api.compiler.model.ModuleElementException;
 import com.amit.api.compiler.model.Project;
 
 /**
@@ -72,15 +73,17 @@ public class AmitParser {
 	 * @return
 	 * @throws RecognitionException 
 	 */
-	public Project parse() throws RecognitionException {
+	public Project parse() throws RecognitionException, ModuleElementException {
 		apiLexer lexer = new apiLexer( stream );
 		CommonTokenStream tokens = new CommonTokenStream( lexer );
 
 		apiParser g = new apiParser( tokens, null );
 		
-		Project module = new Project();
-		g.start( module );
+		Project project = new Project();
+		g.start( project );
 		
-		return module;
+		project.validate();
+		
+		return project;
 	}
 }

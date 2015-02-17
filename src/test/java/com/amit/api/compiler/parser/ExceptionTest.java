@@ -38,7 +38,7 @@ public class ExceptionTest extends TestBase {
 		assertEquals( "InvalidArgException", except.getName() );
 		assertEquals( "exception", except.getType() );
 		assertEquals( 2, except.getMembers().size() );
-		assertNull( except.getBaseType() );
+		assertNull( except.getBaseTypeName() );
 		
 		TypeCompositeMember member = except.getMembers().get( 0 );
 		assertEquals( "argumentName", member.getName() );
@@ -62,12 +62,12 @@ public class ExceptionTest extends TestBase {
 		
 		assertEquals( "BaseException", except.getName() );
 		assertEquals( "exception", except.getType() );
-		assertNull( except.getBaseType() );
+		assertNull( except.getBaseTypeName() );
 
 		except = project.getExceptions().get( 1 );
 		assertEquals( "DerivedException", except.getName() );
 		assertEquals( "exception", except.getType() );
-		assertEquals( "BaseException", except.getBaseType() );
+		assertEquals( "BaseException", except.getBaseTypeName() );
 	}
 	
 	private String path( String name ) throws URISyntaxException {

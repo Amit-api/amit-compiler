@@ -1,0 +1,5 @@
+project test;
+
+type T2 : T1 {
+	int b;
+}

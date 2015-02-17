@@ -25,6 +25,7 @@ public class Type extends ProjectElement {
 	protected final static String COMPOSITE = "type";
 	protected final static String EXCEPTION = "exception";
 	protected final static String INTERFACE = "interface";
+	protected final static String PRIMITIVE = "primitive";
 	
 	private String type;
 	

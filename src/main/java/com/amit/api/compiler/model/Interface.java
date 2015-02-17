@@ -76,4 +76,17 @@ public class Interface extends Type {
 	public List<String> getBaseInterfaceNames() {
 		return Collections.unmodifiableList( baseInterfacesList );
 	}
+	
+	@Override
+	public void validate( Project project ) throws ModuleElementException {
+		super.validate( project );
+		
+		for( Function fun : functions ) {
+			fun.validate( project );
+		}
+		
+		for( String interfName : baseInterfacesList ) {
+			project.validateType( this, interfName, Type.INTERFACE );
+		}
+	}	
 }

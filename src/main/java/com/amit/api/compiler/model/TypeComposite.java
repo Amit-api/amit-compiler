@@ -17,5 +17,14 @@ package com.amit.api.compiler.model;
 public class TypeComposite extends TypeCommonComposite {
 	public TypeComposite( String name, Context context ) {
 		super( COMPOSITE, name, context);
-	}	
+	}
+	
+	@Override
+	public void validate( Project project ) throws ModuleElementException {
+		super.validate( project );
+		
+		if( getBaseTypeName() != null ) {
+			project.validateType( this, getBaseTypeName(), Type.COMPOSITE );
+		}
+	}
 }

@@ -27,4 +27,25 @@ public class ModuleElementException extends IllegalArgumentException {
 	public ProjectElement getModuleElement() {
 		return element;
 	}
+	
+	@Override
+	public String getMessage() {
+		StringBuffer sb = new StringBuffer();
+		if( element != null ) {
+			if( element.getContext() != null ) {
+				sb.append( "line(" );
+				sb.append( element.getContext().getLineNumber() );
+				sb.append( ":" );
+				sb.append(  element.getContext().getPositionInLine() );
+				sb.append( ") " );
+			}
+			sb.append( "at element <");
+			sb.append( element.getName() );
+			sb.append( "> " );
+		}
+		sb.append( "error: " );
+		sb.append( super.getMessage() );
+		
+		return sb.toString();
+	}
 }

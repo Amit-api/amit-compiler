@@ -1,0 +1,9 @@
+project test;
+
+interface I1 {
+
+}
+
+type T1 {
+	I1 a;
+}

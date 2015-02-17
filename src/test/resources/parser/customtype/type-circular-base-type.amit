@@ -1,0 +1,19 @@
+project test;
+
+type T1 : T3 {
+}
+
+type T2 : T1 {
+	
+}
+
+type T3 : T2 {
+
+}
+
+type T0 {
+}
+
+type T4 : T0 {
+
+}

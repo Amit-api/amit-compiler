@@ -1,0 +1,14 @@
+project test;
+
+interface I1 : I4 {
+}
+
+interface I2 : I3 {
+	
+}
+
+interface I3 {
+}
+
+interface I4 : I2, I1 {
+}

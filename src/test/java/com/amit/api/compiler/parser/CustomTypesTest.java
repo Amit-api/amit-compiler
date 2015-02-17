@@ -17,8 +17,10 @@ package com.amit.api.compiler.parser;
 import static org.junit.Assert.*;
 
 import java.net.URISyntaxException;
+
 import org.junit.Test;
 
+import com.amit.api.compiler.model.ModuleElementException;
 import com.amit.api.compiler.model.TypeComposite;
 import com.amit.api.compiler.model.TypeCompositeMember;
 import com.amit.api.compiler.model.Project;
@@ -34,7 +36,7 @@ public class CustomTypesTest extends TestBase {
 		TypeComposite type = project.getCompositeTypes().get( 0 );
 		
 		assertEquals( "Point", type.getName() );
-		assertNull( type.getBaseType() );
+		assertNull( type.getBaseTypeName() );
 		
 		assertEquals( 2, type.getMembers().size() );
 		
@@ -56,12 +58,12 @@ public class CustomTypesTest extends TestBase {
 		TypeComposite type = project.getCompositeTypes().get( 0 );
 		
 		assertEquals( "T1", type.getName() );
-		assertNull( type.getBaseType() );
+		assertNull( type.getBaseTypeName() );
 
 		type = project.getCompositeTypes().get( 1 );
 		
 		assertEquals( "T2", type.getName() );
-		assertEquals( "T1",type.getBaseType() );		
+		assertEquals( "T1",type.getBaseTypeName() );		
 	}
 
 	@Test
@@ -73,7 +75,7 @@ public class CustomTypesTest extends TestBase {
 		TypeComposite type = project.getCompositeTypes().get( 0 );
 		
 		assertEquals( "Modfiers", type.getName() );
-		assertNull( type.getBaseType() );
+		assertNull( type.getBaseTypeName() );
 
 		assertEquals( 3, type.getMembers().size() );
 		
@@ -94,6 +96,30 @@ public class CustomTypesTest extends TestBase {
 		assertEquals( "string", member.getTypeName() );
 		assertTrue( member.isArray() );
 		assertFalse( member.isRequired() );
+	}
+
+	@Test( expected = ModuleElementException.class )
+	public void testUnknownType() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "type-unknown-type.amit" ) );
+		parser.parse();
+	}
+
+	@Test( expected = ModuleElementException.class )
+	public void testUnsuportedType() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "type-unsupported-type.amit" ) );
+		parser.parse();
+	}
+
+	@Test( expected = ModuleElementException.class )
+	public void testUnknownBaseType() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "type-unknow-base-type.amit" ) );
+		parser.parse();
+	}
+
+	@Test( expected = ModuleElementException.class )
+	public void testCircularBaseType() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "type-circular-base-type.amit" ) );
+		parser.parse();
 	}
 	
 	private String path( String name ) throws URISyntaxException {

@@ -1,0 +1,9 @@
+
+project test;
+
+interface B {
+}
+
+interface A : B, int {
+
+}

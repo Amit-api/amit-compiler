@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TypeCommonComposite extends Type {
 	private UniqueCollection<TypeCompositeMember> members = new UniqueCollection<TypeCompositeMember>( "type member" );
-	private String baseType;
+	private String baseTypeName;
 	
 	public TypeCommonComposite( String type, String name, Context context ) {
 		super( type, name, context);
@@ -48,17 +48,28 @@ public class TypeCommonComposite extends Type {
 	
 	/**
 	 * set base type
-	 * @param baseType
+	 * @param baseTypeName
 	 */
-	public void setBaseType( String baseType ) {
-		this.baseType = baseType;
+	public void setBaseTypeName( String baseTypeName ) {
+		this.baseTypeName = baseTypeName;
 	}
 	
 	/**
 	 * return base type
 	 * @return
 	 */
-	public String getBaseType() {
-		return baseType;
+	public String getBaseTypeName() {
+		return baseTypeName;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void validate( Project project ) throws ModuleElementException {
+		super.validate( project );
+		
+		for( TypeCompositeMember member : members ) {
+			member.validate( project );
+		}		
 	}
 }
