@@ -85,7 +85,8 @@ public class Function extends ProjectElement {
 		}
 		
 		if( throwsExceptions.contains( exceptionName ) ) {
-			throw new ModuleElementException( String.format( "duplicate throws exception for name '%s'", exceptionName ), this );
+			throw new ModuleElementException(
+					String.format( "duplicate throws exception for name '%s'", exceptionName ), this );
 		}
 		
 		throwsExceptions.add( exceptionName );
@@ -106,11 +107,20 @@ public class Function extends ProjectElement {
 	@Override
 	public void validate( Project project ) throws ModuleElementException {
 		super.validate( project );
-		
+		validateArgs( project );
+		validateExceptions( project );
+	}
+	
+	private void validateArgs( Project project ) throws ModuleElementException {
 		returnType.validate( project );
-		
 		for( FunctionArgument arg : arguments ) {
 			arg.validate( project );
-		}
-	}	
+		}		
+	}
+	
+	private void validateExceptions( Project project ) throws ModuleElementException {
+		for( String exception : throwsExceptionsList ) {
+			project.validateType( this, exception, Type.EXCEPTION );
+		}		
+	}
 }

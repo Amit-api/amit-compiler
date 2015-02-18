@@ -177,6 +177,18 @@ public class InterfaceTest extends TestBase {
 		parser.parse();
 	}
 	
+	@Test( expected = ModuleElementException.class )
+	public void testBadException() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "int-bad-exception.amit" ) );
+		parser.parse();
+	}
+	
+	@Test( expected = ModuleElementException.class )
+	public void testUnknowException() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "int-unknown-exception.amit" ) );
+		parser.parse();
+	}
+	
 	private String path( String name ) throws URISyntaxException {
 		return pathGlobal( "parser/interface/" + name );
 	}	

@@ -1,0 +1,5 @@
+project test;
+
+interface My {
+	void doSomething() throws int;
+}

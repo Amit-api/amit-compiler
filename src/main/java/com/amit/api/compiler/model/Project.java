@@ -347,5 +347,4 @@ public class Project {
 			throw new ModuleElementException( sb.toString(), null );
 		}
 	}
-	
 }

@@ -1,0 +1,5 @@
+project test;
+
+interface I1 {
+	void doSomething() throws blabla;
+}
