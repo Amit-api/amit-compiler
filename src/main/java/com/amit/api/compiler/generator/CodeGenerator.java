@@ -1,17 +1,34 @@
+/******************************************************************************
+ * Copyright 20014-2015 Alexandru Motriuc                                     *
+ *                                                                            *
+ ******************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");            *
+ * you may not use this file except in compliance with the License.           *
+ * You may obtain a copy of the License at                                    *
+ * http://www.apache.org/licenses/LICENSE-2.0                                 *
+ * Unless required by applicable law or agreed to in writing, software        *
+ * distributed under the License is distributed on an "AS IS" BASIS,          *
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   *
+ * See the License for the specific language governing permissions and        *
+ * limitations under the License.                                             *
+ ******************************************************************************/
 package com.amit.api.compiler.generator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.amit.api.compiler.model.TypeComposite;
 import com.amit.api.compiler.model.Project;
+import com.amit.api.compiler.model.ProjectElement;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -38,41 +55,80 @@ public class CodeGenerator {
 	public void generate(  ) throws IOException, TemplateException {
 		process( null, "start.ftl", "start.out" );
 	}
-
-	public class Runtime {
-		public List<String> processTemplate( String entity, String templateName, String outFile ) throws IOException, TemplateException {
-			List<String> ret = new ArrayList<String>();
-			if( entity.equals( "types") ) {
-				processTypes( ret, templateName, outFile );
-			}
-			return ret;
-		}
-		
-		private void processTypes( List<String> ret, String templateName, String outFile ) throws IOException, TemplateException {
-			for( TypeComposite type : project.getCompositeTypes() ) {
-				String fileName = String.format( outFile, type.getName() );
-				process( type, templateName, fileName );
-				ret.add( String.format( "type: %s, file: %s", type.getName(), fileName ) );
-			}
-		}
-	}
 	
 	public void process( Object obj, String templateFileName, String outFileName ) throws IOException, TemplateException {
 		Template template = cfg.getTemplate( templateFileName );
 
-		Map<String, Object> root = new HashMap<String, Object>();		
-		root.put( "project", project );
-		root.put( "runtime", new Runtime() );
-		root.put( "object", obj );
+		Map<String, Object> root = createObjects( obj );	
 		
 		Writer out = null;
 		try {
-			out = new PrintWriter( Paths.get( outputPath , outFileName ).toString(), "UTF-8" );
+			out = createWrite( outFileName );
 			template.process( root, out );
 			out.flush();
 		} finally {
 			if( out != null ) {
 				out.close();
+			}
+		}
+	}
+	
+	private Writer createWrite( String outFileName ) throws FileNotFoundException, UnsupportedEncodingException {
+		Path filePath = Paths.get( outputPath , outFileName );
+		filePath.toFile().getParentFile().mkdirs();
+		return new PrintWriter( filePath.toString(), "UTF-8" );
+	}
+	
+	private Map<String, Object> createObjects( Object obj ) {
+		Map<String, Object> root = new HashMap<String, Object>();		
+		root.put( "project", project );
+		root.put( "amit", new Runtime() );
+		root.put( "object", obj );
+		
+		return root;
+	}
+	
+	/**
+	 * generator runtime
+	 */
+	public class Runtime {		
+		public List<String> generate( String entity, String templateName, String outFile ) throws IOException, TemplateException {
+			List<String> ret = new ArrayList<String>();
+			
+			if( entity.equals( "type" ) ) {
+				generate( project.getCompositeTypes(), templateName, outFile, ret );
+			} else if( entity.equals( "interface" ) ) {
+				generate( project.getInterfaces(), templateName, outFile, ret );				
+			} else if( entity.equals( "enum" ) ) {
+				generate( project.getEnums(), templateName, outFile, ret );								
+			} else if( entity.equals( "service" ) ) {
+				generate( project.getServices(), templateName, outFile, ret );												
+			} else if( entity.equals( "exeption" ) ) {
+				generate( project.getExceptions(), templateName, outFile, ret );																
+			} else {
+				throw new IllegalArgumentException( String.format( "unknown %s entity", entity ) ); 
+			}
+			return ret;
+		}
+		
+		public String toPath( String value, String separator ) {
+			String values[] = value.split( separator );
+			return Paths.get( "", values ).toString();
+		}
+		
+		public String AUpper( String value ) {
+			if( value != null && value.length() > 0 ) {
+				return value.substring( 0, 1 ).toUpperCase() + value.substring( 1 );
+			}
+			return value;
+		}
+			
+		private void generate( List<? extends ProjectElement> elements, String templateName, 
+				String outFile, List<String> ret ) throws IOException, TemplateException {
+			for( ProjectElement element : elements ) {
+				String fileName = String.format( outFile, element.getName() );
+				process( element, templateName, fileName );
+				ret.add( String.format( "generated: %s, file: %s", element.getName(), fileName ) );				
 			}
 		}
 	}
