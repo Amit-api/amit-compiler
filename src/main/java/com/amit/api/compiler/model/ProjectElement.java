@@ -89,4 +89,21 @@ public class ProjectElement {
 	 */
 	public void validate( Project project ) throws ModuleElementException {
 	}
+	
+	/**
+	 * return true if the element depends on type
+	 * @param typeName
+	 * @return
+	 */	
+	public boolean dependsOnType( String typeName ) {
+		return false;
+	}
+	
+	/**
+	 * return true if the element depends on array
+	 * @return
+	 */
+	public boolean dependsOnTypeArray() {
+		return false;
+	}
 }

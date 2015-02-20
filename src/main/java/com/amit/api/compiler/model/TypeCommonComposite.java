@@ -63,6 +63,48 @@ public class TypeCommonComposite extends Type {
 	}
 	
 	/**
+	 * return true if the composite type uses  typeName
+	 * @param typeName
+	 * @return
+	 */
+	@Override
+	public boolean dependsOnType( String typeName ) {
+		if( super.dependsOnType( typeName ) ) {
+			return true;
+		}
+		
+		if( typeName.equals( baseTypeName ) ) {
+			return true;
+		}
+		
+		for( TypeCompositeMember member : members ) {
+			if( member.getTypeName().equals( typeName ) ) {
+				return true;
+			}
+		}
+		
+		return false;
+ 	}
+	
+	/**
+	 * returns true if Array is used by the composite type
+	 * @return
+	 */
+	@Override
+	public boolean dependsOnTypeArray() {
+		if( super.dependsOnTypeArray() ) {
+			return true;
+		}
+		
+		for( TypeCompositeMember member : members ) {
+			if( member.isArray() ) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public void validate( Project project ) throws ModuleElementException {
