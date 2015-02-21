@@ -67,6 +67,21 @@ public class Project {
 	}
 	
 	/**
+	 * returns true if the type is enum
+	 * @param name
+	 * @return
+	 */
+	public boolean isEnumType( String name ) {
+		Type type = getType( name );
+		
+		if( type == null ) {
+			return false;
+		}
+		
+		return type.getType().equals( Type.ENUM );
+	}
+	
+	/**
 	 * creates an enum
 	 * @param name
 	 * @param context

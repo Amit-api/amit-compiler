@@ -103,7 +103,7 @@ public class CodeGenerator {
 				generate( project.getEnums(), templateName, outFile, ret );								
 			} else if( entity.equals( "service" ) ) {
 				generate( project.getServices(), templateName, outFile, ret );												
-			} else if( entity.equals( "exeption" ) ) {
+			} else if( entity.equals( "exception" ) ) {
 				generate( project.getExceptions(), templateName, outFile, ret );																
 			} else {
 				throw new IllegalArgumentException( String.format( "unknown %s entity", entity ) ); 
