@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import com.amit.api.compiler.model.tools.ChildrenFinder;
 
 public class Project {
 	private UniqueCollection<Type> types = new UniqueCollection<Type>( "type" );
@@ -32,6 +35,8 @@ public class Project {
 	
 	private Module currentModule;
 	private Module projectModule;
+	
+	private Map<String,Set<String>> compositeTypesChildren;
 
 	public Project() {
 		addPrimitiveTypes( PrimitiveTypeNames.ALL );
@@ -44,6 +49,21 @@ public class Project {
 	 */
 	public Type getType( String name ) {
 		return types.get( name );
+	}
+	
+	/**
+	 * returns true if the type is primitive 
+	 * @param name
+	 * @return
+	 */
+	public boolean isPrimitiveType( String name ) {
+		Type type = getType( name );
+		
+		if( type == null ) {
+			return false;
+		}
+		
+		return type.getType().equals( Type.PRIMITIVE );
 	}
 	
 	/**
@@ -111,6 +131,16 @@ public class Project {
 	 */
 	public List<TypeComposite> getCompositeTypes() {
 		return Collections.unmodifiableList( compositeTypes );
+	}
+	
+	/**
+	 * returns all types inherited from name
+	 * @param name
+	 * @return
+	 */
+	public Set<String> getCompositeTypeChildren( String name ) {
+		Set<String> result = compositeTypesChildren.get( name );
+		return result == null ? new HashSet<String>() : result;
 	}
 	
 	/**
@@ -187,6 +217,8 @@ public class Project {
 		validateTypeCircularDependency( compositeTypes );
 		validateTypeCircularDependency( exceptions );
 		validateInterfaceCircularDependency( interfaces );
+		
+		findCompositeTypesChildren();
 	}
 	
 	/**
@@ -346,5 +378,10 @@ public class Project {
 			
 			throw new ModuleElementException( sb.toString(), null );
 		}
+	}
+	
+	private void findCompositeTypesChildren() {
+		ChildrenFinder finder = new ChildrenFinder( compositeTypes );
+		compositeTypesChildren = finder.getAllChildren();
 	}
 }
