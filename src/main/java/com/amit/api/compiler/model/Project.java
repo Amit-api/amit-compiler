@@ -31,12 +31,13 @@ public class Project {
 	private List<Interface> interfaces = new ArrayList<Interface>();
 	private List<TypeEnum> enums = new ArrayList<TypeEnum>();
 	private List<TypeComposite> compositeTypes = new ArrayList<TypeComposite>();
-	private List<TypeException> exceptions = new ArrayList<TypeException>();
+	private List<TypeException> exceptionTypes = new ArrayList<TypeException>();
 	
 	private Module currentModule;
 	private Module projectModule;
 	
 	private Map<String,Set<String>> compositeTypesChildren;
+	private Map<String,Set<String>> exceptionTypesChildren;
 
 	public Project() {
 		addPrimitiveTypes( PrimitiveTypeNames.ALL );
@@ -201,7 +202,17 @@ public class Project {
 	 * @return
 	 */
 	public List<TypeException> getExceptions() {
-		return Collections.unmodifiableList( exceptions );
+		return Collections.unmodifiableList( exceptionTypes );
+	}
+
+	/**
+	 * returns all exception inherited from name
+	 * @param name
+	 * @return
+	 */
+	public Set<String> getExceptionTypeChildren( String name ) {
+		Set<String> result = exceptionTypesChildren.get( name );
+		return result == null ? new HashSet<String>() : result;
 	}
 	
 	/**
@@ -230,10 +241,11 @@ public class Project {
 		}
 		
 		validateTypeCircularDependency( compositeTypes );
-		validateTypeCircularDependency( exceptions );
+		validateTypeCircularDependency( exceptionTypes );
 		validateInterfaceCircularDependency( interfaces );
 		
 		findCompositeTypesChildren();
+		findExceptionTypesChildren();
 	}
 	
 	/**
@@ -251,7 +263,7 @@ public class Project {
 	
 	private void addException( TypeException exception ) {
 		addType( exception );
-		exceptions.add( exception );
+		exceptionTypes.add( exception );
 	}
 	
 	private void addEnum( TypeEnum type ) {
@@ -398,5 +410,10 @@ public class Project {
 	private void findCompositeTypesChildren() {
 		ChildrenFinder finder = new ChildrenFinder( compositeTypes );
 		compositeTypesChildren = finder.getAllChildren();
+	}
+
+	private void findExceptionTypesChildren() {
+		ChildrenFinder finder = new ChildrenFinder( exceptionTypes );
+		exceptionTypesChildren = finder.getAllChildren();
 	}
 }
