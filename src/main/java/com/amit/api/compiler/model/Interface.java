@@ -88,5 +88,41 @@ public class Interface extends Type {
 		for( String interfName : baseInterfacesList ) {
 			project.validateType( this, interfName, Type.INTERFACE );
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean dependsOnType( String typeName ) {
+		if( super.dependsOnType( typeName ) ) {
+			return true;
+		}
+		
+		for( Function fun : functions ) {
+			if( fun.dependsOnType( typeName ) ) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean dependsOnTypeArray() {
+		if( super.dependsOnTypeArray() ) {
+			return true;
+		}
+		
+		for( Function fun : functions ) {
+			if( fun.dependsOnTypeArray() ) {
+				return true;
+			}
+		}
+		
+		return false;
 	}	
 }

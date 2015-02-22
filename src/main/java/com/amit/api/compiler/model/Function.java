@@ -105,6 +105,49 @@ public class Function extends ProjectElement {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public boolean dependsOnType( String typeName ) {
+		if( super.dependsOnType( typeName ) ) {
+			return true;
+		}
+		
+		if( typeName.equals( returnType.getTypeName() ) ) {
+			return true;
+		}
+		
+		for( FunctionArgument arg : arguments ) {
+			if( arg.getTypeName().equals( typeName ) ) {
+				return true;
+			}
+		}
+		
+		return false;
+ 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean dependsOnTypeArray() {
+		if( super.dependsOnTypeArray() ) {
+			return true;
+		}
+		
+		if( returnType.isArray() ) {
+			return true;
+		}
+		
+		for( FunctionArgument arg : arguments ) {
+			if( arg.isArray() ) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void validate( Project project ) throws ModuleElementException {
 		super.validate( project );
 		validateArgs( project );
