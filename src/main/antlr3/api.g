@@ -87,12 +87,12 @@ function_end [Function fun]
 
 function_throws [Function fun]
 	:
-	| THROWS ID { fun.addThrowsExcepton( $ID.text ); }
+	| THROWS ID { fun.addThrowsException( $ID.text ); }
 	  ( function_throws_more [fun] )*
 	;
 
 function_throws_more [Function fun]
-	: COMMA ID { fun.addThrowsExcepton( $ID.text ); }
+	: COMMA ID { fun.addThrowsException( $ID.text ); }
 	;	
 	
 

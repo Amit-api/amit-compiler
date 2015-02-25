@@ -216,6 +216,20 @@ public class Project {
 	}
 	
 	/**
+	 * returns all exception inherited from list name including name original list
+	 * @param names
+	 * @return
+	 */
+	public Set<String> getExceptionTypeChildren( List<String> names ) {
+		Set<String> result = new HashSet<String>();
+		for( String name : names ) {
+			result.add( name );
+			result.addAll( getExceptionTypeChildren( name ) );
+		}
+		return result;
+	}
+	
+	/**
 	 * creates an service
 	 * @param name
 	 * @param attr

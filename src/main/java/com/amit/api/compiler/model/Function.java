@@ -79,7 +79,7 @@ public class Function extends ProjectElement {
 	 * adds throws exception
 	 * @param exceptionName
 	 */
-	public void addThrowsExcepton( String exceptionName ) {
+	public void addThrowsException( String exceptionName ) {
 		if( exceptionName == null || exceptionName.isEmpty() ) {
 			throw new IllegalArgumentException( "exceptionName must be not null or empty" );
 		}
