@@ -39,14 +39,22 @@ public class CodeGenerator {
 	private String outputPath;
 	private Project project;
 	private Configuration cfg;
+	public CodeGenerator( Project project, String templatePath, String outputPath ) throws Exception {
+		this( project, null, templatePath, outputPath );
+	}
 	
-	public CodeGenerator( Project project, String templatePath, String outputPath ) throws IOException {
+	public CodeGenerator( Project project, String jarClass, String templatePath, String outputPath ) throws Exception {
 		this.outputPath = outputPath;
 		this.project = project;
 
 		cfg = new Configuration( Configuration.VERSION_2_3_21 );
 
-		cfg.setDirectoryForTemplateLoading( new File( templatePath ) );
+		if( jarClass != null ) {
+			cfg.setTemplateLoader( new JarTemplateLoader( jarClass, templatePath ) );
+		} else {
+			cfg.setDirectoryForTemplateLoading( new File( templatePath ) );			
+		}
+		
 		cfg.setDefaultEncoding("UTF-8");
 
 		cfg.setTemplateExceptionHandler( TemplateExceptionHandler.RETHROW_HANDLER );		

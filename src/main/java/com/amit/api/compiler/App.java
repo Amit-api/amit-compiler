@@ -14,9 +14,6 @@
  ******************************************************************************/
 package com.amit.api.compiler;
 
-import java.io.IOException;
-
-import org.antlr.runtime.RecognitionException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -28,8 +25,6 @@ import org.apache.commons.cli.ParseException;
 import com.amit.api.compiler.generator.CodeGenerator;
 import com.amit.api.compiler.model.Project;
 import com.amit.api.compiler.parser.AmitParser;
-
-import freemarker.template.TemplateException;
 
 public class App {
 	public static void main( String[] args ) {
@@ -50,7 +45,7 @@ public class App {
 	}
 	
 	private static void execute( CommandLine cmd ) 
-			throws IllegalArgumentException, IOException, RecognitionException, TemplateException {
+			throws Exception {
 		AmitParser parser = AmitParser.fromFile( cmd.getOptionValue( "project" ) );
 		Project project = parser.parse();
 		
