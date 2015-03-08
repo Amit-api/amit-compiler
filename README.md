@@ -11,4 +11,14 @@ type Person {
   string name;
 }
 
+exception InvalidPersonIdException {
+}
+
+interface PersonStorage {
+  Person getPerson( int id ) throws InvalidPersonIdException;
+  void updatePerson( Person person ) throws InvalidPersonIdException;
+}
+
+service PersonStorageService : PersonStorage;
+
 ```
