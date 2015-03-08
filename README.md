@@ -30,3 +30,34 @@ interface PersonStorage {
 service PersonStorageService : PersonStorage;
 
 ```
+
+A sample template to generate interfaces from API defintion language
+
+* interface.ftl - file
+```
+<#import "macros.ftl" as my>
+<#assign javaPackage = my.getJavaPackage() >
+<#assign objectName = object.getName() >
+package ${javaPackage};
+
+/**
+ * interface ${objectName}
+ */
+public interface ${objectName} <@my.extendsInterfaces items=object.getBaseInterfaceNames() />{
+<#list object.getFunctions() as function >
+	<#assign fname = function.getName() >
+	<#assign rtype = my.javaType( function.getReturn() ) >
+	
+	/**
+	 * function ${fname}
+	 */
+	${rtype} ${fname}(
+	<#list function.getArguments() as arg >
+		<#assign aname = arg.getName() >
+		<#assign atype = my.javaType( arg ) >
+		${atype} ${aname}<#if arg_has_next>,</#if>
+	</#list>
+	) <@my.throwsExceptions items=function.getThrowsExceptionNames() />
+</#list>
+}
+```
