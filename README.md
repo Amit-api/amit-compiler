@@ -1,6 +1,15 @@
 # amit-compiler
 
+The purpose of the Amit compiler is to create a generic API definition and code generator tool. 
+The goal is to have:
+1. Simple and readable API defintion langiage.
+2. The code generator templates not to belong to the compiler and any kind generators can be crecated from as templates from outside.
+3. Code generator templates eazy to write.
+
 The amit compiler is used to define API using amit API definition language and it uses FreeMaker http://freemarker.org/ to generate code from the definition.
+
+It can be used in commad line or in a maven project by using amit-maven-plugin.
+predefined Amit templates can be found in https://github.com/Amit-api/amit-templates.
 
 Simple API definition sample:
 ```
