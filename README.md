@@ -31,7 +31,7 @@ service PersonStorageService : PersonStorage;
 
 ```
 
-A sample template to generate interfaces from API defintion language
+A sample template to generate java interfaces from API defintion language
 
 * interface.ftl - file
 ```
