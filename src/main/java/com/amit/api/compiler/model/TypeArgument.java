@@ -22,6 +22,30 @@ public class TypeArgument extends ProjectElement {
 	private boolean isArray = false;
 	private boolean isRequired = false;
 	private boolean canBeVoid = false;
+	
+	/**
+	 * returns the item type
+	 * @return item type name
+	 */
+	public String getTypeName() {
+		return typeName;
+	}	
+	
+	/**
+	 * returns true if composite member is an array
+	 * @return true or false
+	 */
+	public boolean isArray() {
+		return isArray;
+	}
+	
+	/**
+	 * return true if member is required
+	 * @return true or false
+	 */
+	public boolean isRequired() {
+		return isRequired;
+	}
 
 	protected TypeArgument( String type, String name, Context context, Project project ) {
 		this( type, name, context, false, project );
@@ -40,7 +64,7 @@ public class TypeArgument extends ProjectElement {
 
 	/**
 	 * sets the isRequired flag
-	 * @param isRequired
+	 * @param isRequired required flag
 	 */
 	public void setIsRequired( boolean isRequired ) {
 		this.isRequired = isRequired;
@@ -48,34 +72,10 @@ public class TypeArgument extends ProjectElement {
 	
 	/**
 	 * sets is array flag
-	 * @param isArray
+	 * @param isArray is array flag
 	 */
 	public void setIsArray( boolean isArray ) {
 		this.isArray = isArray;
-	}
-	
-	/**
-	 * returns the item type
-	 * @return
-	 */
-	public String getTypeName() {
-		return typeName;
-	}	
-	
-	/**
-	 * returns true if composite member is an array
-	 * @return
-	 */
-	public boolean isArray() {
-		return isArray;
-	}
-	
-	/**
-	 * return true if member is required
-	 * @return
-	 */
-	public boolean isRequired() {
-		return isRequired;
 	}
 	
 	/***

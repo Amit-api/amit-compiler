@@ -24,13 +24,13 @@ import java.util.Map.Entry;
 /**
  * finds all children in a directional graph
  * Ex:
- * a -> b, c
- * b -> c, f
- * c -> g
+ * a - b, c
+ * b - c, f
+ * c - g
  * will result:
- * a -> b, c, g, f
- * b -> c, f, g
- * c -> g 
+ * a - b, c, g, f
+ * b - c, f, g
+ * c - g 
  */
 public abstract class ChildrenFinder {
 	private Map<String,Set<String>> childrenMap = new HashMap<String,Set<String>>();

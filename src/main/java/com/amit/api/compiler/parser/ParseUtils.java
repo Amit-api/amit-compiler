@@ -18,8 +18,8 @@ public final class ParseUtils {
 
 	/**
 	 * parses string from parser format to string format
-	 * @param str
-	 * @return
+	 * @param str string
+	 * @return string
 	 */
 	public static String parseString( String str ) {
 		return str.substring( 1, str.length() - 1 ).replace("\\\"", "\"").replace("\\\\", "\\" );
@@ -27,8 +27,8 @@ public final class ParseUtils {
 	
 	/**
 	 * parses int number to a string
-	 * @param str
-	 * @return
+	 * @param str string
+	 * @return integer
 	 */
 	public static Integer parseNumber( String str ) {
 		if( str.startsWith( "0x" ) ) {

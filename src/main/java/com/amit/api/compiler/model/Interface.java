@@ -32,10 +32,34 @@ public class Interface extends Type {
 	private List<String> baseInterfacesList = new ArrayList<String>();
 	
 	/**
+	 * returns interface functions
+	 * @return function list
+	 */
+	public List<Function> getFunctions() {
+		return functions.readonlyList();
+	}
+	
+	/**
+	 * returns the list of base interface names 
+	 * @return interface name list
+	 */
+	public List<String> getBaseInterfaceNames() {
+		return Collections.unmodifiableList( baseInterfacesList );
+	}
+	
+	/**
+	 * return all base interface names full depth
+	 * @return interface name set
+	 */
+	public Set<String> getAllBaseInterfaceNames() {
+		return getProject().getInterfaceBaseInterfaces( getName() );
+	}
+	
+	/**
 	 * creates an interface
-	 * @param name
-	 * @param context
-	 * @param project
+	 * @param name interface name
+	 * @param context context
+	 * @param project project
 	 */
 	protected Interface( String name, Context context, Project project ) {
 		super( INTERFACE, name, context, project );
@@ -43,10 +67,11 @@ public class Interface extends Type {
 	
 	/**
 	 * creates a function in the interface
-	 * @param name - function name
-	 * @param attr -  function attributes
-	 * @param context
-	 * @return
+	 * @param name function name
+	 * @param functionReturn function return
+	 * @param attr function attributes
+	 * @param context context
+	 * @return function
 	 */
 	public Function createFunction( String name, FunctionReturn functionReturn, AttributeList attr, Context context ) {
 		Function fun = new Function( name, context, getProject() );
@@ -55,18 +80,10 @@ public class Interface extends Type {
 		functions.add( fun );
 		return fun;
 	}
-	
-	/**
-	 * returns interface functions
-	 * @return
-	 */
-	public List<Function> getFunctions() {
-		return functions.readonlyList();
-	}
-	
+		
 	/**
 	 * adds a base interfaces
-	 * @param interfaceName
+	 * @param interfaceName interface name
 	 */
 	public void addBaseInterface( String interfaceName ) {
 		if( interfaceName == null || interfaceName.isEmpty() ) {
@@ -80,29 +97,13 @@ public class Interface extends Type {
 		baseInterfaces.add( interfaceName );
 		baseInterfacesList.add( interfaceName );
 	}
-	
-	/**
-	 * returns the list of base interface names 
-	 * @return
-	 */
-	public List<String> getBaseInterfaceNames() {
-		return Collections.unmodifiableList( baseInterfacesList );
-	}
-	
-	/**
-	 * return all base interface names full depth
-	 * @return
-	 */
-	public Set<String> getAllBaseInterfaceNames() {
-		return getProject().getInterfaceBaseInterfaces( getName() );
-	}
-	
+		
 	/**
 	 * creates the function return which can be assigned to interface function value
-	 * @param type - return type
-	 * @param isArray - true if it i array
-	 * @param context
-	 * @return
+	 * @param type return type
+	 * @param isArray true if it i array
+	 * @param context context
+	 * @return function return type
 	 */
 	public FunctionReturn createFunctionReturn( String type, boolean isArray, Context context ) {
 		return getProject().createFunctionReturn(type, isArray, context);

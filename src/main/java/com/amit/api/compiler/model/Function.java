@@ -34,13 +34,38 @@ public class Function extends ProjectElement {
 	}
 	
 	/**
+	 * returns function arguments
+	 * @return argument list
+	 */
+	public List<FunctionArgument> getArguments() {
+		return arguments.readonlyList();
+	}
+	
+	/**
+	 * get function return type
+	 * @return return type
+	 */
+	public FunctionReturn getReturn() {
+		return returnType;
+	}
+	
+	/**
+	 * returns throws exception name list
+	 * @return exception name list
+	 */
+	public List<String> getThrowsExceptionNames() {
+		return Collections.unmodifiableList( throwsExceptionsList );
+	}
+
+	/**
 	 * creates a function argument
-	 * @param type
-	 * @param name
-	 * @param isArray
-	 * @param attr
-	 * @param context
-	 * @return
+	 * @param type argument type
+	 * @param name argument name
+	 * @param isArray is array or not
+	 * @param isRequired is required or not
+	 * @param attr attribute list
+	 * @param context context
+	 * @return function argument
 	 */
 	public FunctionArgument createArgument( String type, String name, boolean isArray,
 			boolean isRequired, AttributeList attr, Context context ) {
@@ -55,16 +80,8 @@ public class Function extends ProjectElement {
 	}
 	
 	/**
-	 * returns function arguments
-	 * @return
-	 */
-	public List<FunctionArgument> getArguments() {
-		return arguments.readonlyList();
-	}
-	
-	/**
 	 * set function return type
-	 * @param returnType
+	 * @param returnType return type
 	 */
 	public void setReturn( FunctionReturn returnType ) {
 		if( returnType.getProject() != this.getProject() ) {
@@ -75,16 +92,8 @@ public class Function extends ProjectElement {
 	}
 	
 	/**
-	 * get function return type
-	 * @return
-	 */
-	public FunctionReturn getReturn() {
-		return returnType;
-	}
-	
-	/**
 	 * adds throws exception
-	 * @param exceptionName
+	 * @param exceptionName exception name
 	 */
 	public void addThrowsException( String exceptionName ) {
 		if( exceptionName == null || exceptionName.isEmpty() ) {
@@ -98,16 +107,7 @@ public class Function extends ProjectElement {
 		
 		throwsExceptions.add( exceptionName );
 		throwsExceptionsList.add( exceptionName );		
-	}
-	
-	/**
-	 * returns throws exception name list
-	 * @return
-	 */
-	public List<String> getThrowsExceptionNames() {
-		return Collections.unmodifiableList( throwsExceptionsList );
-	}
-	
+	}	
 	
 	/**
 	 * {@inheritDoc}

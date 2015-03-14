@@ -32,15 +32,15 @@ public class Context {
 	
 	/**
 	 * returns line number in the file
-	 * @return
+	 * @return line number
 	 */
 	public int getLineNumber() {
 		return lineNumber;
 	}
 	
 	/**
-	 * returns position in line
-	 * @return
+	 * returns position in the line
+	 * @return position in the line
 	 */
 	public int getPositionInLine() {
 		return positionInLine;

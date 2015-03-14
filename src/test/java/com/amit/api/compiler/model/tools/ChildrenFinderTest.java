@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.amit.api.compiler.model.ModuleType;
 import com.amit.api.compiler.model.Project;
 import com.amit.api.compiler.model.TypeCommonComposite;
 
@@ -16,24 +17,25 @@ public class ChildrenFinderTest {
 	@Test
 	public void testGetChildren() {
 		Project project = new Project();
+		project.createModule("m", ModuleType.PROJECT, null, null );
 		
-		TypeCommonComposite v1 = new TypeCommonComposite( "t", "1", null, project );
+		TypeCommonComposite v1 = project.createCompositeType("1", null, null );
 			v1.setBaseTypeName( "7" );
-		TypeCommonComposite v2 = new TypeCommonComposite( "t", "2", null, project );
+		TypeCommonComposite v2 = project.createCompositeType("2", null, null );
 			v2.setBaseTypeName( "1" );
-		TypeCommonComposite v3 = new TypeCommonComposite( "t", "3", null, project );
+		TypeCommonComposite v3 = project.createCompositeType("3", null, null );
 			v3.setBaseTypeName( "1" );
-		TypeCommonComposite v4 = new TypeCommonComposite( "t", "4", null, project );
+		TypeCommonComposite v4 = project.createCompositeType("4", null, null );
 			v4.setBaseTypeName( "2" );
-		TypeCommonComposite v5 = new TypeCommonComposite( "t", "5", null, project );
+		TypeCommonComposite v5 = project.createCompositeType("5", null, null );
 			v5.setBaseTypeName( "2" );
-		TypeCommonComposite v6 = new TypeCommonComposite( "t", "6", null, project );
+		TypeCommonComposite v6 = project.createCompositeType("6", null, null );
 			v6.setBaseTypeName( "3" );
-		TypeCommonComposite v7 = new TypeCommonComposite( "t", "7", null, project );
-		TypeCommonComposite v8 = new TypeCommonComposite( "t", "8", null, project );
+		TypeCommonComposite v7 = project.createCompositeType("7", null, null );
+		TypeCommonComposite v8 = project.createCompositeType("8", null, null );
 			v8.setBaseTypeName( "7" );
-		TypeCommonComposite v9 = new TypeCommonComposite( "t", "9", null, project );
-		TypeCommonComposite v10 = new TypeCommonComposite( "t", "10", null, project );
+		TypeCommonComposite v9 = project.createCompositeType("9", null, null );
+		TypeCommonComposite v10 = project.createCompositeType("10", null, null );
 			v10.setBaseTypeName( "9" );
 			
 		List<TypeCommonComposite> list = Arrays.asList( v1, v2, v3, v4, v5, v6, v7, v8, v9, v10 );

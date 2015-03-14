@@ -29,10 +29,10 @@ public class AttributeList extends ProjectElement {
 	
 	/**
 	 * creates an attribute
-	 * @param name
-	 * @param value
-	 * @param context
-	 * @return
+	 * @param name attribuite name
+	 * @param value attribute value
+	 * @param context attribut context
+	 * @return created attribute
 	 */
 	public Attribute createAttribute( String name, String value, Context context ) {
 		Attribute attr = new Attribute( name, value, context, getProject() );
@@ -42,8 +42,8 @@ public class AttributeList extends ProjectElement {
 
 	/**
 	 * returns the attribute value
-	 * @param name
-	 * @return
+	 * @param name attribute name
+	 * @return attribute value
 	 */
 	public String get( String name ) {
 		if( name == null || name.isEmpty() ) {

@@ -16,19 +16,47 @@ package com.amit.api.compiler.model;
 
 import java.util.List;
 
+/**
+ * a common type for composite types like type and exception
+ */
 public class TypeCommonComposite extends Type {
 	private UniqueCollection<TypeCompositeMember> members = new UniqueCollection<TypeCompositeMember>( "type member" );
 	private String baseTypeName;
+
+	/**
+	 * retuns composite type members
+	 * @return member list
+	 */
+	public List<TypeCompositeMember> getMembers() {
+		return members.readonlyList();
+	}
+
+	/**
+	 * return base type
+	 * @return name base type name
+	 */
+	public String getBaseTypeName() {
+		return baseTypeName;
+	}
 	
-	public TypeCommonComposite( String type, String name, Context context, Project project ) {
+	/**
+	 * creates common composite type
+	 * @param type type type
+	 * @param name type name
+	 * @param context context
+	 * @param project project
+	 */
+	protected TypeCommonComposite( String type, String name, Context context, Project project ) {
 		super( type, name, context, project );
 	}
 	
 	/**
 	 * adds composite type member
-	 * @param type
-	 * @param name
-	 * @param context
+	 * @param type member type
+	 * @param name member name
+	 * @param isArray is array or not
+	 * @param isRequred is required or not
+	 * @param context context
 	 */
 	public void addMember( String type, String name, boolean isArray, boolean isRequred, Context context ) {
 		TypeCompositeMember member = new TypeCompositeMember( type, name, context, getProject() );
@@ -38,30 +66,15 @@ public class TypeCommonComposite extends Type {
 		members.add( member );
 	}
 	
-	/**
-	 * retuns composite type members
-	 * @return
-	 */
-	public List<TypeCompositeMember> getMembers() {
-		return members.readonlyList();
-	}
 	
 	/**
 	 * set base type
-	 * @param baseTypeName
+	 * @param baseTypeName base type name
 	 */
 	public void setBaseTypeName( String baseTypeName ) {
 		this.baseTypeName = baseTypeName;
 	}
-	
-	/**
-	 * return base type
-	 * @return
-	 */
-	public String getBaseTypeName() {
-		return baseTypeName;
-	}
-	
+		
 	/**
 	 * {@inheritDoc}
 	 */

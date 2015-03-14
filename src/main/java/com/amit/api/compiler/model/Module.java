@@ -27,9 +27,11 @@ public class Module extends ProjectElement {
 	private List<Service> services = new ArrayList<Service>();
 	
 	/**
-	 * 
-	 * @param name
-	 * @param context
+	 * creates a module
+	 * @param name module name
+	 * @param type module type
+	 * @param context context
+	 * @param project project
 	 */
 	protected Module( String name, ModuleType type, Context context, Project project ) {
 		super( name, context, project );
@@ -43,7 +45,7 @@ public class Module extends ProjectElement {
 	
 	/**
 	 * returns the module type
-	 * @return
+	 * @return module type
 	 */
 	public ModuleType getType() {
 		return type;
@@ -51,8 +53,8 @@ public class Module extends ProjectElement {
 	
 	/**
 	 * adds a type to the module
-	 * @param type
-	 * @throws ModuleElementException
+	 * @param type type
+	 * @throws ModuleElementException thrown if validation fail
 	 */
 	public void add( Type type ) throws ModuleElementException {
 		if( type == null ) {
@@ -67,11 +69,11 @@ public class Module extends ProjectElement {
 	}
 
 	/**
-	 * add interface to the module
-	 * @param type
-	 * @throws ModuleElementException
+	 * adds an interface to the module
+	 * @param iinterface interface
+	 * @throws ModuleElementException thrown if validation fail
 	 */
-	public void add( Interface iinterface ) throws ModuleElementException {
+	public void add( Interface iinterface ) {
 		if( iinterface == null ) {
 			throw new IllegalArgumentException( "iinterface must be not null" );			
 		}
@@ -85,7 +87,8 @@ public class Module extends ProjectElement {
 	
 	/**
 	 * adds service to the module
-	 * @param service
+	 * @param service service
+	 * @throws ModuleElementException thrown if validation fail
 	 */
 	public void add( Service service ) throws ModuleElementException {
 		if( service == null ) {

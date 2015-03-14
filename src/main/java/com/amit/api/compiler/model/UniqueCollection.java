@@ -41,8 +41,8 @@ public class UniqueCollection<T extends ProjectElement> implements Iterable<T> {
 	/**
 	 * adds a element to the collection and exception is thrown when 
 	 * element 
-	 * @param type
-	 * @throws ModuleElementException 
+	 * @param element element 
+	 * @throws ModuleElementException thrown on error 
 	 */
 	public void add( T element ) throws ModuleElementException {
 		if( element == null ) {
@@ -59,8 +59,8 @@ public class UniqueCollection<T extends ProjectElement> implements Iterable<T> {
 	
 	/**
 	 * gets the element by name
-	 * @param name
-	 * @return
+	 * @param name element name
+	 * @return element
 	 */
 	public T get( String name ) {
 		if( name == null || name.isEmpty() ) {
@@ -72,12 +72,15 @@ public class UniqueCollection<T extends ProjectElement> implements Iterable<T> {
 	
 	/**
 	 * returns the read only list
-	 * @return
+	 * @return read only element list
 	 */
 	public List<T> readonlyList() {
 		return Collections.unmodifiableList( elementList );
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Iterator<T> iterator() {
 		return elementList.iterator();
 	}

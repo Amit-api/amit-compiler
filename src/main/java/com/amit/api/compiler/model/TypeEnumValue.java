@@ -14,11 +14,30 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+/**
+ * enum value, can be string or int type 
+ */
 public class TypeEnumValue extends ProjectElement {
 	private Integer intValue;
 	private String stringValue;
+
+	/**
+	 * returns int value
+	 * @return int value
+	 */
+	public Integer getIntegerValue() {
+		return intValue;
+	}
 	
-	public TypeEnumValue( String name, Integer intValue, Context context, Project project ) {
+	/**
+	 * returns string value
+	 * @return string value
+	 */
+	public String getStringValue() {
+		return stringValue;
+	}
+	
+	protected TypeEnumValue( String name, Integer intValue, Context context, Project project ) {
 		super( name, context, project );
 		
 		if( intValue == null ) {
@@ -28,7 +47,7 @@ public class TypeEnumValue extends ProjectElement {
 		this.intValue = intValue;
 	}
 	
-	public TypeEnumValue( String name, String stringValue, Context context, Project project ) {
+	protected TypeEnumValue( String name, String stringValue, Context context, Project project ) {
 		super( name, context, project );
 
 		if( stringValue == null ) {
@@ -36,21 +55,5 @@ public class TypeEnumValue extends ProjectElement {
 		}
 		
 		this.stringValue = stringValue;
-	}
-	
-	/**
-	 * returns int value
-	 * @return
-	 */
-	public Integer getIntegerValue() {
-		return intValue;
-	}
-	
-	/**
-	 * returns string value
-	 * @return
-	 */
-	public String getStringValue() {
-		return stringValue;
 	}
 }

@@ -31,8 +31,10 @@ public class Type extends ProjectElement {
 	
 	/**
 	 * creates a new type
-	 * @param type
-	 * @param name
+	 * @param type type type
+	 * @param name type name
+	 * @param context context
+	 * @param project project
 	 */
 	protected Type( String type, String name, Context context, Project project ) {
 		super( name, context, project );
@@ -45,8 +47,8 @@ public class Type extends ProjectElement {
 	}
 	
 	/**
-	 * returns the type type
-	 * @return
+	 * returns the type of the type
+	 * @return type of the type
 	 */
 	public String getType() {
 		return type;

@@ -35,9 +35,9 @@ public class AmitParser {
 	
 	/**
 	 * creates the Amit parser for a string
-	 * @param text
-	 * @return
-	 * @throws IllegalArgumentException
+	 * @param text amit text
+	 * @return returns amit parser
+	 * @throws IllegalArgumentException thrown on error
 	 */
 	public static AmitParser fromString( String text ) throws IllegalArgumentException {
 		if( text == null ) {
@@ -49,11 +49,11 @@ public class AmitParser {
 	
 	/**
 	 * creates a amit parser from a jar file
-	 * @param classFromJar
-	 * @param jarFilePath
-	 * @return
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @param classFromJar a class from the jar
+	 * @param jarFilePath path in the jar
+	 * @return amit parser
+	 * @throws ClassNotFoundException thrown on classFromJar not found
+	 * @throws IOException thrown on IO error
 	 */
 	public static AmitParser fromJar( String classFromJar, String jarFilePath ) throws ClassNotFoundException, IOException {
 		if( classFromJar == null ) {
@@ -70,10 +70,10 @@ public class AmitParser {
 		
 	/**
 	 * creates the Amit parser for a file
-	 * @param fileName
-	 * @return
-	 * @throws IllegalArgumentException
-	 * @throws IOException
+	 * @param fileName file name
+	 * @return amit parser
+	 * @throws IllegalArgumentException thrown on invalid args
+	 * @throws IOException thrown on IO error
 	 */
 	public static AmitParser fromFile( String fileName ) throws IllegalArgumentException, IOException {
 		if( fileName == null ) {
@@ -91,9 +91,10 @@ public class AmitParser {
 	}
 	
 	/**
-	 * parsers the Amit content and returns the resulted module
-	 * @return
-	 * @throws RecognitionException 
+	 * parsers the Amit content and returns the resulted project
+	 * @return project
+	 * @throws RecognitionException thrown on parse error
+	 * @throws ModuleElementException thrown on parse error
 	 */
 	public Project parse() throws RecognitionException, ModuleElementException {
 		apiLexer lexer = new apiLexer( stream );

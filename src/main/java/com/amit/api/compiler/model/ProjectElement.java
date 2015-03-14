@@ -26,9 +26,9 @@ public class ProjectElement {
 	
 	/**
 	 * creates the project element
-	 * @param name - the element name
-	 * @param context - parsing context
-	 * @param project - the owner project
+	 * @param name the element name
+	 * @param context parsing context
+	 * @param project the owner project
 	 */
 	protected ProjectElement( String name, Context context, Project project ) {
 		if( name == null || name.isEmpty() ) {
@@ -44,8 +44,8 @@ public class ProjectElement {
 	}
 	
 	/**
-	 * returns the project elements belongs to
-	 * @return
+	 * returns the project element belongs to
+	 * @return owner project
 	 */
 	public Project getProject() {
 		return project;
@@ -53,7 +53,7 @@ public class ProjectElement {
 	
 	/**
 	 * returns the element name
-	 * @return
+	 * @return element name
 	 */
 	public String getName() {
 		return name;
@@ -61,7 +61,7 @@ public class ProjectElement {
 	
 	/**
 	 * returns the element context
-	 * @return
+	 * @return element context
 	 */
 	public Context getContext() {
 		return context;
@@ -69,18 +69,20 @@ public class ProjectElement {
 	
 	/**
 	 * sets the element attributes
-	 * @param attributes
+	 * @param attributes attribute list
 	 */
 	public void setAttributeList( AttributeList attributes ) {
-		if( attributes.getProject() != this.project ) {
-			throw new IllegalArgumentException( "the attribute list must belong to this project" );
+		if( attributes != null ) {
+			if( attributes.getProject() != this.project ) {
+				throw new IllegalArgumentException( "the attribute list must belong to this project" );
+			}
 		}
 		this.attributes = attributes;
 	}
 	
 	/**
 	 * returns the element attributes
-	 * @return
+	 * @return attribute list
 	 */
 	public AttributeList getAttributes() {
 		return attributes;
@@ -88,8 +90,8 @@ public class ProjectElement {
 
 	/**
 	 * returns the attribute value associated to the element
-	 * @param name
-	 * @return
+	 * @param name attribute name
+	 * @return attribute value
 	 */
 	public String getAttributeValue( String name ) {
 		return attributes.get( name );
@@ -98,9 +100,9 @@ public class ProjectElement {
 	/**
 	 * returns attribute value associated to the element
 	 * if there is no attribute was find the defaultValue is returned 
-	 * @param name
-	 * @param defaultValue
-	 * @return
+	 * @param name attribute name
+	 * @param defaultValue value returned if attribute is not present
+	 * @return attribute value
 	 */
 	public String getAttributeValue( String name, String defaultValue ) {
 		String attr = attributes.get( name );
@@ -111,7 +113,7 @@ public class ProjectElement {
 	/**
 	 * validates the project element if the validation fails
 	 * the exception is thrown
-	 * @throws ModuleElementException
+	 * @throws ModuleElementException thrown when validation fails
 	 */
 	public void validate() throws ModuleElementException {
 	}
@@ -119,7 +121,7 @@ public class ProjectElement {
 	/**
 	 * creates the AttributeList which can be used in the project
 	 * that elements belongs to
-	 * @return
+	 * @return attribute list
 	 */
 	public AttributeList createAttributeList() {
 		return project.createAttributeList();
@@ -128,9 +130,9 @@ public class ProjectElement {
 	/**
 	 * validates if the typeName has acceptedTypeTypes 
 	 * otherwise the exception is thrown
-	 * @param typeName
-	 * @param acceptedTypeTypes
-	 * @throws ModuleElementException
+	 * @param typeName type to be verified
+	 * @param acceptedTypeTypes list of accepted types
+	 * @throws ModuleElementException thrown is validation fails
 	 */
 	protected void validateType( String typeName, String... acceptedTypeTypes ) throws ModuleElementException {
 		Type type = project.getType( typeName );

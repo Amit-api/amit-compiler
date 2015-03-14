@@ -173,8 +173,8 @@ enum_value [TypeEnum type_enum]
 @init {
 	AttributeList attrList = type_enum.createAttributeList();
 }
-	: attributes [attrList] ID	EQUAL number_value { type_enum.createValue( $ID.text, ParseUtils.parseNumber( $number_value.text ), new Context( $ID ), attrList  ); }
-	| attributes [attrList] ID	EQUAL STRING { type_enum.createValue( $ID.text, ParseUtils.parseString( $STRING.text ), new Context( $ID ), attrList  ); }
+	: attributes [attrList] ID	EQUAL number_value { type_enum.createValue( $ID.text, ParseUtils.parseNumber( $number_value.text ), attrList, new Context( $ID ) ); }
+	| attributes [attrList] ID	EQUAL STRING { type_enum.createValue( $ID.text, ParseUtils.parseString( $STRING.text ), attrList, new Context( $ID ) ); }
 	;
 	
 enum_values [TypeEnum type_enum]

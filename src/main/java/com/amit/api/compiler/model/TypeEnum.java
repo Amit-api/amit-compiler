@@ -34,21 +34,32 @@ public class TypeEnum extends Type {
 	private List<TypeEnumValue> valueList = new ArrayList<TypeEnumValue>();
 	
 	/**
-	 * create the enum 
-	 * @param name
+	 * returns enum values
+	 * @return enum values
 	 */
-	public TypeEnum( String name, Context context, Project project ) {
+	public List<TypeEnumValue> getValues() {
+		return Collections.unmodifiableList( valueList );
+	}
+	
+	/**
+	 * create the enum 
+	 * @param name enum name
+	 * @param context context
+	 * @param project project
+	 */
+	protected TypeEnum( String name, Context context, Project project ) {
 		super( Type.ENUM, name, context, project );
 	}
 	
 	/**
 	 * creates an enum value
-	 * @param name 
-	 * @param value
-	 * @param context
-	 * @return
+	 * @param name value name
+	 * @param value value integer value
+	 * @param context context
+	 * @param attr attribute list
+	 * @return enum value
 	 */
-	public TypeEnumValue createValue( String name, Integer value, Context context, AttributeList attr ) {
+	public TypeEnumValue createValue( String name, Integer value, AttributeList attr, Context context ) {
 		TypeEnumValue enum_value = new TypeEnumValue( name, value, context, getProject() );
 		enum_value.setAttributeList( attr );
 		
@@ -58,27 +69,20 @@ public class TypeEnum extends Type {
 
 	/**
 	 * creates an enum value
-	 * @param name
-	 * @param value
-	 * @param context
-	 * @return
+	 * @param name value name
+	 * @param value string value
+	 * @param attr attribute list
+	 * @param context context
+	 * @return enum value
 	 */
-	public TypeEnumValue createValue( String name, String value, Context context, AttributeList attr ) {
+	public TypeEnumValue createValue( String name, String value, AttributeList attr, Context context ) {
 		TypeEnumValue enum_value = new TypeEnumValue( name, value, context, getProject() );
 		enum_value.setAttributeList( attr );
 
 		add( enum_value );
 		return enum_value;
 	}
-	
-	/**
-	 * returns enum values
-	 * @return
-	 */
-	public List<TypeEnumValue> getValues() {
-		return Collections.unmodifiableList( valueList );
-	}
-	
+		
 	private void add( TypeEnumValue enum_value ) {
 		if( values.containsKey( enum_value.getName() ) ) {
 			throw new ModuleElementException( "duplicate enum value", enum_value );

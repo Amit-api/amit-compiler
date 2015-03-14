@@ -25,7 +25,7 @@ public class Attribute extends ProjectElement {
 	
 	/**
 	 * returns attribute value
-	 * @return
+	 * @return attribute value
 	 */
 	public String getValue() {
 		return value;
