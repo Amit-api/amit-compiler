@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.amit.api.compiler.model.tools.ChildrenFinder;
+import com.amit.api.compiler.model.tools.TypeCommonCompositeChildrenFinder;
 
 public class Project {
 	private UniqueCollection<Type> types = new UniqueCollection<Type>( "type" );
@@ -41,6 +41,89 @@ public class Project {
 
 	public Project() {
 		addPrimitiveTypes( PrimitiveTypeNames.ALL );
+	}
+	
+	/**
+	 * returns all services from the project
+	 * @return
+	 */
+	public List<Service> getServices() {
+		return services.readonlyList();
+	}
+	
+	/**
+	 * returns all enums from the project
+	 * @return
+	 */
+	public List<TypeEnum> getEnums() {
+		return Collections.unmodifiableList( enums );
+	}
+	
+	/**
+	 * returns all interfaces from the project
+	 * @return
+	 */
+	public List<Interface> getInterfaces() {
+		return Collections.unmodifiableList( interfaces );
+	}
+
+	/**
+	 * returns all composite types from the project
+	 * @return
+	 */
+	public List<TypeComposite> getCompositeTypes() {
+		return Collections.unmodifiableList( compositeTypes );
+	}
+
+	/**
+	 * returns all types inherited from composite type name
+	 * @param name
+	 * @return
+	 */
+	public Set<String> getCompositeTypeChildren( String name ) {
+		Set<String> result = compositeTypesChildren.get( name );
+		return result == null ? new HashSet<String>() : result;
+	}
+	
+	/**
+	 * returns all exceptions from the project
+	 * @return
+	 */
+	public List<TypeException> getExceptions() {
+		return Collections.unmodifiableList( exceptionTypes );
+	}
+	
+	/**
+	 * returns all exception inherited from the exception with name name
+	 * @param name
+	 * @return
+	 */
+	public Set<String> getExceptionTypeChildren( String name ) {
+		Set<String> result = exceptionTypesChildren.get( name );
+		return result == null ? new HashSet<String>() : result;
+	}
+	
+	/**
+	 * returns all exception inherited from exception names in the list including the names from the names list
+	 * @param names
+	 * @return
+	 */
+	public Set<String> getExceptionTypeChildren( List<String> names ) {
+		Set<String> result = new HashSet<String>();
+		for( String name : names ) {
+			result.add( name );
+			result.addAll( getExceptionTypeChildren( name ) );
+		}
+		return result;
+	}	
+
+	/**
+	 * returns project module associated to the project
+	 * only one module of this type can be per project
+	 * @return
+	 */
+	public Module getProjectModule() {
+		return projectModule;
 	}
 	
 	/**
@@ -83,26 +166,18 @@ public class Project {
 	}
 	
 	/**
-	 * creates an enum
+	 * creates an enum type
 	 * @param name
 	 * @param context
 	 * @return
 	 * @throws ModuleElementException
 	 */
 	public TypeEnum createEnum( String name, Context context ) throws ModuleElementException {
-		TypeEnum type = new TypeEnum( name, context ); 
+		TypeEnum type = new TypeEnum( name, context, this ); 
 		addEnum( type );
 		return type;
 	}
 	
-	/**
-	 * returns all enums from the project
-	 * @return
-	 */
-	public List<TypeEnum> getEnums() {
-		return Collections.unmodifiableList( enums );
-	}
-
 	/**
 	 * creates a module
 	 * @param name
@@ -111,19 +186,10 @@ public class Project {
 	 * @throws ModuleElementException
 	 */
 	public Module createModule( String name, ModuleType type, AttributeList attr, Context context ) throws ModuleElementException {
-		Module module = new Module( name, type, context );
+		Module module = new Module( name, type, context, this );
 		module.setAttributeList( attr );
 		addModule( module );
 		return module;
-	}
-
-	/**
-	 * returns module associated to the project
-	 * only one module of this type can be per project
-	 * @return
-	 */
-	public Module getProjectModule() {
-		return projectModule;
 	}
 	
 	/**
@@ -134,31 +200,13 @@ public class Project {
 	 * @return
 	 * @throws ModuleElementException
 	 */
-	public TypeComposite creatCompositeType( String name, AttributeList attr, Context context ) throws ModuleElementException {
-		TypeComposite type = new TypeComposite( name, context );
+	public TypeComposite createCompositeType( String name, AttributeList attr, Context context ) throws ModuleElementException {
+		TypeComposite type = new TypeComposite( name, context, this );
 		type.setAttributeList( attr );
 		addComposite( type );
 		return type;
 	}
-	
-	/**
-	 * returns all composite types from project
-	 * @return
-	 */
-	public List<TypeComposite> getCompositeTypes() {
-		return Collections.unmodifiableList( compositeTypes );
-	}
-	
-	/**
-	 * returns all types inherited from name
-	 * @param name
-	 * @return
-	 */
-	public Set<String> getCompositeTypeChildren( String name ) {
-		Set<String> result = compositeTypesChildren.get( name );
-		return result == null ? new HashSet<String>() : result;
-	}
-	
+		
 	/**
 	 * create an interface
 	 * @param name
@@ -168,20 +216,12 @@ public class Project {
 	 * @throws ModuleElementException
 	 */
 	public Interface createInterface( String name, AttributeList attr, Context context ) throws ModuleElementException {
-		Interface interf = new Interface( name, context );
+		Interface interf = new Interface( name, context, this );
 		interf.setAttributeList( attr );
 		addInterface( interf );
 		return interf;
 	}
-			
-	/**
-	 * returns all interfaces from the project
-	 * @return
-	 */
-	public List<Interface> getInterfaces() {
-		return Collections.unmodifiableList( interfaces );
-	}
-	
+
 	/**
 	 * create an exception type
 	 * @param name
@@ -191,43 +231,12 @@ public class Project {
 	 * @throws ModuleElementException
 	 */
 	public TypeException createException( String name, AttributeList attr, Context context ) throws ModuleElementException {
-		TypeException exception = new TypeException( name, context );
+		TypeException exception = new TypeException( name, context, this );
 		exception.setAttributeList( attr );
 		addException( exception );
 		return exception;
 	}
 	
-	/**
-	 * returns all exceptions from the project
-	 * @return
-	 */
-	public List<TypeException> getExceptions() {
-		return Collections.unmodifiableList( exceptionTypes );
-	}
-
-	/**
-	 * returns all exception inherited from name
-	 * @param name
-	 * @return
-	 */
-	public Set<String> getExceptionTypeChildren( String name ) {
-		Set<String> result = exceptionTypesChildren.get( name );
-		return result == null ? new HashSet<String>() : result;
-	}
-	
-	/**
-	 * returns all exception inherited from list name including name original list
-	 * @param names
-	 * @return
-	 */
-	public Set<String> getExceptionTypeChildren( List<String> names ) {
-		Set<String> result = new HashSet<String>();
-		for( String name : names ) {
-			result.add( name );
-			result.addAll( getExceptionTypeChildren( name ) );
-		}
-		return result;
-	}
 	
 	/**
 	 * creates an service
@@ -238,11 +247,30 @@ public class Project {
 	 * @throws ModuleElementException
 	 */
 	public Service createService( String name, AttributeList attr, Context context ) throws ModuleElementException {
-		Service service = new Service( name, context );
+		Service service = new Service( name, context, this );
 		service.setAttributeList( attr );
 		addService( service );
 		
 		return service;
+	}
+	
+	/**
+	 * creates an attribute list
+	 * @return
+	 */
+	public AttributeList createAttributeList() {
+		return new AttributeList( this );
+	}
+	
+	/**
+	 * creates the function return
+	 * @param type - return type
+	 * @param isArray - true if it i array
+	 * @param context
+	 * @return
+	 */
+	public FunctionReturn createFunctionReturn( String type, boolean isArray, Context context ) {
+		return new FunctionReturn( type, isArray, context, this );
 	}
 	
 	/**
@@ -251,7 +279,7 @@ public class Project {
 	 */
 	public void validate() throws ModuleElementException {
 		for( Module module : modules ) {
-			module.validate( this );
+			module.validate();
 		}
 		
 		validateTypeCircularDependency( compositeTypes );
@@ -260,15 +288,7 @@ public class Project {
 		
 		findCompositeTypesChildren();
 		findExceptionTypesChildren();
-	}
-	
-	/**
-	 * returns all services from the project
-	 * @return
-	 */
-	public List<Service> getServices() {
-		return services.readonlyList();
-	}
+	}	
 	
 	private void addComposite( TypeComposite type ) {
 		addType( type );
@@ -316,32 +336,10 @@ public class Project {
 		
 	private void addPrimitiveTypes( String... names ) {
 		for( String name : names ) {
-			types.add( new TypePrimitive( name ) );
+			types.add( new TypePrimitive( name, this ) );
 		}
 	}
 	
-	/**
-	 * validates if the typeName has acceptedTypeTypes
-	 * @param where
-	 * @param typeName
-	 * @param acceptedTypeTypes
-	 * @throws ModuleElementException
-	 */
-	protected void validateType( ProjectElement where, String typeName, String... acceptedTypeTypes ) throws ModuleElementException {
-		Type type = getType( typeName );
-		if( type == null ) {
-			throw new ModuleElementException( String.format( "unknown type '%s'", typeName ), where );
-		}
-		
-		for( String typeType: acceptedTypeTypes ) {
-			if( type.getType().equals( typeType ) ) {
-				return;
-			}
-		}
-		
-		throw new ModuleElementException( 
-				String.format( "unsuported type '%s' which is '%s' ", typeName, type.getType() ), where );			
-	}
 	
 	private void validateTypeCircularDependency( List<? extends TypeCommonComposite> elements ) throws ModuleElementException {
 		Set<String> notCircularElements = new HashSet<String>();
@@ -422,12 +420,12 @@ public class Project {
 	}
 	
 	private void findCompositeTypesChildren() {
-		ChildrenFinder finder = new ChildrenFinder( compositeTypes );
+		TypeCommonCompositeChildrenFinder finder = new TypeCommonCompositeChildrenFinder( compositeTypes );
 		compositeTypesChildren = finder.getAllChildren();
 	}
 
 	private void findExceptionTypesChildren() {
-		ChildrenFinder finder = new ChildrenFinder( exceptionTypes );
+		TypeCommonCompositeChildrenFinder finder = new TypeCommonCompositeChildrenFinder( exceptionTypes );
 		exceptionTypesChildren = finder.getAllChildren();
 	}
 }

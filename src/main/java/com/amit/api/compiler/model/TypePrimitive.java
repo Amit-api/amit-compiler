@@ -15,7 +15,7 @@
 package com.amit.api.compiler.model;
 
 public class TypePrimitive extends Type {
-	public TypePrimitive( String name ) {
-		super( PRIMITIVE, name, null );
+	public TypePrimitive( String name, Project project ) {
+		super( PRIMITIVE, name, null, project );
 	}
 }

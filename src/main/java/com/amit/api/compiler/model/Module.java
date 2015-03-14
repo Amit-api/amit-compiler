@@ -31,8 +31,8 @@ public class Module extends ProjectElement {
 	 * @param name
 	 * @param context
 	 */
-	protected Module( String name, ModuleType type, Context context ) {
-		super( name, context );
+	protected Module( String name, ModuleType type, Context context, Project project ) {
+		super( name, context, project );
 		
 		if( type == null ) {
 			throw new IllegalArgumentException( "type must be not null" );
@@ -42,7 +42,7 @@ public class Module extends ProjectElement {
 	}
 	
 	/**
-	 * returns module type
+	 * returns the module type
 	 * @return
 	 */
 	public ModuleType getType() {
@@ -50,13 +50,17 @@ public class Module extends ProjectElement {
 	}
 	
 	/**
-	 * add type to the module
+	 * adds a type to the module
 	 * @param type
 	 * @throws ModuleElementException
 	 */
 	public void add( Type type ) throws ModuleElementException {
 		if( type == null ) {
 			throw new IllegalArgumentException( "type must be not null" );			
+		}
+		
+		if( type.getProject() != this.getProject() ) {
+			throw new IllegalArgumentException( "type must be in this project" );
 		}
 		
 		types.add( type );
@@ -72,6 +76,10 @@ public class Module extends ProjectElement {
 			throw new IllegalArgumentException( "iinterface must be not null" );			
 		}
 		
+		if( iinterface.getProject() != this.getProject() ) {
+			throw new IllegalArgumentException( "interface must be in this project" );
+		}
+		
 		interfaces.add( iinterface );
 	}
 	
@@ -84,22 +92,27 @@ public class Module extends ProjectElement {
 			throw new IllegalArgumentException( "service must be not null" );			
 		}
 		
+		if( service.getProject() != this.getProject() ) {
+			throw new IllegalArgumentException( "service must be in this project" );
+		}
+		
 		if( ! getType().equals( ModuleType.PROJECT ) ) {
 			throw new ModuleElementException( "service is allowed only in the project file", service );
 		}
+		
 		services.add( service );
 	}
 
 	@Override
-	public void validate( Project project ) throws ModuleElementException {
-		super.validate( project );
+	public void validate() throws ModuleElementException {
+		super.validate();
 		
 		for( Type type: types ) {
-			type.validate( project );
+			type.validate();
 		}
 		
 		for( Service service : services ) {
-			service.validate( project );
+			service.validate();
 		}
 	}
 }

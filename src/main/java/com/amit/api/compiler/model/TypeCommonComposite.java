@@ -20,8 +20,8 @@ public class TypeCommonComposite extends Type {
 	private UniqueCollection<TypeCompositeMember> members = new UniqueCollection<TypeCompositeMember>( "type member" );
 	private String baseTypeName;
 	
-	public TypeCommonComposite( String type, String name, Context context ) {
-		super( type, name, context);
+	public TypeCommonComposite( String type, String name, Context context, Project project ) {
+		super( type, name, context, project );
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public class TypeCommonComposite extends Type {
 	 * @param context
 	 */
 	public void addMember( String type, String name, boolean isArray, boolean isRequred, Context context ) {
-		TypeCompositeMember member = new TypeCompositeMember( type, name, context );
+		TypeCompositeMember member = new TypeCompositeMember( type, name, context, getProject() );
 		member.setIsArray( isArray );
 		member.setIsRequired( isRequred );
 		
@@ -63,55 +63,13 @@ public class TypeCommonComposite extends Type {
 	}
 	
 	/**
-	 * return true if the composite type uses  typeName
-	 * @param typeName
-	 * @return
-	 */
-	@Override
-	public boolean dependsOnType( String typeName ) {
-		if( super.dependsOnType( typeName ) ) {
-			return true;
-		}
-		
-		if( typeName.equals( baseTypeName ) ) {
-			return true;
-		}
-		
-		for( TypeCompositeMember member : members ) {
-			if( member.getTypeName().equals( typeName ) ) {
-				return true;
-			}
-		}
-		
-		return false;
- 	}
-	
-	/**
-	 * returns true if Array is used by the composite type
-	 * @return
-	 */
-	@Override
-	public boolean dependsOnTypeArray() {
-		if( super.dependsOnTypeArray() ) {
-			return true;
-		}
-		
-		for( TypeCompositeMember member : members ) {
-			if( member.isArray() ) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
-	public void validate( Project project ) throws ModuleElementException {
-		super.validate( project );
+	public void validate() throws ModuleElementException {
+		super.validate();
 		
 		for( TypeCompositeMember member : members ) {
-			member.validate( project );
-		}		
+			member.validate();
+		}
 	}
 }

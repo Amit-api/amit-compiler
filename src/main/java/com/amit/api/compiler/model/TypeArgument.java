@@ -14,18 +14,21 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+/**
+ * an argument which contains a type which can be array type as well 
+ */
 public class TypeArgument extends ProjectElement {
 	private String typeName;
 	private boolean isArray = false;
 	private boolean isRequired = false;
 	private boolean canBeVoid = false;
 
-	protected TypeArgument( String type, String name, Context context ) {
-		this( type, name, context, false );
+	protected TypeArgument( String type, String name, Context context, Project project ) {
+		this( type, name, context, false, project );
 	}
 
-	protected TypeArgument( String type, String name, Context context, boolean canBeVoid ) {
-		super( name, context );
+	protected TypeArgument( String type, String name, Context context, boolean canBeVoid, Project project ) {
+		super( name, context, project );
 		
 		if( type == null || type.isEmpty() ) {
 			throw new IllegalArgumentException( "type must be not null or empty" );
@@ -79,10 +82,10 @@ public class TypeArgument extends ProjectElement {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void validate( Project project ) throws ModuleElementException {
-		super.validate( project );
+	public void validate() throws ModuleElementException {
+		super.validate();
 		
-		project.validateType( this, getTypeName(), Type.PRIMITIVE, Type.ENUM, Type.COMPOSITE );
+		validateType( getTypeName(), Type.PRIMITIVE, Type.ENUM, Type.COMPOSITE );
 		
 		if( !canBeVoid && getTypeName().equals( PrimitiveTypeNames.VOID ) ) {
 			throw new ModuleElementException( "the type can't be void ", this );

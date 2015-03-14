@@ -17,6 +17,7 @@ package com.amit.api.compiler.parser;
 import java.io.IOException;
 
 import org.antlr.runtime.ANTLRFileStream;
+import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -44,6 +45,27 @@ public class AmitParser {
 		}
 		
 		return new AmitParser( new ANTLRStringStream( text ) );
+	}
+	
+	/**
+	 * creates a amit parser from a jar file
+	 * @param classFromJar
+	 * @param jarFilePath
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public static AmitParser fromJar( String classFromJar, String jarFilePath ) throws ClassNotFoundException, IOException {
+		if( classFromJar == null ) {
+			throw new IllegalArgumentException( "classFromJar must be not null" );
+		}
+		
+		if( jarFilePath == null ) {
+			throw new IllegalArgumentException( "jarFilePath must be not null" );			
+		}
+
+		return new AmitParser( new ANTLRInputStream(
+			Class.forName( classFromJar ).getClassLoader().getResourceAsStream( jarFilePath )));
 	}
 		
 	/**

@@ -25,8 +25,8 @@ public class Interface extends Type {
 	private Set<String> baseInterfaces = new HashSet<String>();
 	private List<String> baseInterfacesList = new ArrayList<String>();
 	
-	protected Interface( String name, Context context ) {
-		super( INTERFACE, name, context );
+	protected Interface( String name, Context context, Project project ) {
+		super( INTERFACE, name, context, project );
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class Interface extends Type {
 	 * @return
 	 */
 	public Function createFunction( String name, FunctionReturn functionReturn, AttributeList attr, Context context ) {
-		Function fun = new Function( name, context );
+		Function fun = new Function( name, context, getProject() );
 		fun.setAttributeList( attr );
 		fun.setReturn( functionReturn );
 		functions.add( fun );
@@ -77,52 +77,27 @@ public class Interface extends Type {
 		return Collections.unmodifiableList( baseInterfacesList );
 	}
 	
+	/**
+	 * creates the function return
+	 * @param type - return type
+	 * @param isArray - true if it i array
+	 * @param context
+	 * @return
+	 */
+	public FunctionReturn createFunctionReturn( String type, boolean isArray, Context context ) {
+		return getProject().createFunctionReturn(type, isArray, context);
+	}	
+	
 	@Override
-	public void validate( Project project ) throws ModuleElementException {
-		super.validate( project );
+	public void validate() throws ModuleElementException {
+		super.validate();
 		
 		for( Function fun : functions ) {
-			fun.validate( project );
+			fun.validate();
 		}
 		
 		for( String interfName : baseInterfacesList ) {
-			project.validateType( this, interfName, Type.INTERFACE );
+			validateType( interfName, Type.INTERFACE );
 		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean dependsOnType( String typeName ) {
-		if( super.dependsOnType( typeName ) ) {
-			return true;
-		}
-		
-		for( Function fun : functions ) {
-			if( fun.dependsOnType( typeName ) ) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean dependsOnTypeArray() {
-		if( super.dependsOnTypeArray() ) {
-			return true;
-		}
-		
-		for( Function fun : functions ) {
-			if( fun.dependsOnTypeArray() ) {
-				return true;
-			}
-		}
-		
-		return false;
 	}	
 }

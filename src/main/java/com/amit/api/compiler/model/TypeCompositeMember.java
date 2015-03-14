@@ -15,7 +15,7 @@
 package com.amit.api.compiler.model;
 
 public class TypeCompositeMember extends TypeArgument {
-	protected TypeCompositeMember( String type, String name, Context context ) {
-		super( type, name, context );
+	protected TypeCompositeMember( String type, String name, Context context, Project project ) {
+		super( type, name, context, project );
 	}
 }

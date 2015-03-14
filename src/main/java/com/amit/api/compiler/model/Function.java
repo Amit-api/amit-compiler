@@ -20,14 +20,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * a function : returnType FunctionName( function args ) throws exceptions;
+ */
 public class Function extends ProjectElement {
 	private UniqueCollection<FunctionArgument> arguments =  new UniqueCollection<FunctionArgument>( "argument" );
 	private FunctionReturn returnType;
 	private Set<String> throwsExceptions = new HashSet<String>();
 	private List<String> throwsExceptionsList = new ArrayList<String>();
 	
-	protected Function( String name, Context context ) {
-		super( name, context );
+	protected Function( String name, Context context, Project project ) {
+		super( name, context, project );
 	}
 	
 	/**
@@ -42,7 +45,7 @@ public class Function extends ProjectElement {
 	public FunctionArgument createArgument( String type, String name, boolean isArray,
 			boolean isRequired, AttributeList attr, Context context ) {
 		
-		FunctionArgument arg = new FunctionArgument( type, name, context );
+		FunctionArgument arg = new FunctionArgument( type, name, context, getProject() );
 		arg.setAttributeList( attr );
 		arg.setIsArray( isArray );
 		arg.setIsRequired( isRequired );
@@ -64,6 +67,10 @@ public class Function extends ProjectElement {
 	 * @param returnType
 	 */
 	public void setReturn( FunctionReturn returnType ) {
+		if( returnType.getProject() != this.getProject() ) {
+			throw new IllegalArgumentException( "the return type must belong to the project" );
+		}
+		
 		this.returnType = returnType;
 	}
 	
@@ -101,69 +108,27 @@ public class Function extends ProjectElement {
 		return Collections.unmodifiableList( throwsExceptionsList );
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean dependsOnType( String typeName ) {
-		if( super.dependsOnType( typeName ) ) {
-			return true;
-		}
-		
-		if( typeName.equals( returnType.getTypeName() ) ) {
-			return true;
-		}
-		
-		for( FunctionArgument arg : arguments ) {
-			if( arg.getTypeName().equals( typeName ) ) {
-				return true;
-			}
-		}
-		
-		return false;
- 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean dependsOnTypeArray() {
-		if( super.dependsOnTypeArray() ) {
-			return true;
-		}
-		
-		if( returnType.isArray() ) {
-			return true;
-		}
-		
-		for( FunctionArgument arg : arguments ) {
-			if( arg.isArray() ) {
-				return true;
-			}
-		}
-		return false;
+	public void validate() throws ModuleElementException {
+		super.validate();
+		validateArgs();
+		validateExceptions();
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void validate( Project project ) throws ModuleElementException {
-		super.validate( project );
-		validateArgs( project );
-		validateExceptions( project );
-	}
-	
-	private void validateArgs( Project project ) throws ModuleElementException {
-		returnType.validate( project );
+	private void validateArgs() throws ModuleElementException {
+		returnType.validate();
 		for( FunctionArgument arg : arguments ) {
-			arg.validate( project );
+			arg.validate();
 		}		
 	}
 	
-	private void validateExceptions( Project project ) throws ModuleElementException {
+	private void validateExceptions() throws ModuleElementException {
 		for( String exception : throwsExceptionsList ) {
-			project.validateType( this, exception, Type.EXCEPTION );
+			validateType( exception, Type.EXCEPTION );
 		}		
 	}
 }

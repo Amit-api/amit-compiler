@@ -26,7 +26,7 @@ include
 	
 module [Project project]
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = project.createAttributeList();
 }	: attributes [attrList] PROJECT ID SEMICOLON { project.createModule( $ID.text, ModuleType.PROJECT, attrList, new Context( $ID ) ); }
 	| LIB ID SEMICOLON { project.createModule( $ID.text, ModuleType.LIB, null, new Context( $ID ) ); }
 	;
@@ -41,7 +41,7 @@ statment [Project project]
 
 service_statment [Project project]
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = project.createAttributeList();
 }
 	: attributes [attrList] SERVICE
 	  ID { Service service = project.createService( $ID.text, attrList, new Context( $ID ) ); }
@@ -51,7 +51,7 @@ service_statment [Project project]
 
 interface_statment [Project project]
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = project.createAttributeList();
 }
 	: attributes [attrList] INTERFACE
 	  ID { Interface interf = project.createInterface( $ID.text, attrList, new Context( $ID ) ); }
@@ -72,10 +72,10 @@ interface_inh_end [Interface interf]
 		
 function [Interface interf]
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = interf.createAttributeList();
 	ReturnValue<FunctionReturn> returnType = new ReturnValue<FunctionReturn>(); 
 }
-	: attributes [attrList] function_ret [returnType] 
+	: attributes [attrList] function_ret [returnType,interf] 
 	  ID { Function fun = interf.createFunction( $ID.text, returnType.get(), attrList, new Context( $ID ) ); } 
 	  function_end [fun]
 	; 
@@ -96,9 +96,9 @@ function_throws_more [Function fun]
 	;	
 	
 
-function_ret [ReturnValue<FunctionReturn> returnType]
-	: ID { returnType.set( new FunctionReturn( $ID.text, false, new Context( $ID ) ) ); }
-	| ARRAY ID { returnType.set( new FunctionReturn( $ID.text, true, new Context( $ID ) ) ); }
+function_ret [ReturnValue<FunctionReturn> returnType,Interface interf]
+	: ID { returnType.set( interf.createFunctionReturn( $ID.text, false, new Context( $ID ) ) ); }
+	| ARRAY ID { returnType.set( interf.createFunctionReturn( $ID.text, true, new Context( $ID ) ) ); }
 	;
 		
 function_args [Function fun] 
@@ -107,7 +107,7 @@ function_args [Function fun]
 			
 function_arg [Function fun]
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = fun.createAttributeList();
 }
 	: attributes [attrList] ID function_arg_end [$ID.text, false, false, attrList, fun] 
 	| attributes [attrList] ARRAY ID function_arg_end [$ID.text, true, false, attrList, fun]
@@ -120,7 +120,7 @@ function_arg_end [String type, boolean isArray, boolean isRequired, AttributeLis
 
 exception_statment[Project project]
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = project.createAttributeList();
 }
 	: attributes [attrList] EXCEPTION
 	  ID { TypeCommonComposite type = project.createException( $ID.text, attrList, new Context( $ID ) ); }
@@ -129,10 +129,10 @@ exception_statment[Project project]
 				
 type_statment[Project project]
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = project.createAttributeList();
 }
 	: attributes [attrList] TYPE
-	  ID { TypeCommonComposite type = project.creatCompositeType( $ID.text, attrList, new Context( $ID ) ); }
+	  ID { TypeCommonComposite type = project.createCompositeType( $ID.text, attrList, new Context( $ID ) ); }
 	  type_end [type]
 	;
 
@@ -143,7 +143,7 @@ type_end [TypeCommonComposite type]
 	
 type_item [TypeCommonComposite type] 
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = type.createAttributeList();
 }
 	: attributes [attrList] ID type_value[false, false, $ID.text, type]
 	| attributes [attrList] REQUIRED ID type_value[false, true, $ID.text, type]
@@ -156,7 +156,7 @@ type_value [boolean isArray, boolean isRequired, String memberType, TypeCommonCo
 			
 enum_statment [Project project]
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = project.createAttributeList();
 }
 	: attributes [attrList]
 	  ENUM
@@ -171,7 +171,7 @@ enum_statment [Project project]
 
 enum_value [TypeEnum type_enum]
 @init {
-	AttributeList attrList = new AttributeList();
+	AttributeList attrList = type_enum.createAttributeList();
 }
 	: attributes [attrList] ID	EQUAL number_value { type_enum.createValue( $ID.text, ParseUtils.parseNumber( $number_value.text ), new Context( $ID ), attrList  ); }
 	| attributes [attrList] ID	EQUAL STRING { type_enum.createValue( $ID.text, ParseUtils.parseString( $STRING.text ), new Context( $ID ), attrList  ); }

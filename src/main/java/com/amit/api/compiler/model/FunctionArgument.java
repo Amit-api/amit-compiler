@@ -16,7 +16,7 @@ package com.amit.api.compiler.model;
 
 public class FunctionArgument extends TypeArgument {
 
-	protected FunctionArgument( String type, String name, Context context ) {
-		super( type, name, context );
+	protected FunctionArgument( String type, String name, Context context, Project project ) {
+		super( type, name, context, project );
 	}
 }

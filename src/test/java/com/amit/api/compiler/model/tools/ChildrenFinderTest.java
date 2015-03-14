@@ -8,35 +8,38 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.amit.api.compiler.model.Project;
 import com.amit.api.compiler.model.TypeCommonComposite;
 
 public class ChildrenFinderTest {
 
 	@Test
 	public void testGetChildren() {
-		TypeCommonComposite v1 = new TypeCommonComposite( "t", "1", null );
+		Project project = new Project();
+		
+		TypeCommonComposite v1 = new TypeCommonComposite( "t", "1", null, project );
 			v1.setBaseTypeName( "7" );
-		TypeCommonComposite v2 = new TypeCommonComposite( "t", "2", null );
+		TypeCommonComposite v2 = new TypeCommonComposite( "t", "2", null, project );
 			v2.setBaseTypeName( "1" );
-		TypeCommonComposite v3 = new TypeCommonComposite( "t", "3", null );
+		TypeCommonComposite v3 = new TypeCommonComposite( "t", "3", null, project );
 			v3.setBaseTypeName( "1" );
-		TypeCommonComposite v4 = new TypeCommonComposite( "t", "4", null );
+		TypeCommonComposite v4 = new TypeCommonComposite( "t", "4", null, project );
 			v4.setBaseTypeName( "2" );
-		TypeCommonComposite v5 = new TypeCommonComposite( "t", "5", null );
+		TypeCommonComposite v5 = new TypeCommonComposite( "t", "5", null, project );
 			v5.setBaseTypeName( "2" );
-		TypeCommonComposite v6 = new TypeCommonComposite( "t", "6", null );
+		TypeCommonComposite v6 = new TypeCommonComposite( "t", "6", null, project );
 			v6.setBaseTypeName( "3" );
-		TypeCommonComposite v7 = new TypeCommonComposite( "t", "7", null );
-		TypeCommonComposite v8 = new TypeCommonComposite( "t", "8", null );
+		TypeCommonComposite v7 = new TypeCommonComposite( "t", "7", null, project );
+		TypeCommonComposite v8 = new TypeCommonComposite( "t", "8", null, project );
 			v8.setBaseTypeName( "7" );
-		TypeCommonComposite v9 = new TypeCommonComposite( "t", "9", null );
-		TypeCommonComposite v10 = new TypeCommonComposite( "t", "10", null );
+		TypeCommonComposite v9 = new TypeCommonComposite( "t", "9", null, project );
+		TypeCommonComposite v10 = new TypeCommonComposite( "t", "10", null, project );
 			v10.setBaseTypeName( "9" );
 			
 		List<TypeCommonComposite> list = Arrays.asList( v1, v2, v3, v4, v5, v6, v7, v8, v9, v10 );
 		
 		
-		ChildrenFinder find = new ChildrenFinder( list );
+		TypeCommonCompositeChildrenFinder find = new TypeCommonCompositeChildrenFinder( list );
 		
 		assertEquals( new HashSet<String>(Arrays.asList("2","3","6","4","5" ) ), 
 				find.getAllChildren().get( "1" ) );

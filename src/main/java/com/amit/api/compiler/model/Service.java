@@ -14,8 +14,11 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+/**
+ * a service 
+ */
 public class Service extends Interface {
-	protected Service( String name, Context context ) {
-		super( name, context );
+	protected Service( String name, Context context, Project project ) {
+		super( name, context, project );
 	}
 }

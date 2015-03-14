@@ -18,8 +18,8 @@ public class TypeEnumValue extends ProjectElement {
 	private Integer intValue;
 	private String stringValue;
 	
-	public TypeEnumValue( String name, Integer intValue, Context context ) {
-		super( name, context );
+	public TypeEnumValue( String name, Integer intValue, Context context, Project project ) {
+		super( name, context, project );
 		
 		if( intValue == null ) {
 			throw new IllegalArgumentException( "intValue must be not null" );
@@ -28,8 +28,8 @@ public class TypeEnumValue extends ProjectElement {
 		this.intValue = intValue;
 	}
 	
-	public TypeEnumValue( String name, String stringValue, Context context ) {
-		super( name, context );
+	public TypeEnumValue( String name, String stringValue, Context context, Project project ) {
+		super( name, context, project );
 
 		if( stringValue == null ) {
 			throw new IllegalArgumentException( "stringValue must be not null" );

@@ -15,16 +15,16 @@
 package com.amit.api.compiler.model;
 
 public class TypeException extends TypeCommonComposite {
-	public TypeException( String name, Context context ) {
-		super( EXCEPTION, name, context );
+	public TypeException( String name, Context context, Project project ) {
+		super( EXCEPTION, name, context, project );
 	}
 
 	@Override
-	public void validate( Project project ) throws ModuleElementException {
-		super.validate( project );
+	public void validate() throws ModuleElementException {
+		super.validate();
 		
 		if( getBaseTypeName() != null ) {
-			project.validateType( this, getBaseTypeName(), Type.EXCEPTION );
+			validateType( getBaseTypeName(), Type.EXCEPTION );
 		}
 	}	
 }

@@ -29,8 +29,8 @@ public class TypeEnum extends Type {
 	 * create the enum 
 	 * @param name
 	 */
-	public TypeEnum( String name, Context context ) {
-		super( Type.ENUM, name, context );
+	public TypeEnum( String name, Context context, Project project ) {
+		super( Type.ENUM, name, context, project );
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class TypeEnum extends Type {
 	 * @return
 	 */
 	public TypeEnumValue createValue( String name, Integer value, Context context, AttributeList attr ) {
-		TypeEnumValue enum_value = new TypeEnumValue( name, value, context );
+		TypeEnumValue enum_value = new TypeEnumValue( name, value, context, getProject() );
 		enum_value.setAttributeList( attr );
 		
 		add( enum_value );		
@@ -56,7 +56,7 @@ public class TypeEnum extends Type {
 	 * @return
 	 */
 	public TypeEnumValue createValue( String name, String value, Context context, AttributeList attr ) {
-		TypeEnumValue enum_value = new TypeEnumValue( name,value , context );
+		TypeEnumValue enum_value = new TypeEnumValue( name, value, context, getProject() );
 		enum_value.setAttributeList( attr );
 
 		add( enum_value );

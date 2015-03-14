@@ -17,24 +17,34 @@ package com.amit.api.compiler.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AttributeList {
+/**
+ * attributes list 
+ */
+public class AttributeList extends ProjectElement {
 	private Map<String, Attribute> attributeMap = new HashMap<String, Attribute>();
+
+	protected AttributeList( Project project ) {
+		super( "attributes", null, project );
+	}
 	
+	/**
+	 * creates an attribute
+	 * @param name
+	 * @param value
+	 * @param context
+	 * @return
+	 */
 	public Attribute createAttribute( String name, String value, Context context ) {
-		Attribute attr = new Attribute( name, value, context );
-		
+		Attribute attr = new Attribute( name, value, context, getProject() );
 		add( attr );
 		return attr;
 	}
-	
-	public void add( Attribute attr ) {
-		if( attributeMap.containsKey( attr.getName() ) ) {
-			throw new ModuleElementException( "duplicate attribute value", attr );
-		}
-		
-		attributeMap.put( attr.getName(), attr );		
-	}
-	
+
+	/**
+	 * returns the attribute value
+	 * @param name
+	 * @return
+	 */
 	public String get( String name ) {
 		if( name == null || name.isEmpty() ) {
 			throw new IllegalArgumentException( "name must be not empty or null" );
@@ -43,4 +53,12 @@ public class AttributeList {
 		Attribute attr = attributeMap.get( name );
 		return attr == null ? null : attr.getValue();
 	}
+	
+	private void add( Attribute attr ) {
+		if( attributeMap.containsKey( attr.getName() ) ) {
+			throw new ModuleElementException( "duplicate attribute value", attr );
+		}
+		
+		attributeMap.put( attr.getName(), attr );		
+	}	
 }

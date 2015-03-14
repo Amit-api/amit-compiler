@@ -34,8 +34,8 @@ public class Type extends ProjectElement {
 	 * @param type
 	 * @param name
 	 */
-	public Type( String type, String name, Context context ) {
-		super( name, context );
+	protected Type( String type, String name, Context context, Project project ) {
+		super( name, context, project );
 		
 		if( type == null || type.isEmpty() ) {
 			throw new IllegalArgumentException( "type must be not null or empty" );

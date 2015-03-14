@@ -17,8 +17,8 @@ package com.amit.api.compiler.model;
 public class Attribute extends ProjectElement {
 	private String value;
 
-	public Attribute( String name, String value, Context context ) {
-		super( name, context );
+	protected Attribute( String name, String value, Context context, Project project ) {
+		super( name, context, project );
 		
 		this.value = value;
 	}

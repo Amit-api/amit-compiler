@@ -24,11 +24,11 @@ import java.util.Set;
 
 import com.amit.api.compiler.model.TypeCommonComposite;
 
-public class ChildrenFinder {
+public class TypeCommonCompositeChildrenFinder {
 	private List<? extends TypeCommonComposite> elements;
 	private Map<String,Set<String>> childrenMap = new HashMap<String,Set<String>>();
 	
-	public ChildrenFinder( List<? extends TypeCommonComposite> elements ) {
+	public TypeCommonCompositeChildrenFinder( List<? extends TypeCommonComposite> elements ) {
 		this.elements = elements;
 		buildChildrenMap();
 		findAllChildren();

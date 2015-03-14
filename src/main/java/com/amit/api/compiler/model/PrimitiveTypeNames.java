@@ -1,5 +1,8 @@
 package com.amit.api.compiler.model;
 
+/**
+ * the list of all primitive types supported by amit 
+ */
 final public class PrimitiveTypeNames {
 	public static final String VOID = "void";
 	public static final String BOOL = "boolean";

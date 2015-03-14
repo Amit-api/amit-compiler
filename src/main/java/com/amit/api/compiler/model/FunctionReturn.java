@@ -14,11 +14,14 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+/**
+ * the function return argument 
+ */
 public class FunctionReturn extends TypeArgument {
 	public static final String NAME = "*return*";
 	
-	public FunctionReturn( String type, boolean isArray, Context context ) {
-		super( type, NAME, context, true );
+	protected FunctionReturn( String type, boolean isArray, Context context, Project project ) {
+		super( type, NAME, context, true, project );
 		
 		setIsArray( isArray );
 	}

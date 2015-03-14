@@ -14,17 +14,24 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+/**
+ * a composite type
+ * type TypeName : baseType {
+ * 		memberType memberName;
+ * 		....
+ * } 
+ */
 public class TypeComposite extends TypeCommonComposite {
-	public TypeComposite( String name, Context context ) {
-		super( COMPOSITE, name, context);
+	protected TypeComposite( String name, Context context, Project project ) {
+		super( COMPOSITE, name, context, project );
 	}
 	
 	@Override
-	public void validate( Project project ) throws ModuleElementException {
-		super.validate( project );
+	public void validate() throws ModuleElementException {
+		super.validate();
 		
 		if( getBaseTypeName() != null ) {
-			project.validateType( this, getBaseTypeName(), Type.COMPOSITE );
+			validateType( getBaseTypeName(), Type.COMPOSITE );
 		}
 	}
 }

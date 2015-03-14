@@ -14,18 +14,36 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+/**
+ * this class defines an project elements
+ * a project element has name and attributes 
+ */
 public class ProjectElement {
 	private String name;
 	private Context context;
 	private AttributeList attributes;
+	private Project project;
 	
-	protected ProjectElement( String name, Context context ) {
+	protected ProjectElement( String name, Context context, Project project ) {
 		if( name == null || name.isEmpty() ) {
 			throw new IllegalArgumentException( "type must be not null or empty" );
 		}
 		
+		if( project == null ) {
+			throw new IllegalArgumentException( "project must be not null" );
+		}
+		
 		this.name = name;
 		this.context = context;
+		this.project = project;
+	}
+	
+	/**
+	 * returns the elements project
+	 * @return
+	 */
+	public Project getProject() {
+		return project;
 	}
 	
 	/**
@@ -49,6 +67,9 @@ public class ProjectElement {
 	 * @param attributes
 	 */
 	public void setAttributeList( AttributeList attributes ) {
+		if( attributes.getProject() != this.project ) {
+			throw new IllegalArgumentException( "the attribute list must belong to this project" );
+		}
 		this.attributes = attributes;
 	}
 	
@@ -84,26 +105,38 @@ public class ProjectElement {
 	/**
 	 * validates the project element if the validation fails
 	 * the exception is thrown
-	 * @param project
 	 * @throws ModuleElementException
 	 */
-	public void validate( Project project ) throws ModuleElementException {
+	public void validate() throws ModuleElementException {
 	}
 	
 	/**
-	 * return true if the element depends on type
-	 * @param typeName
-	 * @return
-	 */	
-	public boolean dependsOnType( String typeName ) {
-		return false;
-	}
-	
-	/**
-	 * return true if the element depends on array
+	 * creates the AttributeList which can be used in this project
 	 * @return
 	 */
-	public boolean dependsOnTypeArray() {
-		return false;
+	public AttributeList createAttributeList() {
+		return project.createAttributeList();
 	}
+		
+	/**
+	 * validates if the typeName has acceptedTypeTypes
+	 * @param typeName
+	 * @param acceptedTypeTypes
+	 * @throws ModuleElementException
+	 */
+	protected void validateType( String typeName, String... acceptedTypeTypes ) throws ModuleElementException {
+		Type type = project.getType( typeName );
+		if( type == null ) {
+			throw new ModuleElementException( String.format( "unknown type '%s'", typeName ), this );
+		}
+		
+		for( String typeType: acceptedTypeTypes ) {
+			if( type.getType().equals( typeType ) ) {
+				return;
+			}
+		}
+		
+		throw new ModuleElementException( 
+				String.format( "unsuported type '%s' which is '%s' ", typeName, type.getType() ), this );			
+	}	
 }
