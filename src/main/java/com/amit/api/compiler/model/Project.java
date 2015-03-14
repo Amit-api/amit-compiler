@@ -21,8 +21,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.amit.api.compiler.model.tools.InterfaceBaseChildrenFinder;
+import com.amit.api.compiler.model.tools.InterfaceChildrenFinder;
 import com.amit.api.compiler.model.tools.TypeCommonCompositeChildrenFinder;
 
+/**
+ * amit project
+ */
 public class Project {
 	private UniqueCollection<Type> types = new UniqueCollection<Type>( "type" );
 	private UniqueCollection<Module> modules = new UniqueCollection<Module>( "module" );
@@ -38,6 +43,9 @@ public class Project {
 	
 	private Map<String,Set<String>> compositeTypesChildren;
 	private Map<String,Set<String>> exceptionTypesChildren;
+	private Map<String,Set<String>> interfaceChildred;
+	
+	private Map<String,Set<String>> interfaceBaseInterfaces;
 
 	public Project() {
 		addPrimitiveTypes( PrimitiveTypeNames.ALL );
@@ -65,6 +73,26 @@ public class Project {
 	 */
 	public List<Interface> getInterfaces() {
 		return Collections.unmodifiableList( interfaces );
+	}
+	
+	/**
+	 * returns all interface inherited from interface with name 
+	 * @param name
+	 * @return
+	 */
+	public Set<String> getInterfaceChildren( String name ) {
+		Set<String> result = interfaceChildred.get( name );
+		return result == null ? new HashSet<String>() : result;		
+	}
+	
+	/**
+	 * returns interface all base interfaces
+	 * @param name
+	 * @return
+	 */
+	public Set<String> getInterfaceBaseInterfaces( String name ) {
+		Set<String> result = interfaceBaseInterfaces.get( name );
+		return result == null ? new HashSet<String>() : result;				
 	}
 
 	/**
@@ -288,6 +316,8 @@ public class Project {
 		
 		findCompositeTypesChildren();
 		findExceptionTypesChildren();
+		findInterfaceChildren();
+		findInterfaceBaseChildren();
 	}	
 	
 	private void addComposite( TypeComposite type ) {
@@ -427,5 +457,15 @@ public class Project {
 	private void findExceptionTypesChildren() {
 		TypeCommonCompositeChildrenFinder finder = new TypeCommonCompositeChildrenFinder( exceptionTypes );
 		exceptionTypesChildren = finder.getAllChildren();
+	}
+	
+	private void findInterfaceChildren() {
+		InterfaceChildrenFinder finder = new InterfaceChildrenFinder( interfaces );
+		interfaceChildred = finder.getAllChildren();
+	}
+	
+	private void findInterfaceBaseChildren() {
+		InterfaceBaseChildrenFinder finder = new InterfaceBaseChildrenFinder( interfaces );
+		interfaceBaseInterfaces = finder.getAllChildren();
 	}
 }

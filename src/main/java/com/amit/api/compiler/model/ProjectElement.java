@@ -15,8 +15,8 @@
 package com.amit.api.compiler.model;
 
 /**
- * this class defines an project elements
- * a project element has name and attributes 
+ * A project element is an entity in the project
+ * the entity belongs to the project has a name and may contain attributes 
  */
 public class ProjectElement {
 	private String name;
@@ -24,11 +24,16 @@ public class ProjectElement {
 	private AttributeList attributes;
 	private Project project;
 	
+	/**
+	 * creates the project element
+	 * @param name - the element name
+	 * @param context - parsing context
+	 * @param project - the owner project
+	 */
 	protected ProjectElement( String name, Context context, Project project ) {
 		if( name == null || name.isEmpty() ) {
 			throw new IllegalArgumentException( "type must be not null or empty" );
 		}
-		
 		if( project == null ) {
 			throw new IllegalArgumentException( "project must be not null" );
 		}
@@ -39,7 +44,7 @@ public class ProjectElement {
 	}
 	
 	/**
-	 * returns the elements project
+	 * returns the project elements belongs to
 	 * @return
 	 */
 	public Project getProject() {
@@ -47,7 +52,7 @@ public class ProjectElement {
 	}
 	
 	/**
-	 * returns the name
+	 * returns the element name
 	 * @return
 	 */
 	public String getName() {
@@ -55,7 +60,7 @@ public class ProjectElement {
 	}
 	
 	/**
-	 * return context
+	 * returns the element context
 	 * @return
 	 */
 	public Context getContext() {
@@ -63,7 +68,7 @@ public class ProjectElement {
 	}
 	
 	/**
-	 * sets element attributes
+	 * sets the element attributes
 	 * @param attributes
 	 */
 	public void setAttributeList( AttributeList attributes ) {
@@ -74,7 +79,7 @@ public class ProjectElement {
 	}
 	
 	/**
-	 * return element attributes
+	 * returns the element attributes
 	 * @return
 	 */
 	public AttributeList getAttributes() {
@@ -82,7 +87,7 @@ public class ProjectElement {
 	}
 
 	/**
-	 * returns attribute value
+	 * returns the attribute value associated to the element
 	 * @param name
 	 * @return
 	 */
@@ -91,7 +96,8 @@ public class ProjectElement {
 	}
 	
 	/**
-	 * returns attribute value
+	 * returns attribute value associated to the element
+	 * if there is no attribute was find the defaultValue is returned 
 	 * @param name
 	 * @param defaultValue
 	 * @return
@@ -111,7 +117,8 @@ public class ProjectElement {
 	}
 	
 	/**
-	 * creates the AttributeList which can be used in this project
+	 * creates the AttributeList which can be used in the project
+	 * that elements belongs to
 	 * @return
 	 */
 	public AttributeList createAttributeList() {
@@ -119,7 +126,8 @@ public class ProjectElement {
 	}
 		
 	/**
-	 * validates if the typeName has acceptedTypeTypes
+	 * validates if the typeName has acceptedTypeTypes 
+	 * otherwise the exception is thrown
 	 * @param typeName
 	 * @param acceptedTypeTypes
 	 * @throws ModuleElementException

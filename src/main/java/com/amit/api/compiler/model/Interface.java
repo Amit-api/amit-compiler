@@ -20,19 +20,31 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * an amit interface ex:
+ * interface IntefaceName : BaseInterface1, ... BaseInterfaceN {
+ * 	 ....
+ * }
+ */
 public class Interface extends Type {
 	private UniqueCollection<Function> functions = new UniqueCollection<Function>( "function" );
 	private Set<String> baseInterfaces = new HashSet<String>();
 	private List<String> baseInterfacesList = new ArrayList<String>();
 	
+	/**
+	 * creates an interface
+	 * @param name
+	 * @param context
+	 * @param project
+	 */
 	protected Interface( String name, Context context, Project project ) {
 		super( INTERFACE, name, context, project );
 	}
 	
 	/**
 	 * creates a function in the interface
-	 * @param name
-	 * @param attr
+	 * @param name - function name
+	 * @param attr -  function attributes
 	 * @param context
 	 * @return
 	 */
@@ -53,7 +65,7 @@ public class Interface extends Type {
 	}
 	
 	/**
-	 * add base interfaces
+	 * adds a base interfaces
 	 * @param interfaceName
 	 */
 	public void addBaseInterface( String interfaceName ) {
@@ -78,7 +90,15 @@ public class Interface extends Type {
 	}
 	
 	/**
-	 * creates the function return
+	 * return all base interface names full depth
+	 * @return
+	 */
+	public Set<String> getAllBaseInterfaceNames() {
+		return getProject().getInterfaceBaseInterfaces( getName() );
+	}
+	
+	/**
+	 * creates the function return which can be assigned to interface function value
 	 * @param type - return type
 	 * @param isArray - true if it i array
 	 * @param context

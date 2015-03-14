@@ -14,29 +14,23 @@
  ******************************************************************************/
 package com.amit.api.compiler.model.tools;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import com.amit.api.compiler.model.Interface;
 
-public class InterfaceChildrenFinder {
+public class InterfaceChildrenFinder extends ChildrenFinder {
 	private List<Interface> elements;
-	private Map<String,Set<String>> childrenMap = new HashMap<String,Set<String>>();
 
 	public InterfaceChildrenFinder( List<Interface> elements ) {
 		this.elements = elements;
-		buildChildrenMap();
-		findAllChildren();		
+		this.process();
 	}
-	
-	private void buildChildrenMap() {
-		childrenMap = new HashMap<String,Set<String>>();
 		
+	@Override
+	protected void buildChildrenMap(Map<String, Set<String>> childrenMap) {
 		for( Interface element : elements ) {
 			for( String bintName : element.getBaseInterfaceNames() ) {
 				Set<String> children = childrenMap.get( bintName );
@@ -46,22 +40,6 @@ public class InterfaceChildrenFinder {
 				}
 				children.add( element.getName() );
 			}
-		}
-	}
-	
-	private void findAllChildren() {
-		List<String> nodes = new ArrayList<String>();
-		nodes.addAll( childrenMap.keySet() );
-
-		while( !nodes.isEmpty() ) {
-			String name = nodes.remove( 0 );
-			Set<String> children = childrenMap.get( name );
-			
-			for( Entry<String, Set<String>> item : childrenMap.entrySet() ) {
-				if( item.getValue().contains( name) ) {
-					item.getValue().addAll( children );
-				}
-			}
-		}
+		}		
 	}
 }

@@ -14,32 +14,51 @@
  ******************************************************************************/
 package com.amit.api.compiler.model.tools;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
-import com.amit.api.compiler.model.TypeCommonComposite;
-
-public class TypeCommonCompositeChildrenFinder  extends ChildrenFinder {
-	private List<? extends TypeCommonComposite> elements;
+/**
+ * finds all children in a directional graph
+ * Ex:
+ * a -> b, c
+ * b -> c, f
+ * c -> g
+ * will result:
+ * a -> b, c, g, f
+ * b -> c, f, g
+ * c -> g 
+ */
+public abstract class ChildrenFinder {
+	private Map<String,Set<String>> childrenMap = new HashMap<String,Set<String>>();
 	
-	public TypeCommonCompositeChildrenFinder( List<? extends TypeCommonComposite> elements ) {
-		this.elements = elements;
-		this.process();
+	public Map<String,Set<String>> getAllChildren() {
+		return childrenMap;
 	}
 	
-	@Override
-	protected void buildChildrenMap(Map<String, Set<String>> childrenMap) {
-		for( TypeCommonComposite element : elements ) {
-			if( element.getBaseTypeName() != null ) {
-				Set<String> children = childrenMap.get( element.getBaseTypeName() );
-				if( children == null ) {
-					children = new HashSet<String>();
-					childrenMap.put( element.getBaseTypeName(), children );
+	protected void process() {
+		buildChildrenMap( childrenMap );
+		findAllChildren();
+	}
+	
+	protected abstract void buildChildrenMap( Map<String,Set<String>> childrenMap );
+	
+	private void findAllChildren() {
+		List<String> nodes = new ArrayList<String>();
+		nodes.addAll( childrenMap.keySet() );
+
+		while( !nodes.isEmpty() ) {
+			String name = nodes.remove( 0 );
+			Set<String> children = childrenMap.get( name );
+			
+			for( Entry<String, Set<String>> item : childrenMap.entrySet() ) {
+				if( item.getValue().contains( name) ) {
+					item.getValue().addAll( children );
 				}
-				children.add( element.getName() );
 			}
-		}		
+		}
 	}	
 }

@@ -19,27 +19,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.amit.api.compiler.model.TypeCommonComposite;
+import com.amit.api.compiler.model.Interface;
 
-public class TypeCommonCompositeChildrenFinder  extends ChildrenFinder {
-	private List<? extends TypeCommonComposite> elements;
-	
-	public TypeCommonCompositeChildrenFinder( List<? extends TypeCommonComposite> elements ) {
+public class InterfaceBaseChildrenFinder extends ChildrenFinder {
+
+	private List<Interface> elements;
+
+	public InterfaceBaseChildrenFinder( List<Interface> elements ) {
 		this.elements = elements;
 		this.process();
 	}
 	
 	@Override
 	protected void buildChildrenMap(Map<String, Set<String>> childrenMap) {
-		for( TypeCommonComposite element : elements ) {
-			if( element.getBaseTypeName() != null ) {
-				Set<String> children = childrenMap.get( element.getBaseTypeName() );
-				if( children == null ) {
-					children = new HashSet<String>();
-					childrenMap.put( element.getBaseTypeName(), children );
-				}
-				children.add( element.getName() );
+		for( Interface element : elements ) {
+			Set<String> children = childrenMap.get( element.getName() );
+			if( children == null ) {
+				children = new HashSet<String>();
+				childrenMap.put( element.getName(), children );
 			}
-		}		
-	}	
+			children.addAll( element.getBaseInterfaceNames() );
+		}
+	}
 }

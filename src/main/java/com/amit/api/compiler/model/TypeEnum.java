@@ -20,6 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * emit enum Ex:
+ * 
+ * enum Color {
+ * 	red = 1,
+ *  blue = 2
+ *  }
+ */
 public class TypeEnum extends Type {
 	
 	private Map<String, TypeEnumValue> values = new HashMap<String, TypeEnumValue>();

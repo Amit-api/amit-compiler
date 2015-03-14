@@ -17,6 +17,7 @@ package com.amit.api.compiler.parser;
 import static org.junit.Assert.*;
 
 import java.net.URISyntaxException;
+import java.util.HashSet;
 
 import org.junit.Test;
 
@@ -163,6 +164,25 @@ public class InterfaceTest extends TestBase {
 		assertEquals( "d", arg.getName() );
 		assertTrue( arg.isArray() );
 		assertFalse( arg.isRequired() );
+	}
+	
+	@SuppressWarnings("serial")
+	@Test
+	public void testDependency() throws Exception {
+		AmitParser parser = AmitParser.fromFile( path( "int-dep.amit" ) );
+		Project project = parser.parse();
+	
+		assertEquals( new HashSet<String>(), project.getInterfaceBaseInterfaces( "I1" ) );
+		assertEquals( new HashSet<String>(), project.getInterfaceBaseInterfaces( "I2" ) );
+		assertEquals( new HashSet<String>(){{add("I1");}}, project.getInterfaceBaseInterfaces( "I3" ) );
+		assertEquals( new HashSet<String>(){{add("I1");add("I2");add("I3");}}, project.getInterfaceBaseInterfaces( "I4" ) );
+		assertEquals( new HashSet<String>(){{add("I1");add("I2");add("I3");add("I4");}}, project.getInterfaceBaseInterfaces( "I5" ) );
+		
+		assertEquals( new HashSet<String>(), project.getInterfaceChildren( "I5" ) );
+		assertEquals( new HashSet<String>(){{add("I5");}}, project.getInterfaceChildren( "I4" ) );
+		assertEquals( new HashSet<String>(){{add("I5");add("I4");}}, project.getInterfaceChildren( "I3" ) );
+		assertEquals( new HashSet<String>(){{add("I5");add("I4");}}, project.getInterfaceChildren( "I2" ) );
+		assertEquals( new HashSet<String>(){{add("I5");add("I4");add("I3");}}, project.getInterfaceChildren( "I1" ) );	
 	}
 	
 	@Test( expected = ModuleElementException.class )
