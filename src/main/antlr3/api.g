@@ -97,8 +97,9 @@ function_throws_more [Function fun]
 	
 
 function_ret [ReturnValue<FunctionReturn> returnType,Interface interf]
-	: ID { returnType.set( interf.createFunctionReturn( $ID.text, false, new Context( $ID ) ) ); }
-	| ARRAY ID { returnType.set( interf.createFunctionReturn( $ID.text, true, new Context( $ID ) ) ); }
+	: ID { returnType.set( interf.getProject().createFunctionReturn( $ID.text, false, false, new Context( $ID ) ) ); }
+	| ARRAY ID { returnType.set( interf.getProject().createFunctionReturn( $ID.text, true, false, new Context( $ID ) ) ); }
+	| MAP ID { returnType.set( interf.getProject().createFunctionReturn( $ID.text, false, true, new Context( $ID ) ) ); }
 	;
 		
 function_args [Function fun] 
@@ -109,13 +110,16 @@ function_arg [Function fun]
 @init {
 	AttributeList attrList = fun.createAttributeList();
 }
-	: attributes [attrList] ID function_arg_end [$ID.text, false, false, attrList, fun] 
-	| attributes [attrList] ARRAY ID function_arg_end [$ID.text, true, false, attrList, fun]
-	| attributes [attrList] REQUIRED ID function_arg_end [$ID.text, false, true, attrList, fun]
+	: attributes [attrList] ID function_arg_end [$ID.text, false, false, false, attrList, fun] 
+	| attributes [attrList] ARRAY ID function_arg_end [$ID.text, false, true, false, attrList, fun]
+	| attributes [attrList] MAP ID function_arg_end [$ID.text, false, false, true, attrList, fun]
+	| attributes [attrList] REQUIRED ID function_arg_end [$ID.text, true, false, false, attrList, fun]
+	| attributes [attrList] REQUIRED ARRAY ID function_arg_end [$ID.text, true, true, false, attrList, fun]
+	| attributes [attrList] REQUIRED MAP ID function_arg_end [$ID.text, true, false, true, attrList, fun]
 	;
 
-function_arg_end [String type, boolean isArray, boolean isRequired, AttributeList attrList, Function fun]
-	: ID { fun.createArgument( type, $ID.text, isArray, isRequired, attrList, new Context( $ID ) ); }
+function_arg_end [String type, boolean isRequired, boolean isArray, boolean isMap, AttributeList attrList, Function fun]
+	: ID { fun.createArgument( type, $ID.text, isRequired, isArray, isMap, attrList, new Context( $ID ) ); }
 	;
 
 exception_statment[Project project]
@@ -145,13 +149,16 @@ type_item [TypeCommonComposite type]
 @init {
 	AttributeList attrList = type.createAttributeList();
 }
-	: attributes [attrList] ID type_value[false, false, $ID.text, type]
-	| attributes [attrList] REQUIRED ID type_value[false, true, $ID.text, type]
-	| attributes [attrList] ARRAY ID type_value[true, false, $ID.text, type]
+	: attributes [attrList] ID type_value[$ID.text, false, false, false, type]
+	| attributes [attrList] ARRAY ID type_value[$ID.text, false, true, false, type]
+	| attributes [attrList] MAP ID type_value[$ID.text, false, false, true, type]
+	| attributes [attrList] REQUIRED ID type_value[$ID.text, true, false, false, type]
+	| attributes [attrList] REQUIRED ARRAY ID type_value[$ID.text, true, true, false, type]
+	| attributes [attrList] REQUIRED MAP ID type_value[$ID.text, true, false, true, type]
 	;
 
-type_value [boolean isArray, boolean isRequired, String memberType, TypeCommonComposite type]
-	: ID SEMICOLON { type.addMember( memberType, $ID.text, isArray, isRequired, new Context( $ID ) ); }
+type_value [String memberType, boolean isRequired, boolean isArray, boolean isMap, TypeCommonComposite type]
+	: ID SEMICOLON { type.addMember( memberType, $ID.text, isRequired, isArray, isMap, new Context( $ID ) ); }
 	;
 			
 enum_statment [Project project]
@@ -197,6 +204,9 @@ number_value
 	;
 ARRAY	
 	: 'array'
+	;
+MAP
+	: 'map'
 	;
 	
 REQUIRED 

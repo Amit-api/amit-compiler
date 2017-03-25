@@ -14,9 +14,9 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-public class FunctionArgument extends TypeArgument {
-
-	protected FunctionArgument( String type, String name, Context context, Project project ) {
-		super( type, name, context, project );
+public class FunctionArgument extends TypedItem {
+	protected FunctionArgument(String type, String name, boolean isRequired,
+			boolean isArray, boolean isMap, Context context, Project project) {
+		super(type, name, false, isRequired, isArray, isMap, context, project);
 	}
 }

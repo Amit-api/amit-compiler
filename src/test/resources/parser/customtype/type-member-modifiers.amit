@@ -5,4 +5,7 @@ type Modfiers {
 	required int a;
 	int b;
 	array string c;
+	map string d;
+	required array string e;
+	required map string f;
 }

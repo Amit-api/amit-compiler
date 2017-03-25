@@ -97,17 +97,6 @@ public class Interface extends Type {
 		baseInterfaces.add( interfaceName );
 		baseInterfacesList.add( interfaceName );
 	}
-		
-	/**
-	 * creates the function return which can be assigned to interface function value
-	 * @param type return type
-	 * @param isArray true if it i array
-	 * @param context context
-	 * @return function return type
-	 */
-	public FunctionReturn createFunctionReturn( String type, boolean isArray, Context context ) {
-		return getProject().createFunctionReturn(type, isArray, context);
-	}	
 	
 	@Override
 	public void validate() throws ModuleElementException {

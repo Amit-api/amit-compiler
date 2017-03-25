@@ -14,8 +14,9 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
-public class TypeCompositeMember extends TypeArgument {
-	protected TypeCompositeMember( String type, String name, Context context, Project project ) {
-		super( type, name, context, project );
+public class TypeCompositeMember extends TypedItem {
+	protected TypeCompositeMember(String type, String name, boolean isRequired,
+			boolean isArray, boolean isMap, Context context, Project project) {
+		super(type, name, false, isRequired, isArray, isMap, context, project);
 	}
 }

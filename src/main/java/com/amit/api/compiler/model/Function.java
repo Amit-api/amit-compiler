@@ -24,91 +24,104 @@ import java.util.Set;
  * a function : returnType FunctionName( function args ) throws exceptions;
  */
 public class Function extends ProjectElement {
-	private UniqueCollection<FunctionArgument> arguments =  new UniqueCollection<FunctionArgument>( "argument" );
+	private UniqueCollection<FunctionArgument> arguments = new UniqueCollection<FunctionArgument>(
+			"argument");
 	private FunctionReturn returnType;
 	private Set<String> throwsExceptions = new HashSet<String>();
 	private List<String> throwsExceptionsList = new ArrayList<String>();
-	
-	protected Function( String name, Context context, Project project ) {
-		super( name, context, project );
+
+	protected Function(String name, Context context, Project project) {
+		super(name, context, project);
 	}
-	
+
 	/**
 	 * returns function arguments
+	 * 
 	 * @return argument list
 	 */
 	public List<FunctionArgument> getArguments() {
 		return arguments.readonlyList();
 	}
-	
+
 	/**
 	 * get function return type
+	 * 
 	 * @return return type
 	 */
 	public FunctionReturn getReturn() {
 		return returnType;
 	}
-	
+
 	/**
 	 * returns throws exception name list
+	 * 
 	 * @return exception name list
 	 */
 	public List<String> getThrowsExceptionNames() {
-		return Collections.unmodifiableList( throwsExceptionsList );
+		return Collections.unmodifiableList(throwsExceptionsList);
 	}
 
 	/**
-	 * creates a function argument
-	 * @param type argument type
-	 * @param name argument name
-	 * @param isArray is array or not
-	 * @param isRequired is required or not
-	 * @param attr attribute list
-	 * @param context context
-	 * @return function argument
+	 * create a function argument
+	 * 
+	 * @param type
+	 * @param name
+	 * @param isRequired
+	 * @param isMap
+	 * @param isArray
+	 * @param attr
+	 * @param context
+	 * @return
 	 */
-	public FunctionArgument createArgument( String type, String name, boolean isArray,
-			boolean isRequired, AttributeList attr, Context context ) {
-		
-		FunctionArgument arg = new FunctionArgument( type, name, context, getProject() );
-		arg.setAttributeList( attr );
-		arg.setIsArray( isArray );
-		arg.setIsRequired( isRequired );
-		
-		arguments.add( arg );
+	public FunctionArgument createArgument(String type, String name,
+			boolean isRequired, boolean isArray, boolean isMap,
+			AttributeList attr, Context context) {
+
+		FunctionArgument arg = new FunctionArgument(type, name, isRequired,
+				isArray, isMap, context, getProject());
+		arg.setAttributeList(attr);
+
+		arguments.add(arg);
 		return arg;
 	}
-	
+
 	/**
 	 * set function return type
-	 * @param returnType return type
+	 * 
+	 * @param returnType
+	 *            return type
 	 */
-	public void setReturn( FunctionReturn returnType ) {
-		if( returnType.getProject() != this.getProject() ) {
-			throw new IllegalArgumentException( "the return type must belong to the project" );
+	public void setReturn(FunctionReturn returnType) {
+		if (returnType.getProject() != this.getProject()) {
+			throw new IllegalArgumentException(
+					"the return type must belong to the project");
 		}
-		
+
 		this.returnType = returnType;
 	}
-	
+
 	/**
 	 * adds throws exception
-	 * @param exceptionName exception name
+	 * 
+	 * @param exceptionName
+	 *            exception name
 	 */
-	public void addThrowsException( String exceptionName ) {
-		if( exceptionName == null || exceptionName.isEmpty() ) {
-			throw new IllegalArgumentException( "exceptionName must be not null or empty" );
+	public void addThrowsException(String exceptionName) {
+		if (exceptionName == null || exceptionName.isEmpty()) {
+			throw new IllegalArgumentException(
+					"exceptionName must be not null or empty");
 		}
-		
-		if( throwsExceptions.contains( exceptionName ) ) {
-			throw new ModuleElementException(
-					String.format( "duplicate throws exception for name '%s'", exceptionName ), this );
+
+		if (throwsExceptions.contains(exceptionName)) {
+			throw new ModuleElementException(String.format(
+					"duplicate throws exception for name '%s'", exceptionName),
+					this);
 		}
-		
-		throwsExceptions.add( exceptionName );
-		throwsExceptionsList.add( exceptionName );		
-	}	
-	
+
+		throwsExceptions.add(exceptionName);
+		throwsExceptionsList.add(exceptionName);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -118,17 +131,17 @@ public class Function extends ProjectElement {
 		validateArgs();
 		validateExceptions();
 	}
-	
+
 	private void validateArgs() throws ModuleElementException {
 		returnType.validate();
-		for( FunctionArgument arg : arguments ) {
+		for (FunctionArgument arg : arguments) {
 			arg.validate();
-		}		
+		}
 	}
-	
+
 	private void validateExceptions() throws ModuleElementException {
-		for( String exception : throwsExceptionsList ) {
-			validateType( exception, Type.EXCEPTION );
-		}		
+		for (String exception : throwsExceptionsList) {
+			validateType(exception, Type.EXCEPTION);
+		}
 	}
 }

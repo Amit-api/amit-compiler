@@ -6,6 +6,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry excluding="**" kind="src" path="src/main/antlr3"/>
 	<classpathentry kind="src" path="src/tmp/java"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>

@@ -15,80 +15,78 @@
 package com.amit.api.compiler.model;
 
 /**
- * an argument which contains a type which can be array type as well 
+ * and item which can have a type and type modifiers like array map,...
  */
-public class TypeArgument extends ProjectElement {
+public class TypedItem extends ProjectElement {
 	private String typeName;
 	private boolean isArray = false;
 	private boolean isRequired = false;
 	private boolean canBeVoid = false;
-	
+	private boolean isMap = false;
+
 	/**
-	 * returns the item type
+	 * returns the type name
+	 * 
 	 * @return item type name
 	 */
 	public String getTypeName() {
 		return typeName;
-	}	
-	
+	}
+
 	/**
-	 * returns true if composite member is an array
+	 * returns true if the type modifier is an array
+	 * 
 	 * @return true or false
 	 */
 	public boolean isArray() {
 		return isArray;
 	}
-	
+
+	/**
+	 * returns true if the type modifier is a map
+	 * 
+	 * @return
+	 */
+	public boolean isMap() {
+		return isMap;
+	}
+
 	/**
 	 * return true if member is required
+	 * 
 	 * @return true or false
 	 */
 	public boolean isRequired() {
 		return isRequired;
 	}
 
-	protected TypeArgument( String type, String name, Context context, Project project ) {
-		this( type, name, context, false, project );
-	}
+	protected TypedItem(String type, String name, boolean canBeVoid,
+			boolean isRequired, boolean isArray, boolean isMap,
+			Context context, Project project) {
+		super(name, context, project);
 
-	protected TypeArgument( String type, String name, Context context, boolean canBeVoid, Project project ) {
-		super( name, context, project );
-		
-		if( type == null || type.isEmpty() ) {
-			throw new IllegalArgumentException( "type must be not null or empty" );
+		if (type == null || type.isEmpty()) {
+			throw new IllegalArgumentException("type must be not null or empty");
 		}
-		
+
 		this.typeName = type;
 		this.canBeVoid = canBeVoid;
+		this.isRequired = isRequired;
+		this.isArray = isArray;
+		this.isMap = isMap;
 	}
 
-	/**
-	 * sets the isRequired flag
-	 * @param isRequired required flag
-	 */
-	public void setIsRequired( boolean isRequired ) {
-		this.isRequired = isRequired;
-	}
-	
-	/**
-	 * sets is array flag
-	 * @param isArray is array flag
-	 */
-	public void setIsArray( boolean isArray ) {
-		this.isArray = isArray;
-	}
-	
 	/***
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void validate() throws ModuleElementException {
 		super.validate();
-		
-		validateType( getTypeName(), Type.PRIMITIVE, Type.ENUM, Type.COMPOSITE );
-		
-		if( !canBeVoid && getTypeName().equals( PrimitiveTypeNames.VOID ) ) {
-			throw new ModuleElementException( "the type can't be void ", this );
+
+		validateType(getTypeName(), Type.PRIMITIVE, Type.ENUM, Type.COMPOSITE);
+
+		if (!canBeVoid && getTypeName().equals(PrimitiveTypeNames.VOID)) {
+			throw new ModuleElementException("the type can't be void ", this);
 		}
 	}
 }
