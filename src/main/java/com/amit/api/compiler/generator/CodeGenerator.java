@@ -39,97 +39,109 @@ public class CodeGenerator {
 	private String outputPath;
 	private Project project;
 	private Configuration cfg;
-	public CodeGenerator( Project project, String templatePath, String outputPath ) throws Exception {
-		this( project, null, templatePath, outputPath );
+
+	public CodeGenerator(Project project, String templatePath, String outputPath)
+			throws Exception {
+		this(project, null, templatePath, outputPath);
 	}
-	
-	public CodeGenerator( Project project, String jarClass, String templatePath, String outputPath ) throws Exception {
+
+	public CodeGenerator(Project project, String jarClass, String templatePath,
+			String outputPath) throws Exception {
 		this.outputPath = outputPath;
 		this.project = project;
 
-		cfg = new Configuration( Configuration.VERSION_2_3_21 );
+		cfg = new Configuration(Configuration.VERSION_2_3_21);
 
-		if( jarClass != null ) {
-			cfg.setTemplateLoader( new JarTemplateLoader( jarClass, templatePath ) );
+		if (jarClass != null) {
+			cfg.setTemplateLoader(new JarTemplateLoader(jarClass, templatePath));
 		} else {
-			cfg.setDirectoryForTemplateLoading( new File( templatePath ) );			
+			cfg.setDirectoryForTemplateLoading(new File(templatePath));
 		}
-		
+
 		cfg.setDefaultEncoding("UTF-8");
 
-		cfg.setTemplateExceptionHandler( TemplateExceptionHandler.RETHROW_HANDLER );		
+		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 	}
-	
-	public void generate(  ) throws IOException, TemplateException {
-		process( null, "start.ftl", "start.out" );
-	}
-	
-	public void process( Object obj, String templateFileName, String outFileName ) throws IOException, TemplateException {
-		Template template = cfg.getTemplate( templateFileName );
 
-		Map<String, Object> root = createObjects( obj );	
-		
+	public void generate() throws IOException, TemplateException {
+		process(null, "start.ftl", "start.out");
+	}
+
+	public void process(Object obj, String templateFileName, String outFileName)
+			throws IOException, TemplateException {
+		Template template = cfg.getTemplate(templateFileName);
+
+		Map<String, Object> root = createObjects(obj);
+
 		Writer out = null;
 		try {
-			out = createWrite( outFileName );
-			template.process( root, out );
+			out = createWrite(outFileName);
+			template.process(root, out);
 			out.flush();
 		} finally {
-			if( out != null ) {
+			if (out != null) {
 				out.close();
 			}
 		}
 	}
-	
-	private Writer createWrite( String outFileName ) throws FileNotFoundException, UnsupportedEncodingException {
-		Path filePath = Paths.get( outputPath , outFileName );
+
+	private Writer createWrite(String outFileName)
+			throws FileNotFoundException, UnsupportedEncodingException {
+		Path filePath = Paths.get(outputPath, outFileName);
 		filePath.toFile().getParentFile().mkdirs();
-		return new PrintWriter( filePath.toString(), "UTF-8" );
+		return new PrintWriter(filePath.toString(), "UTF-8");
 	}
-	
-	private Map<String, Object> createObjects( Object obj ) {
-		Map<String, Object> root = new HashMap<String, Object>();		
-		root.put( "project", project );
-		root.put( "amit", new Runtime() );
-		root.put( "object", obj );
-		
+
+	private Map<String, Object> createObjects(Object obj) {
+		Map<String, Object> root = new HashMap<String, Object>();
+		root.put("project", project);
+		root.put("amit", new Runtime());
+		root.put("object", obj);
+
 		return root;
 	}
-	
+
 	/**
 	 * generator runtime
 	 */
-	public class Runtime {		
-		public List<String> generate( String entity, String templateName, String outFile ) throws IOException, TemplateException {
+	public class Runtime {
+		public List<String> generate(String entity, String templateName,
+				String outFile) throws IOException, TemplateException {
 			List<String> ret = new ArrayList<String>();
-			
-			if( entity.equals( "type" ) ) {
-				generate( project.getCompositeTypes(), templateName, outFile, ret );
-			} else if( entity.equals( "interface" ) ) {
-				generate( project.getInterfaces(), templateName, outFile, ret );				
-			} else if( entity.equals( "enum" ) ) {
-				generate( project.getEnums(), templateName, outFile, ret );								
-			} else if( entity.equals( "service" ) ) {
-				generate( project.getServices(), templateName, outFile, ret );												
-			} else if( entity.equals( "exception" ) ) {
-				generate( project.getExceptions(), templateName, outFile, ret );																
+
+			if (entity.equals("type")) {
+				generate(project.getCompositeTypes(), templateName, outFile,
+						ret);
+			} else if (entity.equals("interface")) {
+				generate(project.getInterfaces(), templateName, outFile, ret);
+			} else if (entity.equals("enum")) {
+				generate(project.getEnums(), templateName, outFile, ret);
+			} else if (entity.equals("service")) {
+				generate(project.getServices(), templateName, outFile, ret);
+			} else if (entity.equals("exception")) {
+				generate(project.getExceptions(), templateName, outFile, ret);
+			} else if (entity.equals("project")) {
+				generate(null, templateName, outFile, ret);
 			} else {
-				throw new IllegalArgumentException( String.format( "unknown %s entity", entity ) ); 
+				throw new IllegalArgumentException(String.format(
+						"unknown %s entity", entity));
 			}
 			return ret;
 		}
-		
-		public String toPath( String value, String separator ) {
-			String values[] = value.split( separator );
-			return Paths.get( "", values ).toString();
+
+		public String toPath(String value, String separator) {
+			String values[] = value.split(separator);
+			return Paths.get("", values).toString();
 		}
-					
-		private void generate( List<? extends ProjectElement> elements, String templateName, 
-				String outFile, List<String> ret ) throws IOException, TemplateException {
-			for( ProjectElement element : elements ) {
-				String fileName = String.format( outFile, element.getName() );
-				process( element, templateName, fileName );
-				ret.add( String.format( "generated: %s, file: %s", element.getName(), fileName ) );				
+
+		private void generate(List<? extends ProjectElement> elements,
+				String templateName, String outFile, List<String> ret)
+				throws IOException, TemplateException {
+			for (ProjectElement element : elements) {
+				String fileName = String.format(outFile, element.getName());
+				process(element, templateName, fileName);
+				ret.add(String.format("generated: %s, file: %s",
+						element.getName(), fileName));
 			}
 		}
 	}
