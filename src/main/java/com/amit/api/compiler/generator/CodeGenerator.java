@@ -64,6 +64,10 @@ public class CodeGenerator {
 	}
 
 	public void generate() throws IOException, TemplateException {
+		for(File file: Paths.get(outputPath).toFile().listFiles()) 
+		    if (!file.isDirectory()) 
+		        file.delete();
+		
 		process(null, "start.ftl", "start.out");
 	}
 
@@ -121,7 +125,8 @@ public class CodeGenerator {
 			} else if (entity.equals("exception")) {
 				generate(project.getExceptions(), templateName, outFile, ret);
 			} else if (entity.equals("project")) {
-				generate(null, templateName, outFile, ret);
+				process(null, templateName, outFile);
+				ret.add(outFile);
 			} else {
 				throw new IllegalArgumentException(String.format(
 						"unknown %s entity", entity));

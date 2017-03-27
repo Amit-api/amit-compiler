@@ -14,6 +14,7 @@
  ******************************************************************************/
 package com.amit.api.compiler.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,29 @@ public class TypeCommonComposite extends Type {
 	 */
 	public List<TypeCompositeMember> getMembers() {
 		return members.readonlyList();
+	}
+
+	/**
+	 * returns all the composite members including inherited ones.
+	 * 
+	 * @return
+	 */
+	public List<TypeCompositeMember> getAllMembers() {
+		List<TypeCompositeMember> result = new ArrayList<TypeCompositeMember>();
+
+		TypeCommonComposite tcomp = this;
+
+		for (;;) {
+			result.addAll(tcomp.getMembers());
+
+			if (tcomp.getBaseTypeName() == null) {
+				break;
+			}
+
+			tcomp = (TypeCommonComposite) getProject().getType(baseTypeName);
+		}
+
+		return result;
 	}
 
 	/**
@@ -70,7 +94,7 @@ public class TypeCommonComposite extends Type {
 	 * @param context
 	 */
 	public void addMember(String type, String name, boolean isRequired,
-		 boolean isArray, boolean isMap, Context context) {
+			boolean isArray, boolean isMap, Context context) {
 		TypeCompositeMember member = new TypeCompositeMember(type, name,
 				isRequired, isArray, isMap, context, getProject());
 

@@ -35,18 +35,15 @@ public class JarTemplateLoader implements TemplateLoader {
 		this.path = path;
 	}
 	
-	@Override
 	public Object findTemplateSource(String name) throws IOException {
 		String rpath = path + "/" + name;		
 		return classLoader.getResourceAsStream( rpath );
 	}
 
-	@Override
 	public long getLastModified(Object templateSource) {
 		return -1;
 	}
 
-	@Override
 	public Reader getReader(Object templateSource, String encoding)
 			throws IOException {
 		InputStream stream = (InputStream)templateSource;
@@ -54,7 +51,6 @@ public class JarTemplateLoader implements TemplateLoader {
 		return new InputStreamReader( stream, Charset.forName( encoding ) );
 	}
 
-	@Override
 	public void closeTemplateSource(Object templateSource) throws IOException {
 		InputStream stream = (InputStream)templateSource;
 		stream.close();
