@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -15,7 +15,7 @@
 package com.amit.api.compiler.model;
 
 public class TypePrimitive extends Type {
-	public TypePrimitive( String name, Project project ) {
-		super( PRIMITIVE, name, null, project );
+	public TypePrimitive(String name, Project project) {
+		super(PRIMITIVE, name, null, project);
 	}
 }

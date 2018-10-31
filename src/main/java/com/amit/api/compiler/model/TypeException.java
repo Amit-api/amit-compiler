@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -15,16 +15,16 @@
 package com.amit.api.compiler.model;
 
 public class TypeException extends TypeCommonComposite {
-	public TypeException( String name, Context context, Project project ) {
-		super( EXCEPTION, name, context, project );
+	public TypeException(String name, Context context, Project project) {
+		super(EXCEPTION, name, context, project);
 	}
 
 	@Override
 	public void validate() throws ModuleElementException {
 		super.validate();
-		
-		if( getBaseTypeName() != null ) {
-			validateType( getBaseTypeName(), Type.EXCEPTION );
+
+		if (getBaseTypeName() != null) {
+			validateType(getBaseTypeName(), Type.EXCEPTION);
 		}
-	}	
+	}
 }

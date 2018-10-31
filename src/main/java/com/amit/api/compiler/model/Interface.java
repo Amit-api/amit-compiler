@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -21,93 +21,117 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * an amit interface ex:
- * interface IntefaceName : BaseInterface1, ... BaseInterfaceN {
- * 	 ....
- * }
+ * an amit interface ex: interface IntefaceName : BaseInterface1, ...
+ * BaseInterfaceN { .... }
  */
-public class Interface extends Type {
-	private UniqueCollection<Function> functions = new UniqueCollection<Function>( "function" );
+public class Interface extends ProjectElement {
+	private UniqueCollection<Function> functions = new UniqueCollection<Function>(
+			"function");
 	private Set<String> baseInterfaces = new HashSet<String>();
 	private List<String> baseInterfacesList = new ArrayList<String>();
-	
+
 	/**
 	 * returns interface functions
+	 * 
 	 * @return function list
 	 */
 	public List<Function> getFunctions() {
 		return functions.readonlyList();
 	}
-	
+
 	/**
-	 * returns the list of base interface names 
+	 * returns the list of base interface names
+	 * 
 	 * @return interface name list
 	 */
 	public List<String> getBaseInterfaceNames() {
-		return Collections.unmodifiableList( baseInterfacesList );
+		return Collections.unmodifiableList(baseInterfacesList);
 	}
-	
+
 	/**
 	 * return all base interface names full depth
+	 * 
 	 * @return interface name set
 	 */
 	public Set<String> getAllBaseInterfaceNames() {
-		return getProject().getInterfaceBaseInterfaces( getName() );
+		return getProject().getInterfaceBaseInterfaces(getName());
 	}
-	
+
 	/**
 	 * creates an interface
-	 * @param name interface name
-	 * @param context context
-	 * @param project project
+	 * 
+	 * @param name
+	 *            interface name
+	 * @param context
+	 *            context
+	 * @param project
+	 *            project
 	 */
-	protected Interface( String name, Context context, Project project ) {
-		super( INTERFACE, name, context, project );
+	protected Interface(String name, Context context, Project project) {
+		super(name, context, project);
 	}
-	
+
 	/**
 	 * creates a function in the interface
-	 * @param name function name
-	 * @param functionReturn function return
-	 * @param attr function attributes
-	 * @param context context
+	 * 
+	 * @param name
+	 *            function name
+	 * @param functionReturn
+	 *            function return
+	 * @param attr
+	 *            function attributes
+	 * @param context
+	 *            context
 	 * @return function
 	 */
-	public Function createFunction( String name, FunctionReturn functionReturn, AttributeList attr, Context context ) {
-		Function fun = new Function( name, context, getProject() );
-		fun.setAttributeList( attr );
-		fun.setReturn( functionReturn );
-		functions.add( fun );
+	public Function createFunction(String name, FunctionReturn functionReturn,
+			AttributeList attr, Context context) {
+		Function fun = new Function(name, context, this, getProject());
+		fun.setAttributeList(attr);
+		fun.setReturn(functionReturn);
+		functions.add(fun);
 		return fun;
 	}
-		
+
 	/**
 	 * adds a base interfaces
-	 * @param interfaceName interface name
+	 * 
+	 * @param interfaceName
+	 *            interface name
 	 */
-	public void addBaseInterface( String interfaceName ) {
-		if( interfaceName == null || interfaceName.isEmpty() ) {
-			throw new IllegalArgumentException( "interfaceName must be not null or empty" );
+	public void addBaseInterface(String interfaceName) {
+		if (interfaceName == null || interfaceName.isEmpty()) {
+			throw new IllegalArgumentException(
+					"interfaceName must be not null or empty");
 		}
-		
-		if( baseInterfaces.contains( interfaceName ) ) {
-			throw new ModuleElementException( String.format( "duplicate inheritance for name '%s'", interfaceName ), this );
+
+		if (baseInterfaces.contains(interfaceName)) {
+			throw new ModuleElementException(String.format(
+					"duplicate inheritance for name '%s'", interfaceName), this);
 		}
-		
-		baseInterfaces.add( interfaceName );
-		baseInterfacesList.add( interfaceName );
+
+		baseInterfaces.add(interfaceName);
+		baseInterfacesList.add(interfaceName);
 	}
 	
+	/**
+	 * return the funciton by name
+	 * @return
+	 */
+	public Function getFunction(String functionName) {
+		return functions.get(functionName);
+	}
+
 	@Override
 	public void validate() throws ModuleElementException {
 		super.validate();
-		
-		for( Function fun : functions ) {
+
+		for (Function fun : functions) {
 			fun.validate();
 		}
-		
-		for( String interfName : baseInterfacesList ) {
-			validateType( interfName, Type.INTERFACE );
+
+		for (String interfName : baseInterfacesList) {
+			validateInterface(interfName);
 		}
-	}	
+	}
 }

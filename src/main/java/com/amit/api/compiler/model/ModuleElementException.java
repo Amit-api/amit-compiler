@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -18,34 +18,34 @@ public class ModuleElementException extends IllegalArgumentException {
 	private static final long serialVersionUID = 1L;
 
 	private ProjectElement element;
-	
-	public ModuleElementException( String message, ProjectElement element ) {
-		super( message );
+
+	public ModuleElementException(String message, ProjectElement element) {
+		super(message);
 		this.element = element;
 	}
-	
+
 	public ProjectElement getModuleElement() {
 		return element;
 	}
-	
+
 	@Override
 	public String getMessage() {
-		StringBuffer sb = new StringBuffer();
-		if( element != null ) {
-			if( element.getContext() != null ) {
-				sb.append( "line(" );
-				sb.append( element.getContext().getLineNumber() );
-				sb.append( ":" );
-				sb.append(  element.getContext().getPositionInLine() );
-				sb.append( ") " );
+		StringBuilder sb = new StringBuilder();
+		if (element != null) {
+			if (element.getContext() != null) {
+				sb.append("line(");
+				sb.append(element.getContext().getLineNumber());
+				sb.append(":");
+				sb.append(element.getContext().getPositionInLine());
+				sb.append(") ");
 			}
-			sb.append( "at element <");
-			sb.append( element.getName() );
-			sb.append( "> " );
+			sb.append("at element <");
+			sb.append(element.getName());
+			sb.append("> ");
 		}
-		sb.append( "error: " );
-		sb.append( super.getMessage() );
-		
+		sb.append("error: ");
+		sb.append(super.getMessage());
+
 		return sb.toString();
 	}
 }

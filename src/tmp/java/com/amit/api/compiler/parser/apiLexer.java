@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 api.g 2017-03-25 17:01:58
+// $ANTLR 3.5.2 api.g 2018-09-27 11:46:18
 
 package com.amit.api.compiler.parser;
 
@@ -12,42 +12,50 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class apiLexer extends Lexer {
 	public static final int EOF=-1;
-	public static final int ARRAY=4;
-	public static final int ASTART=5;
-	public static final int ASTOP=6;
-	public static final int CHAR=7;
-	public static final int COLON=8;
-	public static final int COMMA=9;
-	public static final int COMMENT=10;
-	public static final int END=11;
-	public static final int ENUM=12;
-	public static final int EQUAL=13;
-	public static final int ESC_SEQ=14;
-	public static final int EXCEPTION=15;
-	public static final int EXPONENT=16;
-	public static final int FLOAT=17;
-	public static final int HEX=18;
-	public static final int HEX_DIGIT=19;
-	public static final int ID=20;
-	public static final int INCLUDE=21;
-	public static final int INT=22;
-	public static final int INTERFACE=23;
-	public static final int LIB=24;
-	public static final int MAP=25;
-	public static final int MINUS=26;
-	public static final int OCTAL_ESC=27;
-	public static final int PCLOSE=28;
-	public static final int POPEN=29;
-	public static final int PROJECT=30;
-	public static final int REQUIRED=31;
-	public static final int SEMICOLON=32;
-	public static final int SERVICE=33;
-	public static final int START=34;
-	public static final int STRING=35;
-	public static final int THROWS=36;
-	public static final int TYPE=37;
-	public static final int UNICODE_ESC=38;
-	public static final int WS=39;
+	public static final int AND=4;
+	public static final int ARRAY=5;
+	public static final int ASTART=6;
+	public static final int ASTOP=7;
+	public static final int CHAR=8;
+	public static final int COLON=9;
+	public static final int COMMA=10;
+	public static final int COMMENT=11;
+	public static final int DOTDOT=12;
+	public static final int EMPTY=13;
+	public static final int END=14;
+	public static final int ENUM=15;
+	public static final int EQUAL=16;
+	public static final int ESC_SEQ=17;
+	public static final int EXCEPTION=18;
+	public static final int EXPONENT=19;
+	public static final int FOR=20;
+	public static final int HEX=21;
+	public static final int HEX_DIGIT=22;
+	public static final int ID=23;
+	public static final int INCLUDE=24;
+	public static final int INT=25;
+	public static final int INTERFACE=26;
+	public static final int LIB=27;
+	public static final int MAP=28;
+	public static final int MINUS=29;
+	public static final int NOT=30;
+	public static final int NULL=31;
+	public static final int OCTAL_ESC=32;
+	public static final int OR=33;
+	public static final int PCLOSE=34;
+	public static final int POPEN=35;
+	public static final int PROJECT=36;
+	public static final int REQUIRED=37;
+	public static final int SEMICOLON=38;
+	public static final int SERVICE=39;
+	public static final int START=40;
+	public static final int STRING=41;
+	public static final int THROWS=42;
+	public static final int TYPE=43;
+	public static final int UNICODE_ESC=44;
+	public static final int VALIDATE=45;
+	public static final int VALIDATION=46;
+	public static final int WS=47;
 
 	// delegates
 	// delegators
@@ -69,8 +77,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = ARRAY;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:206:2: ( 'array' )
-			// api.g:206:4: 'array'
+			// api.g:299:2: ( 'array' )
+			// api.g:299:4: 'array'
 			{
 			match("array"); 
 
@@ -90,8 +98,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = MAP;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:209:2: ( 'map' )
-			// api.g:209:4: 'map'
+			// api.g:302:2: ( 'map' )
+			// api.g:302:4: 'map'
 			{
 			match("map"); 
 
@@ -111,8 +119,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = REQUIRED;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:213:2: ( 'required' )
-			// api.g:213:4: 'required'
+			// api.g:306:2: ( 'required' )
+			// api.g:306:4: 'required'
 			{
 			match("required"); 
 
@@ -132,8 +140,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = ENUM;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:216:6: ( 'enum' )
-			// api.g:216:8: 'enum'
+			// api.g:309:6: ( 'enum' )
+			// api.g:309:8: 'enum'
 			{
 			match("enum"); 
 
@@ -153,8 +161,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = TYPE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:219:6: ( 'type' )
-			// api.g:219:8: 'type'
+			// api.g:312:6: ( 'type' )
+			// api.g:312:8: 'type'
 			{
 			match("type"); 
 
@@ -174,8 +182,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = LIB;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:222:5: ( 'lib' )
-			// api.g:222:7: 'lib'
+			// api.g:315:5: ( 'lib' )
+			// api.g:315:7: 'lib'
 			{
 			match("lib"); 
 
@@ -195,8 +203,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = PROJECT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:225:9: ( 'project' )
-			// api.g:225:11: 'project'
+			// api.g:318:9: ( 'project' )
+			// api.g:318:11: 'project'
 			{
 			match("project"); 
 
@@ -216,8 +224,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = SERVICE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:228:9: ( 'service' )
-			// api.g:228:11: 'service'
+			// api.g:321:9: ( 'service' )
+			// api.g:321:11: 'service'
 			{
 			match("service"); 
 
@@ -237,8 +245,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = EXCEPTION;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:231:11: ( 'exception' )
-			// api.g:231:13: 'exception'
+			// api.g:324:11: ( 'exception' )
+			// api.g:324:13: 'exception'
 			{
 			match("exception"); 
 
@@ -258,8 +266,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = INCLUDE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:234:9: ( 'include' )
-			// api.g:234:11: 'include'
+			// api.g:327:9: ( 'include' )
+			// api.g:327:11: 'include'
 			{
 			match("include"); 
 
@@ -279,8 +287,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = INTERFACE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:237:11: ( 'interface' )
-			// api.g:237:13: 'interface'
+			// api.g:330:11: ( 'interface' )
+			// api.g:330:13: 'interface'
 			{
 			match("interface"); 
 
@@ -300,8 +308,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = THROWS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:240:8: ( 'throws' )
-			// api.g:240:10: 'throws'
+			// api.g:333:8: ( 'throws' )
+			// api.g:333:10: 'throws'
 			{
 			match("throws"); 
 
@@ -316,13 +324,160 @@ public class apiLexer extends Lexer {
 	}
 	// $ANTLR end "THROWS"
 
+	// $ANTLR start "VALIDATE"
+	public final void mVALIDATE() throws RecognitionException {
+		try {
+			int _type = VALIDATE;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// api.g:336:10: ( 'validate' )
+			// api.g:336:12: 'validate'
+			{
+			match("validate"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "VALIDATE"
+
+	// $ANTLR start "VALIDATION"
+	public final void mVALIDATION() throws RecognitionException {
+		try {
+			int _type = VALIDATION;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// api.g:339:11: ( 'validation' )
+			// api.g:339:13: 'validation'
+			{
+			match("validation"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "VALIDATION"
+
+	// $ANTLR start "NULL"
+	public final void mNULL() throws RecognitionException {
+		try {
+			int _type = NULL;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// api.g:342:6: ( 'null' )
+			// api.g:342:8: 'null'
+			{
+			match("null"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "NULL"
+
+	// $ANTLR start "EMPTY"
+	public final void mEMPTY() throws RecognitionException {
+		try {
+			int _type = EMPTY;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// api.g:345:7: ( 'empty' )
+			// api.g:345:9: 'empty'
+			{
+			match("empty"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "EMPTY"
+
+	// $ANTLR start "FOR"
+	public final void mFOR() throws RecognitionException {
+		try {
+			int _type = FOR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// api.g:348:5: ( 'for' )
+			// api.g:348:7: 'for'
+			{
+			match("for"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "FOR"
+
+	// $ANTLR start "OR"
+	public final void mOR() throws RecognitionException {
+		try {
+			int _type = OR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// api.g:351:4: ( 'or' )
+			// api.g:351:6: 'or'
+			{
+			match("or"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "OR"
+
+	// $ANTLR start "AND"
+	public final void mAND() throws RecognitionException {
+		try {
+			int _type = AND;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// api.g:354:5: ( 'and' )
+			// api.g:354:7: 'and'
+			{
+			match("and"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "AND"
+
 	// $ANTLR start "ID"
 	public final void mID() throws RecognitionException {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:243:5: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-			// api.g:243:7: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// api.g:357:5: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+			// api.g:357:7: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -332,7 +487,7 @@ public class apiLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// api.g:243:31: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// api.g:357:31: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			loop1:
 			while (true) {
 				int alt1=2;
@@ -377,66 +532,66 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = INT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:246:5: ( ( '0' .. '9' )+ )
-			// api.g:246:7: ( '0' .. '9' )+
-			{
-			// api.g:246:7: ( '0' .. '9' )+
-			int cnt2=0;
-			loop2:
-			while (true) {
-				int alt2=2;
-				int LA2_0 = input.LA(1);
-				if ( ((LA2_0 >= '0' && LA2_0 <= '9')) ) {
-					alt2=1;
-				}
+			// api.g:360:5: ( ( '0' .. '9' )+ | '-' ( '0' .. '9' )+ )
+			int alt4=2;
+			int LA4_0 = input.LA(1);
+			if ( ((LA4_0 >= '0' && LA4_0 <= '9')) ) {
+				alt4=1;
+			}
+			else if ( (LA4_0=='-') ) {
+				alt4=2;
+			}
 
-				switch (alt2) {
+			else {
+				NoViableAltException nvae =
+					new NoViableAltException("", 4, 0, input);
+				throw nvae;
+			}
+
+			switch (alt4) {
 				case 1 :
-					// api.g:
+					// api.g:360:7: ( '0' .. '9' )+
 					{
-					if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-						input.consume();
+					// api.g:360:7: ( '0' .. '9' )+
+					int cnt2=0;
+					loop2:
+					while (true) {
+						int alt2=2;
+						int LA2_0 = input.LA(1);
+						if ( ((LA2_0 >= '0' && LA2_0 <= '9')) ) {
+							alt2=1;
+						}
+
+						switch (alt2) {
+						case 1 :
+							// api.g:
+							{
+							if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+								input.consume();
+							}
+							else {
+								MismatchedSetException mse = new MismatchedSetException(null,input);
+								recover(mse);
+								throw mse;
+							}
+							}
+							break;
+
+						default :
+							if ( cnt2 >= 1 ) break loop2;
+							EarlyExitException eee = new EarlyExitException(2, input);
+							throw eee;
+						}
+						cnt2++;
 					}
-					else {
-						MismatchedSetException mse = new MismatchedSetException(null,input);
-						recover(mse);
-						throw mse;
-					}
+
 					}
 					break;
-
-				default :
-					if ( cnt2 >= 1 ) break loop2;
-					EarlyExitException eee = new EarlyExitException(2, input);
-					throw eee;
-				}
-				cnt2++;
-			}
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "INT"
-
-	// $ANTLR start "FLOAT"
-	public final void mFLOAT() throws RecognitionException {
-		try {
-			int _type = FLOAT;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:250:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
-			int alt9=3;
-			alt9 = dfa9.predict(input);
-			switch (alt9) {
-				case 1 :
-					// api.g:250:9: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
+				case 2 :
+					// api.g:361:4: '-' ( '0' .. '9' )+
 					{
-					// api.g:250:9: ( '0' .. '9' )+
+					match('-'); 
+					// api.g:361:7: ( '0' .. '9' )+
 					int cnt3=0;
 					loop3:
 					while (true) {
@@ -469,149 +624,6 @@ public class apiLexer extends Lexer {
 						cnt3++;
 					}
 
-					match('.'); 
-					// api.g:250:25: ( '0' .. '9' )*
-					loop4:
-					while (true) {
-						int alt4=2;
-						int LA4_0 = input.LA(1);
-						if ( ((LA4_0 >= '0' && LA4_0 <= '9')) ) {
-							alt4=1;
-						}
-
-						switch (alt4) {
-						case 1 :
-							// api.g:
-							{
-							if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-								input.consume();
-							}
-							else {
-								MismatchedSetException mse = new MismatchedSetException(null,input);
-								recover(mse);
-								throw mse;
-							}
-							}
-							break;
-
-						default :
-							break loop4;
-						}
-					}
-
-					// api.g:250:37: ( EXPONENT )?
-					int alt5=2;
-					int LA5_0 = input.LA(1);
-					if ( (LA5_0=='E'||LA5_0=='e') ) {
-						alt5=1;
-					}
-					switch (alt5) {
-						case 1 :
-							// api.g:250:37: EXPONENT
-							{
-							mEXPONENT(); 
-
-							}
-							break;
-
-					}
-
-					}
-					break;
-				case 2 :
-					// api.g:251:9: '.' ( '0' .. '9' )+ ( EXPONENT )?
-					{
-					match('.'); 
-					// api.g:251:13: ( '0' .. '9' )+
-					int cnt6=0;
-					loop6:
-					while (true) {
-						int alt6=2;
-						int LA6_0 = input.LA(1);
-						if ( ((LA6_0 >= '0' && LA6_0 <= '9')) ) {
-							alt6=1;
-						}
-
-						switch (alt6) {
-						case 1 :
-							// api.g:
-							{
-							if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-								input.consume();
-							}
-							else {
-								MismatchedSetException mse = new MismatchedSetException(null,input);
-								recover(mse);
-								throw mse;
-							}
-							}
-							break;
-
-						default :
-							if ( cnt6 >= 1 ) break loop6;
-							EarlyExitException eee = new EarlyExitException(6, input);
-							throw eee;
-						}
-						cnt6++;
-					}
-
-					// api.g:251:25: ( EXPONENT )?
-					int alt7=2;
-					int LA7_0 = input.LA(1);
-					if ( (LA7_0=='E'||LA7_0=='e') ) {
-						alt7=1;
-					}
-					switch (alt7) {
-						case 1 :
-							// api.g:251:25: EXPONENT
-							{
-							mEXPONENT(); 
-
-							}
-							break;
-
-					}
-
-					}
-					break;
-				case 3 :
-					// api.g:252:9: ( '0' .. '9' )+ EXPONENT
-					{
-					// api.g:252:9: ( '0' .. '9' )+
-					int cnt8=0;
-					loop8:
-					while (true) {
-						int alt8=2;
-						int LA8_0 = input.LA(1);
-						if ( ((LA8_0 >= '0' && LA8_0 <= '9')) ) {
-							alt8=1;
-						}
-
-						switch (alt8) {
-						case 1 :
-							// api.g:
-							{
-							if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-								input.consume();
-							}
-							else {
-								MismatchedSetException mse = new MismatchedSetException(null,input);
-								recover(mse);
-								throw mse;
-							}
-							}
-							break;
-
-						default :
-							if ( cnt8 >= 1 ) break loop8;
-							EarlyExitException eee = new EarlyExitException(8, input);
-							throw eee;
-						}
-						cnt8++;
-					}
-
-					mEXPONENT(); 
-
 					}
 					break;
 
@@ -623,15 +635,36 @@ public class apiLexer extends Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "FLOAT"
+	// $ANTLR end "INT"
+
+	// $ANTLR start "DOTDOT"
+	public final void mDOTDOT() throws RecognitionException {
+		try {
+			int _type = DOTDOT;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// api.g:364:8: ( '..' )
+			// api.g:364:10: '..'
+			{
+			match(".."); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "DOTDOT"
 
 	// $ANTLR start "ASTART"
 	public final void mASTART() throws RecognitionException {
 		try {
 			int _type = ASTART;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:256:8: ( '[' )
-			// api.g:256:10: '['
+			// api.g:367:8: ( '[' )
+			// api.g:367:10: '['
 			{
 			match('['); 
 			}
@@ -650,8 +683,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = ASTOP;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:259:7: ( ']' )
-			// api.g:259:9: ']'
+			// api.g:370:7: ( ']' )
+			// api.g:370:9: ']'
 			{
 			match(']'); 
 			}
@@ -670,8 +703,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = START;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:262:8: ( '{' )
-			// api.g:262:10: '{'
+			// api.g:373:8: ( '{' )
+			// api.g:373:10: '{'
 			{
 			match('{'); 
 			}
@@ -690,8 +723,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = END;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:265:5: ( '}' )
-			// api.g:265:7: '}'
+			// api.g:376:5: ( '}' )
+			// api.g:376:7: '}'
 			{
 			match('}'); 
 			}
@@ -710,8 +743,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = POPEN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:268:7: ( '(' )
-			// api.g:268:9: '('
+			// api.g:379:7: ( '(' )
+			// api.g:379:9: '('
 			{
 			match('('); 
 			}
@@ -730,8 +763,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = PCLOSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:271:8: ( ')' )
-			// api.g:271:10: ')'
+			// api.g:382:8: ( ')' )
+			// api.g:382:10: ')'
 			{
 			match(')'); 
 			}
@@ -750,8 +783,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = EQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:274:7: ( '=' )
-			// api.g:274:9: '='
+			// api.g:385:7: ( '=' )
+			// api.g:385:9: '='
 			{
 			match('='); 
 			}
@@ -770,8 +803,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = COMMA;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:277:7: ( ',' )
-			// api.g:277:9: ','
+			// api.g:388:7: ( ',' )
+			// api.g:388:9: ','
 			{
 			match(','); 
 			}
@@ -790,8 +823,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = SEMICOLON;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:281:2: ( ';' )
-			// api.g:281:4: ';'
+			// api.g:392:2: ( ';' )
+			// api.g:392:4: ';'
 			{
 			match(';'); 
 			}
@@ -810,8 +843,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = COLON;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:284:7: ( ':' )
-			// api.g:284:9: ':'
+			// api.g:395:7: ( ':' )
+			// api.g:395:9: ':'
 			{
 			match(':'); 
 			}
@@ -825,21 +858,41 @@ public class apiLexer extends Lexer {
 	}
 	// $ANTLR end "COLON"
 
+	// $ANTLR start "NOT"
+	public final void mNOT() throws RecognitionException {
+		try {
+			int _type = NOT;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// api.g:398:5: ( '!' )
+			// api.g:398:7: '!'
+			{
+			match('!'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "NOT"
+
 	// $ANTLR start "COMMENT"
 	public final void mCOMMENT() throws RecognitionException {
 		try {
 			int _type = COMMENT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:288:5: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' | '/*' ( options {greedy=false; } : . )* '*/' )
-			int alt13=2;
-			int LA13_0 = input.LA(1);
-			if ( (LA13_0=='/') ) {
-				int LA13_1 = input.LA(2);
-				if ( (LA13_1=='/') ) {
-					alt13=1;
+			// api.g:402:5: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' | '/*' ( options {greedy=false; } : . )* '*/' )
+			int alt8=2;
+			int LA8_0 = input.LA(1);
+			if ( (LA8_0=='/') ) {
+				int LA8_1 = input.LA(2);
+				if ( (LA8_1=='/') ) {
+					alt8=1;
 				}
-				else if ( (LA13_1=='*') ) {
-					alt13=2;
+				else if ( (LA8_1=='*') ) {
+					alt8=2;
 				}
 
 				else {
@@ -847,7 +900,7 @@ public class apiLexer extends Lexer {
 					try {
 						input.consume();
 						NoViableAltException nvae =
-							new NoViableAltException("", 13, 1, input);
+							new NoViableAltException("", 8, 1, input);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -858,26 +911,26 @@ public class apiLexer extends Lexer {
 
 			else {
 				NoViableAltException nvae =
-					new NoViableAltException("", 13, 0, input);
+					new NoViableAltException("", 8, 0, input);
 				throw nvae;
 			}
 
-			switch (alt13) {
+			switch (alt8) {
 				case 1 :
-					// api.g:288:9: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
+					// api.g:402:9: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
 					{
 					match("//"); 
 
-					// api.g:288:14: (~ ( '\\n' | '\\r' ) )*
-					loop10:
+					// api.g:402:14: (~ ( '\\n' | '\\r' ) )*
+					loop5:
 					while (true) {
-						int alt10=2;
-						int LA10_0 = input.LA(1);
-						if ( ((LA10_0 >= '\u0000' && LA10_0 <= '\t')||(LA10_0 >= '\u000B' && LA10_0 <= '\f')||(LA10_0 >= '\u000E' && LA10_0 <= '\uFFFF')) ) {
-							alt10=1;
+						int alt5=2;
+						int LA5_0 = input.LA(1);
+						if ( ((LA5_0 >= '\u0000' && LA5_0 <= '\t')||(LA5_0 >= '\u000B' && LA5_0 <= '\f')||(LA5_0 >= '\u000E' && LA5_0 <= '\uFFFF')) ) {
+							alt5=1;
 						}
 
-						switch (alt10) {
+						switch (alt5) {
 						case 1 :
 							// api.g:
 							{
@@ -893,19 +946,19 @@ public class apiLexer extends Lexer {
 							break;
 
 						default :
-							break loop10;
+							break loop5;
 						}
 					}
 
-					// api.g:288:28: ( '\\r' )?
-					int alt11=2;
-					int LA11_0 = input.LA(1);
-					if ( (LA11_0=='\r') ) {
-						alt11=1;
+					// api.g:402:28: ( '\\r' )?
+					int alt6=2;
+					int LA6_0 = input.LA(1);
+					if ( (LA6_0=='\r') ) {
+						alt6=1;
 					}
-					switch (alt11) {
+					switch (alt6) {
 						case 1 :
-							// api.g:288:28: '\\r'
+							// api.g:402:28: '\\r'
 							{
 							match('\r'); 
 							}
@@ -918,39 +971,39 @@ public class apiLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// api.g:289:9: '/*' ( options {greedy=false; } : . )* '*/'
+					// api.g:403:9: '/*' ( options {greedy=false; } : . )* '*/'
 					{
 					match("/*"); 
 
-					// api.g:289:14: ( options {greedy=false; } : . )*
-					loop12:
+					// api.g:403:14: ( options {greedy=false; } : . )*
+					loop7:
 					while (true) {
-						int alt12=2;
-						int LA12_0 = input.LA(1);
-						if ( (LA12_0=='*') ) {
-							int LA12_1 = input.LA(2);
-							if ( (LA12_1=='/') ) {
-								alt12=2;
+						int alt7=2;
+						int LA7_0 = input.LA(1);
+						if ( (LA7_0=='*') ) {
+							int LA7_1 = input.LA(2);
+							if ( (LA7_1=='/') ) {
+								alt7=2;
 							}
-							else if ( ((LA12_1 >= '\u0000' && LA12_1 <= '.')||(LA12_1 >= '0' && LA12_1 <= '\uFFFF')) ) {
-								alt12=1;
+							else if ( ((LA7_1 >= '\u0000' && LA7_1 <= '.')||(LA7_1 >= '0' && LA7_1 <= '\uFFFF')) ) {
+								alt7=1;
 							}
 
 						}
-						else if ( ((LA12_0 >= '\u0000' && LA12_0 <= ')')||(LA12_0 >= '+' && LA12_0 <= '\uFFFF')) ) {
-							alt12=1;
+						else if ( ((LA7_0 >= '\u0000' && LA7_0 <= ')')||(LA7_0 >= '+' && LA7_0 <= '\uFFFF')) ) {
+							alt7=1;
 						}
 
-						switch (alt12) {
+						switch (alt7) {
 						case 1 :
-							// api.g:289:42: .
+							// api.g:403:42: .
 							{
 							matchAny(); 
 							}
 							break;
 
 						default :
-							break loop12;
+							break loop7;
 						}
 					}
 
@@ -975,8 +1028,8 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:292:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// api.g:292:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+			// api.g:406:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// api.g:406:9: ( ' ' | '\\t' | '\\r' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 				input.consume();
@@ -1003,16 +1056,16 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = HEX;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:299:5: ( ( MINUS )? '0' ( 'x' | 'X' ) ( HEX_DIGIT )+ )
-			// api.g:299:9: ( MINUS )? '0' ( 'x' | 'X' ) ( HEX_DIGIT )+
+			// api.g:413:5: ( ( MINUS )? '0' ( 'x' | 'X' ) ( HEX_DIGIT )+ )
+			// api.g:413:9: ( MINUS )? '0' ( 'x' | 'X' ) ( HEX_DIGIT )+
 			{
-			// api.g:299:9: ( MINUS )?
-			int alt14=2;
-			int LA14_0 = input.LA(1);
-			if ( (LA14_0=='-') ) {
-				alt14=1;
+			// api.g:413:9: ( MINUS )?
+			int alt9=2;
+			int LA9_0 = input.LA(1);
+			if ( (LA9_0=='-') ) {
+				alt9=1;
 			}
-			switch (alt14) {
+			switch (alt9) {
 				case 1 :
 					// api.g:
 					{
@@ -1038,17 +1091,17 @@ public class apiLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// api.g:299:30: ( HEX_DIGIT )+
-			int cnt15=0;
-			loop15:
+			// api.g:413:30: ( HEX_DIGIT )+
+			int cnt10=0;
+			loop10:
 			while (true) {
-				int alt15=2;
-				int LA15_0 = input.LA(1);
-				if ( ((LA15_0 >= '0' && LA15_0 <= '9')||(LA15_0 >= 'A' && LA15_0 <= 'F')||(LA15_0 >= 'a' && LA15_0 <= 'f')) ) {
-					alt15=1;
+				int alt10=2;
+				int LA10_0 = input.LA(1);
+				if ( ((LA10_0 >= '0' && LA10_0 <= '9')||(LA10_0 >= 'A' && LA10_0 <= 'F')||(LA10_0 >= 'a' && LA10_0 <= 'f')) ) {
+					alt10=1;
 				}
 
-				switch (alt15) {
+				switch (alt10) {
 				case 1 :
 					// api.g:
 					{
@@ -1064,11 +1117,11 @@ public class apiLexer extends Lexer {
 					break;
 
 				default :
-					if ( cnt15 >= 1 ) break loop15;
-					EarlyExitException eee = new EarlyExitException(15, input);
+					if ( cnt10 >= 1 ) break loop10;
+					EarlyExitException eee = new EarlyExitException(10, input);
 					throw eee;
 				}
-				cnt15++;
+				cnt10++;
 			}
 
 			}
@@ -1087,32 +1140,32 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = STRING;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:303:5: ( '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"' )
-			// api.g:303:8: '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"'
+			// api.g:417:5: ( '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"' )
+			// api.g:417:8: '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"'
 			{
 			match('\"'); 
-			// api.g:303:12: ( ESC_SEQ |~ ( '\\\\' | '\"' ) )*
-			loop16:
+			// api.g:417:12: ( ESC_SEQ |~ ( '\\\\' | '\"' ) )*
+			loop11:
 			while (true) {
-				int alt16=3;
-				int LA16_0 = input.LA(1);
-				if ( (LA16_0=='\\') ) {
-					alt16=1;
+				int alt11=3;
+				int LA11_0 = input.LA(1);
+				if ( (LA11_0=='\\') ) {
+					alt11=1;
 				}
-				else if ( ((LA16_0 >= '\u0000' && LA16_0 <= '!')||(LA16_0 >= '#' && LA16_0 <= '[')||(LA16_0 >= ']' && LA16_0 <= '\uFFFF')) ) {
-					alt16=2;
+				else if ( ((LA11_0 >= '\u0000' && LA11_0 <= '!')||(LA11_0 >= '#' && LA11_0 <= '[')||(LA11_0 >= ']' && LA11_0 <= '\uFFFF')) ) {
+					alt11=2;
 				}
 
-				switch (alt16) {
+				switch (alt11) {
 				case 1 :
-					// api.g:303:14: ESC_SEQ
+					// api.g:417:14: ESC_SEQ
 					{
 					mESC_SEQ(); 
 
 					}
 					break;
 				case 2 :
-					// api.g:303:24: ~ ( '\\\\' | '\"' )
+					// api.g:417:24: ~ ( '\\\\' | '\"' )
 					{
 					if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '!')||(input.LA(1) >= '#' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
 						input.consume();
@@ -1126,7 +1179,7 @@ public class apiLexer extends Lexer {
 					break;
 
 				default :
-					break loop16;
+					break loop11;
 				}
 			}
 
@@ -1147,36 +1200,36 @@ public class apiLexer extends Lexer {
 		try {
 			int _type = CHAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// api.g:306:5: ( '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\'' )
-			// api.g:306:8: '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\''
+			// api.g:420:5: ( '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\'' )
+			// api.g:420:8: '\\'' ( ESC_SEQ |~ ( '\\'' | '\\\\' ) ) '\\''
 			{
 			match('\''); 
-			// api.g:306:13: ( ESC_SEQ |~ ( '\\'' | '\\\\' ) )
-			int alt17=2;
-			int LA17_0 = input.LA(1);
-			if ( (LA17_0=='\\') ) {
-				alt17=1;
+			// api.g:420:13: ( ESC_SEQ |~ ( '\\'' | '\\\\' ) )
+			int alt12=2;
+			int LA12_0 = input.LA(1);
+			if ( (LA12_0=='\\') ) {
+				alt12=1;
 			}
-			else if ( ((LA17_0 >= '\u0000' && LA17_0 <= '&')||(LA17_0 >= '(' && LA17_0 <= '[')||(LA17_0 >= ']' && LA17_0 <= '\uFFFF')) ) {
-				alt17=2;
+			else if ( ((LA12_0 >= '\u0000' && LA12_0 <= '&')||(LA12_0 >= '(' && LA12_0 <= '[')||(LA12_0 >= ']' && LA12_0 <= '\uFFFF')) ) {
+				alt12=2;
 			}
 
 			else {
 				NoViableAltException nvae =
-					new NoViableAltException("", 17, 0, input);
+					new NoViableAltException("", 12, 0, input);
 				throw nvae;
 			}
 
-			switch (alt17) {
+			switch (alt12) {
 				case 1 :
-					// api.g:306:15: ESC_SEQ
+					// api.g:420:15: ESC_SEQ
 					{
 					mESC_SEQ(); 
 
 					}
 					break;
 				case 2 :
-					// api.g:306:25: ~ ( '\\'' | '\\\\' )
+					// api.g:420:25: ~ ( '\\'' | '\\\\' )
 					{
 					if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '&')||(input.LA(1) >= '(' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
 						input.consume();
@@ -1206,8 +1259,8 @@ public class apiLexer extends Lexer {
 	// $ANTLR start "MINUS"
 	public final void mMINUS() throws RecognitionException {
 		try {
-			// api.g:311:7: ( '-' )
-			// api.g:311:9: '-'
+			// api.g:425:7: ( '-' )
+			// api.g:425:9: '-'
 			{
 			match('-'); 
 			}
@@ -1222,8 +1275,8 @@ public class apiLexer extends Lexer {
 	// $ANTLR start "EXPONENT"
 	public final void mEXPONENT() throws RecognitionException {
 		try {
-			// api.g:315:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-			// api.g:315:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+			// api.g:429:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+			// api.g:429:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
 			{
 			if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
 				input.consume();
@@ -1233,13 +1286,13 @@ public class apiLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// api.g:315:22: ( '+' | '-' )?
-			int alt18=2;
-			int LA18_0 = input.LA(1);
-			if ( (LA18_0=='+'||LA18_0=='-') ) {
-				alt18=1;
+			// api.g:429:22: ( '+' | '-' )?
+			int alt13=2;
+			int LA13_0 = input.LA(1);
+			if ( (LA13_0=='+'||LA13_0=='-') ) {
+				alt13=1;
 			}
-			switch (alt18) {
+			switch (alt13) {
 				case 1 :
 					// api.g:
 					{
@@ -1256,17 +1309,17 @@ public class apiLexer extends Lexer {
 
 			}
 
-			// api.g:315:33: ( '0' .. '9' )+
-			int cnt19=0;
-			loop19:
+			// api.g:429:33: ( '0' .. '9' )+
+			int cnt14=0;
+			loop14:
 			while (true) {
-				int alt19=2;
-				int LA19_0 = input.LA(1);
-				if ( ((LA19_0 >= '0' && LA19_0 <= '9')) ) {
-					alt19=1;
+				int alt14=2;
+				int LA14_0 = input.LA(1);
+				if ( ((LA14_0 >= '0' && LA14_0 <= '9')) ) {
+					alt14=1;
 				}
 
-				switch (alt19) {
+				switch (alt14) {
 				case 1 :
 					// api.g:
 					{
@@ -1282,11 +1335,11 @@ public class apiLexer extends Lexer {
 					break;
 
 				default :
-					if ( cnt19 >= 1 ) break loop19;
-					EarlyExitException eee = new EarlyExitException(19, input);
+					if ( cnt14 >= 1 ) break loop14;
+					EarlyExitException eee = new EarlyExitException(14, input);
 					throw eee;
 				}
-				cnt19++;
+				cnt14++;
 			}
 
 			}
@@ -1301,7 +1354,7 @@ public class apiLexer extends Lexer {
 	// $ANTLR start "HEX_DIGIT"
 	public final void mHEX_DIGIT() throws RecognitionException {
 		try {
-			// api.g:318:11: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
+			// api.g:432:11: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
 			// api.g:
 			{
 			if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'F')||(input.LA(1) >= 'a' && input.LA(1) <= 'f') ) {
@@ -1324,10 +1377,10 @@ public class apiLexer extends Lexer {
 	// $ANTLR start "ESC_SEQ"
 	public final void mESC_SEQ() throws RecognitionException {
 		try {
-			// api.g:322:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UNICODE_ESC | OCTAL_ESC )
-			int alt20=3;
-			int LA20_0 = input.LA(1);
-			if ( (LA20_0=='\\') ) {
+			// api.g:436:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) | UNICODE_ESC | OCTAL_ESC )
+			int alt15=3;
+			int LA15_0 = input.LA(1);
+			if ( (LA15_0=='\\') ) {
 				switch ( input.LA(2) ) {
 				case '\"':
 				case '\'':
@@ -1338,12 +1391,12 @@ public class apiLexer extends Lexer {
 				case 'r':
 				case 't':
 					{
-					alt20=1;
+					alt15=1;
 					}
 					break;
 				case 'u':
 					{
-					alt20=2;
+					alt15=2;
 					}
 					break;
 				case '0':
@@ -1355,7 +1408,7 @@ public class apiLexer extends Lexer {
 				case '6':
 				case '7':
 					{
-					alt20=3;
+					alt15=3;
 					}
 					break;
 				default:
@@ -1363,7 +1416,7 @@ public class apiLexer extends Lexer {
 					try {
 						input.consume();
 						NoViableAltException nvae =
-							new NoViableAltException("", 20, 1, input);
+							new NoViableAltException("", 15, 1, input);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -1373,13 +1426,13 @@ public class apiLexer extends Lexer {
 
 			else {
 				NoViableAltException nvae =
-					new NoViableAltException("", 20, 0, input);
+					new NoViableAltException("", 15, 0, input);
 				throw nvae;
 			}
 
-			switch (alt20) {
+			switch (alt15) {
 				case 1 :
-					// api.g:322:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
+					// api.g:436:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
 					{
 					match('\\'); 
 					if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1393,14 +1446,14 @@ public class apiLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// api.g:323:9: UNICODE_ESC
+					// api.g:437:9: UNICODE_ESC
 					{
 					mUNICODE_ESC(); 
 
 					}
 					break;
 				case 3 :
-					// api.g:324:9: OCTAL_ESC
+					// api.g:438:9: OCTAL_ESC
 					{
 					mOCTAL_ESC(); 
 
@@ -1418,38 +1471,38 @@ public class apiLexer extends Lexer {
 	// $ANTLR start "OCTAL_ESC"
 	public final void mOCTAL_ESC() throws RecognitionException {
 		try {
-			// api.g:329:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
-			int alt21=3;
-			int LA21_0 = input.LA(1);
-			if ( (LA21_0=='\\') ) {
-				int LA21_1 = input.LA(2);
-				if ( ((LA21_1 >= '0' && LA21_1 <= '3')) ) {
-					int LA21_2 = input.LA(3);
-					if ( ((LA21_2 >= '0' && LA21_2 <= '7')) ) {
-						int LA21_4 = input.LA(4);
-						if ( ((LA21_4 >= '0' && LA21_4 <= '7')) ) {
-							alt21=1;
+			// api.g:443:5: ( '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) ( '0' .. '7' ) | '\\\\' ( '0' .. '7' ) )
+			int alt16=3;
+			int LA16_0 = input.LA(1);
+			if ( (LA16_0=='\\') ) {
+				int LA16_1 = input.LA(2);
+				if ( ((LA16_1 >= '0' && LA16_1 <= '3')) ) {
+					int LA16_2 = input.LA(3);
+					if ( ((LA16_2 >= '0' && LA16_2 <= '7')) ) {
+						int LA16_4 = input.LA(4);
+						if ( ((LA16_4 >= '0' && LA16_4 <= '7')) ) {
+							alt16=1;
 						}
 
 						else {
-							alt21=2;
+							alt16=2;
 						}
 
 					}
 
 					else {
-						alt21=3;
+						alt16=3;
 					}
 
 				}
-				else if ( ((LA21_1 >= '4' && LA21_1 <= '7')) ) {
-					int LA21_3 = input.LA(3);
-					if ( ((LA21_3 >= '0' && LA21_3 <= '7')) ) {
-						alt21=2;
+				else if ( ((LA16_1 >= '4' && LA16_1 <= '7')) ) {
+					int LA16_3 = input.LA(3);
+					if ( ((LA16_3 >= '0' && LA16_3 <= '7')) ) {
+						alt16=2;
 					}
 
 					else {
-						alt21=3;
+						alt16=3;
 					}
 
 				}
@@ -1459,7 +1512,7 @@ public class apiLexer extends Lexer {
 					try {
 						input.consume();
 						NoViableAltException nvae =
-							new NoViableAltException("", 21, 1, input);
+							new NoViableAltException("", 16, 1, input);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -1470,13 +1523,13 @@ public class apiLexer extends Lexer {
 
 			else {
 				NoViableAltException nvae =
-					new NoViableAltException("", 21, 0, input);
+					new NoViableAltException("", 16, 0, input);
 				throw nvae;
 			}
 
-			switch (alt21) {
+			switch (alt16) {
 				case 1 :
-					// api.g:329:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
+					// api.g:443:9: '\\\\' ( '0' .. '3' ) ( '0' .. '7' ) ( '0' .. '7' )
 					{
 					match('\\'); 
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '3') ) {
@@ -1506,7 +1559,7 @@ public class apiLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// api.g:330:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
+					// api.g:444:9: '\\\\' ( '0' .. '7' ) ( '0' .. '7' )
 					{
 					match('\\'); 
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '7') ) {
@@ -1528,7 +1581,7 @@ public class apiLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// api.g:331:9: '\\\\' ( '0' .. '7' )
+					// api.g:445:9: '\\\\' ( '0' .. '7' )
 					{
 					match('\\'); 
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '7') ) {
@@ -1553,8 +1606,8 @@ public class apiLexer extends Lexer {
 	// $ANTLR start "UNICODE_ESC"
 	public final void mUNICODE_ESC() throws RecognitionException {
 		try {
-			// api.g:336:5: ( '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT )
-			// api.g:336:9: '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+			// api.g:450:5: ( '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT )
+			// api.g:450:9: '\\\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
 			{
 			match('\\'); 
 			match('u'); 
@@ -1577,10 +1630,10 @@ public class apiLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// api.g:1:8: ( ARRAY | MAP | REQUIRED | ENUM | TYPE | LIB | PROJECT | SERVICE | EXCEPTION | INCLUDE | INTERFACE | THROWS | ID | INT | FLOAT | ASTART | ASTOP | START | END | POPEN | PCLOSE | EQUAL | COMMA | SEMICOLON | COLON | COMMENT | WS | HEX | STRING | CHAR )
-		int alt22=30;
-		alt22 = dfa22.predict(input);
-		switch (alt22) {
+		// api.g:1:8: ( ARRAY | MAP | REQUIRED | ENUM | TYPE | LIB | PROJECT | SERVICE | EXCEPTION | INCLUDE | INTERFACE | THROWS | VALIDATE | VALIDATION | NULL | EMPTY | FOR | OR | AND | ID | INT | DOTDOT | ASTART | ASTOP | START | END | POPEN | PCLOSE | EQUAL | COMMA | SEMICOLON | COLON | NOT | COMMENT | WS | HEX | STRING | CHAR )
+		int alt17=38;
+		alt17 = dfa17.predict(input);
+		switch (alt17) {
 			case 1 :
 				// api.g:1:10: ARRAY
 				{
@@ -1666,126 +1719,182 @@ public class apiLexer extends Lexer {
 				}
 				break;
 			case 13 :
-				// api.g:1:94: ID
+				// api.g:1:94: VALIDATE
+				{
+				mVALIDATE(); 
+
+				}
+				break;
+			case 14 :
+				// api.g:1:103: VALIDATION
+				{
+				mVALIDATION(); 
+
+				}
+				break;
+			case 15 :
+				// api.g:1:114: NULL
+				{
+				mNULL(); 
+
+				}
+				break;
+			case 16 :
+				// api.g:1:119: EMPTY
+				{
+				mEMPTY(); 
+
+				}
+				break;
+			case 17 :
+				// api.g:1:125: FOR
+				{
+				mFOR(); 
+
+				}
+				break;
+			case 18 :
+				// api.g:1:129: OR
+				{
+				mOR(); 
+
+				}
+				break;
+			case 19 :
+				// api.g:1:132: AND
+				{
+				mAND(); 
+
+				}
+				break;
+			case 20 :
+				// api.g:1:136: ID
 				{
 				mID(); 
 
 				}
 				break;
-			case 14 :
-				// api.g:1:97: INT
+			case 21 :
+				// api.g:1:139: INT
 				{
 				mINT(); 
 
 				}
 				break;
-			case 15 :
-				// api.g:1:101: FLOAT
+			case 22 :
+				// api.g:1:143: DOTDOT
 				{
-				mFLOAT(); 
+				mDOTDOT(); 
 
 				}
 				break;
-			case 16 :
-				// api.g:1:107: ASTART
+			case 23 :
+				// api.g:1:150: ASTART
 				{
 				mASTART(); 
 
 				}
 				break;
-			case 17 :
-				// api.g:1:114: ASTOP
+			case 24 :
+				// api.g:1:157: ASTOP
 				{
 				mASTOP(); 
 
 				}
 				break;
-			case 18 :
-				// api.g:1:120: START
+			case 25 :
+				// api.g:1:163: START
 				{
 				mSTART(); 
 
 				}
 				break;
-			case 19 :
-				// api.g:1:126: END
+			case 26 :
+				// api.g:1:169: END
 				{
 				mEND(); 
 
 				}
 				break;
-			case 20 :
-				// api.g:1:130: POPEN
+			case 27 :
+				// api.g:1:173: POPEN
 				{
 				mPOPEN(); 
 
 				}
 				break;
-			case 21 :
-				// api.g:1:136: PCLOSE
+			case 28 :
+				// api.g:1:179: PCLOSE
 				{
 				mPCLOSE(); 
 
 				}
 				break;
-			case 22 :
-				// api.g:1:143: EQUAL
+			case 29 :
+				// api.g:1:186: EQUAL
 				{
 				mEQUAL(); 
 
 				}
 				break;
-			case 23 :
-				// api.g:1:149: COMMA
+			case 30 :
+				// api.g:1:192: COMMA
 				{
 				mCOMMA(); 
 
 				}
 				break;
-			case 24 :
-				// api.g:1:155: SEMICOLON
+			case 31 :
+				// api.g:1:198: SEMICOLON
 				{
 				mSEMICOLON(); 
 
 				}
 				break;
-			case 25 :
-				// api.g:1:165: COLON
+			case 32 :
+				// api.g:1:208: COLON
 				{
 				mCOLON(); 
 
 				}
 				break;
-			case 26 :
-				// api.g:1:171: COMMENT
+			case 33 :
+				// api.g:1:214: NOT
+				{
+				mNOT(); 
+
+				}
+				break;
+			case 34 :
+				// api.g:1:218: COMMENT
 				{
 				mCOMMENT(); 
 
 				}
 				break;
-			case 27 :
-				// api.g:1:179: WS
+			case 35 :
+				// api.g:1:226: WS
 				{
 				mWS(); 
 
 				}
 				break;
-			case 28 :
-				// api.g:1:182: HEX
+			case 36 :
+				// api.g:1:229: HEX
 				{
 				mHEX(); 
 
 				}
 				break;
-			case 29 :
-				// api.g:1:186: STRING
+			case 37 :
+				// api.g:1:233: STRING
 				{
 				mSTRING(); 
 
 				}
 				break;
-			case 30 :
-				// api.g:1:193: CHAR
+			case 38 :
+				// api.g:1:240: CHAR
 				{
 				mCHAR(); 
 
@@ -1796,129 +1905,57 @@ public class apiLexer extends Lexer {
 	}
 
 
-	protected DFA9 dfa9 = new DFA9(this);
-	protected DFA22 dfa22 = new DFA22(this);
-	static final String DFA9_eotS =
-		"\5\uffff";
-	static final String DFA9_eofS =
-		"\5\uffff";
-	static final String DFA9_minS =
-		"\2\56\3\uffff";
-	static final String DFA9_maxS =
-		"\1\71\1\145\3\uffff";
-	static final String DFA9_acceptS =
-		"\2\uffff\1\2\1\1\1\3";
-	static final String DFA9_specialS =
-		"\5\uffff}>";
-	static final String[] DFA9_transitionS = {
-			"\1\2\1\uffff\12\1",
-			"\1\3\1\uffff\12\1\13\uffff\1\4\37\uffff\1\4",
-			"",
-			"",
-			""
-	};
-
-	static final short[] DFA9_eot = DFA.unpackEncodedString(DFA9_eotS);
-	static final short[] DFA9_eof = DFA.unpackEncodedString(DFA9_eofS);
-	static final char[] DFA9_min = DFA.unpackEncodedStringToUnsignedChars(DFA9_minS);
-	static final char[] DFA9_max = DFA.unpackEncodedStringToUnsignedChars(DFA9_maxS);
-	static final short[] DFA9_accept = DFA.unpackEncodedString(DFA9_acceptS);
-	static final short[] DFA9_special = DFA.unpackEncodedString(DFA9_specialS);
-	static final short[][] DFA9_transition;
-
-	static {
-		int numStates = DFA9_transitionS.length;
-		DFA9_transition = new short[numStates][];
-		for (int i=0; i<numStates; i++) {
-			DFA9_transition[i] = DFA.unpackEncodedString(DFA9_transitionS[i]);
-		}
-	}
-
-	protected class DFA9 extends DFA {
-
-		public DFA9(BaseRecognizer recognizer) {
-			this.recognizer = recognizer;
-			this.decisionNumber = 9;
-			this.eot = DFA9_eot;
-			this.eof = DFA9_eof;
-			this.min = DFA9_min;
-			this.max = DFA9_max;
-			this.accept = DFA9_accept;
-			this.special = DFA9_special;
-			this.transition = DFA9_transition;
-		}
-		@Override
-		public String getDescription() {
-			return "249:1: FLOAT : ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
-		}
-	}
-
-	static final String DFA22_eotS =
-		"\1\uffff\11\12\1\uffff\1\50\16\uffff\1\50\2\uffff\13\12\1\uffff\1\12\1"+
-		"\66\5\12\1\74\5\12\1\uffff\1\12\1\103\1\12\1\105\1\12\1\uffff\4\12\1\113"+
-		"\1\12\1\uffff\1\12\1\uffff\5\12\1\uffff\2\12\1\125\6\12\1\uffff\1\134"+
-		"\1\135\1\136\1\12\1\140\1\12\3\uffff\1\12\1\uffff\1\143\1\144\2\uffff";
-	static final String DFA22_eofS =
-		"\145\uffff";
-	static final String DFA22_minS =
-		"\1\11\1\162\1\141\1\145\1\156\1\150\1\151\1\162\1\145\1\156\1\uffff\1"+
-		"\56\16\uffff\1\56\2\uffff\1\162\1\160\1\161\1\165\1\143\1\160\1\162\1"+
-		"\142\1\157\1\162\1\143\1\uffff\1\141\1\60\1\165\1\155\2\145\1\157\1\60"+
-		"\1\152\1\166\1\154\1\145\1\171\1\uffff\1\151\1\60\1\160\1\60\1\167\1\uffff"+
-		"\1\145\1\151\1\165\1\162\1\60\1\162\1\uffff\1\164\1\uffff\1\163\2\143"+
-		"\1\144\1\146\1\uffff\1\145\1\151\1\60\1\164\2\145\1\141\1\144\1\157\1"+
-		"\uffff\3\60\1\143\1\60\1\156\3\uffff\1\145\1\uffff\2\60\2\uffff";
-	static final String DFA22_maxS =
-		"\1\175\1\162\1\141\1\145\1\170\1\171\1\151\1\162\1\145\1\156\1\uffff\1"+
-		"\170\16\uffff\1\145\2\uffff\1\162\1\160\1\161\1\165\1\143\1\160\1\162"+
-		"\1\142\1\157\1\162\1\164\1\uffff\1\141\1\172\1\165\1\155\2\145\1\157\1"+
-		"\172\1\152\1\166\1\154\1\145\1\171\1\uffff\1\151\1\172\1\160\1\172\1\167"+
-		"\1\uffff\1\145\1\151\1\165\1\162\1\172\1\162\1\uffff\1\164\1\uffff\1\163"+
-		"\2\143\1\144\1\146\1\uffff\1\145\1\151\1\172\1\164\2\145\1\141\1\144\1"+
-		"\157\1\uffff\3\172\1\143\1\172\1\156\3\uffff\1\145\1\uffff\2\172\2\uffff";
-	static final String DFA22_acceptS =
-		"\12\uffff\1\15\1\uffff\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27\1"+
-		"\30\1\31\1\32\1\33\1\34\1\uffff\1\35\1\36\13\uffff\1\16\15\uffff\1\2\5"+
-		"\uffff\1\6\6\uffff\1\4\1\uffff\1\5\5\uffff\1\1\11\uffff\1\14\6\uffff\1"+
-		"\7\1\10\1\12\1\uffff\1\3\2\uffff\1\11\1\13";
-	static final String DFA22_specialS =
-		"\145\uffff}>";
-	static final String[] DFA22_transitionS = {
-			"\2\30\2\uffff\1\30\22\uffff\1\30\1\uffff\1\33\4\uffff\1\34\1\21\1\22"+
-			"\2\uffff\1\24\1\31\1\14\1\27\1\13\11\32\1\26\1\25\1\uffff\1\23\3\uffff"+
-			"\32\12\1\15\1\uffff\1\16\1\uffff\1\12\1\uffff\1\1\3\12\1\4\3\12\1\11"+
-			"\2\12\1\6\1\2\2\12\1\7\1\12\1\3\1\10\1\5\6\12\1\17\1\uffff\1\20",
-			"\1\35",
-			"\1\36",
-			"\1\37",
-			"\1\40\11\uffff\1\41",
-			"\1\43\20\uffff\1\42",
+	protected DFA17 dfa17 = new DFA17(this);
+	static final String DFA17_eotS =
+		"\1\uffff\15\16\1\uffff\1\37\22\uffff\20\16\1\106\1\uffff\1\37\1\16\1\110"+
+		"\1\111\6\16\1\120\6\16\1\127\1\uffff\1\16\2\uffff\1\16\1\132\2\16\1\135"+
+		"\1\16\1\uffff\5\16\1\144\1\uffff\1\145\1\16\1\uffff\1\16\1\150\1\uffff"+
+		"\6\16\2\uffff\2\16\1\uffff\1\161\7\16\1\uffff\1\171\1\172\1\173\2\16\1"+
+		"\177\1\16\3\uffff\1\16\1\u0082\1\16\1\uffff\1\u0084\1\u0085\1\uffff\1"+
+		"\16\2\uffff\1\u0087\1\uffff";
+	static final String DFA17_eofS =
+		"\u0088\uffff";
+	static final String DFA17_minS =
+		"\1\11\1\156\1\141\1\145\1\155\1\150\1\151\1\162\1\145\1\156\1\141\1\165"+
+		"\1\157\1\162\1\uffff\1\130\1\60\21\uffff\1\162\1\144\1\160\1\161\1\165"+
+		"\1\143\2\160\1\162\1\142\1\157\1\162\1\143\2\154\1\162\1\60\1\uffff\1"+
+		"\130\1\141\2\60\1\165\1\155\1\145\1\164\1\145\1\157\1\60\1\152\1\166\1"+
+		"\154\1\145\1\151\1\154\1\60\1\uffff\1\171\2\uffff\1\151\1\60\1\160\1\171"+
+		"\1\60\1\167\1\uffff\1\145\1\151\1\165\1\162\1\144\1\60\1\uffff\1\60\1"+
+		"\162\1\uffff\1\164\1\60\1\uffff\1\163\2\143\1\144\1\146\1\141\2\uffff"+
+		"\1\145\1\151\1\uffff\1\60\1\164\2\145\1\141\1\164\1\144\1\157\1\uffff"+
+		"\3\60\1\143\1\145\1\60\1\156\3\uffff\1\145\1\60\1\157\1\uffff\2\60\1\uffff"+
+		"\1\156\2\uffff\1\60\1\uffff";
+	static final String DFA17_maxS =
+		"\1\175\1\162\1\141\1\145\1\170\1\171\1\151\1\162\1\145\1\156\1\141\1\165"+
+		"\1\157\1\162\1\uffff\1\170\1\71\21\uffff\1\162\1\144\1\160\1\161\1\165"+
+		"\1\143\2\160\1\162\1\142\1\157\1\162\1\164\2\154\1\162\1\172\1\uffff\1"+
+		"\170\1\141\2\172\1\165\1\155\1\145\1\164\1\145\1\157\1\172\1\152\1\166"+
+		"\1\154\1\145\1\151\1\154\1\172\1\uffff\1\171\2\uffff\1\151\1\172\1\160"+
+		"\1\171\1\172\1\167\1\uffff\1\145\1\151\1\165\1\162\1\144\1\172\1\uffff"+
+		"\1\172\1\162\1\uffff\1\164\1\172\1\uffff\1\163\2\143\1\144\1\146\1\141"+
+		"\2\uffff\1\145\1\151\1\uffff\1\172\1\164\2\145\1\141\1\164\1\144\1\157"+
+		"\1\uffff\3\172\1\143\1\151\1\172\1\156\3\uffff\1\145\1\172\1\157\1\uffff"+
+		"\2\172\1\uffff\1\156\2\uffff\1\172\1\uffff";
+	static final String DFA17_acceptS =
+		"\16\uffff\1\24\2\uffff\1\26\1\27\1\30\1\31\1\32\1\33\1\34\1\35\1\36\1"+
+		"\37\1\40\1\41\1\42\1\43\1\25\1\45\1\46\21\uffff\1\44\22\uffff\1\22\1\uffff"+
+		"\1\23\1\2\6\uffff\1\6\6\uffff\1\21\2\uffff\1\4\2\uffff\1\5\6\uffff\1\17"+
+		"\1\1\2\uffff\1\20\10\uffff\1\14\7\uffff\1\7\1\10\1\12\3\uffff\1\3\2\uffff"+
+		"\1\15\1\uffff\1\11\1\13\1\uffff\1\16";
+	static final String DFA17_specialS =
+		"\u0088\uffff}>";
+	static final String[] DFA17_transitionS = {
+			"\2\36\2\uffff\1\36\22\uffff\1\36\1\34\1\40\4\uffff\1\41\1\26\1\27\2\uffff"+
+			"\1\31\1\20\1\21\1\35\1\17\11\37\1\33\1\32\1\uffff\1\30\3\uffff\32\16"+
+			"\1\22\1\uffff\1\23\1\uffff\1\16\1\uffff\1\1\3\16\1\4\1\14\2\16\1\11\2"+
+			"\16\1\6\1\2\1\13\1\15\1\7\1\16\1\3\1\10\1\5\1\16\1\12\4\16\1\24\1\uffff"+
+			"\1\25",
+			"\1\43\3\uffff\1\42",
 			"\1\44",
 			"\1\45",
-			"\1\46",
-			"\1\47",
-			"",
-			"\1\14\1\uffff\12\32\13\uffff\1\14\22\uffff\1\31\14\uffff\1\14\22\uffff"+
-			"\1\31",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"\1\14\1\uffff\12\32\13\uffff\1\14\37\uffff\1\14",
-			"",
-			"",
-			"\1\51",
-			"\1\52",
+			"\1\50\1\46\11\uffff\1\47",
+			"\1\52\20\uffff\1\51",
 			"\1\53",
 			"\1\54",
 			"\1\55",
@@ -1927,102 +1964,162 @@ public class apiLexer extends Lexer {
 			"\1\60",
 			"\1\61",
 			"\1\62",
-			"\1\63\20\uffff\1\64",
+			"",
+			"\1\63\37\uffff\1\63",
+			"\1\64\11\37",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
 			"",
 			"\1\65",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
+			"\1\66",
 			"\1\67",
 			"\1\70",
 			"\1\71",
 			"\1\72",
 			"\1\73",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
+			"\1\74",
 			"\1\75",
 			"\1\76",
 			"\1\77",
 			"\1\100",
-			"\1\101",
-			"",
-			"\1\102",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
+			"\1\101\20\uffff\1\102",
+			"\1\103",
 			"\1\104",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
-			"\1\106",
+			"\1\105",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
 			"",
+			"\1\63\37\uffff\1\63",
 			"\1\107",
-			"\1\110",
-			"\1\111",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
 			"\1\112",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
+			"\1\113",
 			"\1\114",
-			"",
 			"\1\115",
-			"",
 			"\1\116",
 			"\1\117",
-			"\1\120",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
 			"\1\121",
 			"\1\122",
-			"",
 			"\1\123",
 			"\1\124",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
+			"\1\125",
 			"\1\126",
-			"\1\127",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"",
 			"\1\130",
+			"",
+			"",
 			"\1\131",
-			"\1\132",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
 			"\1\133",
+			"\1\134",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\1\136",
 			"",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
 			"\1\137",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
+			"\1\140",
 			"\1\141",
-			"",
-			"",
-			"",
 			"\1\142",
+			"\1\143",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
 			"",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
-			"\12\12\7\uffff\32\12\4\uffff\1\12\1\uffff\32\12",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\1\146",
 			"",
+			"\1\147",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"",
+			"\1\151",
+			"\1\152",
+			"\1\153",
+			"\1\154",
+			"\1\155",
+			"\1\156",
+			"",
+			"",
+			"\1\157",
+			"\1\160",
+			"",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\1\162",
+			"\1\163",
+			"\1\164",
+			"\1\165",
+			"\1\166",
+			"\1\167",
+			"\1\170",
+			"",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\1\174",
+			"\1\175\3\uffff\1\176",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\1\u0080",
+			"",
+			"",
+			"",
+			"\1\u0081",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\1\u0083",
+			"",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
+			"",
+			"\1\u0086",
+			"",
+			"",
+			"\12\16\7\uffff\32\16\4\uffff\1\16\1\uffff\32\16",
 			""
 	};
 
-	static final short[] DFA22_eot = DFA.unpackEncodedString(DFA22_eotS);
-	static final short[] DFA22_eof = DFA.unpackEncodedString(DFA22_eofS);
-	static final char[] DFA22_min = DFA.unpackEncodedStringToUnsignedChars(DFA22_minS);
-	static final char[] DFA22_max = DFA.unpackEncodedStringToUnsignedChars(DFA22_maxS);
-	static final short[] DFA22_accept = DFA.unpackEncodedString(DFA22_acceptS);
-	static final short[] DFA22_special = DFA.unpackEncodedString(DFA22_specialS);
-	static final short[][] DFA22_transition;
+	static final short[] DFA17_eot = DFA.unpackEncodedString(DFA17_eotS);
+	static final short[] DFA17_eof = DFA.unpackEncodedString(DFA17_eofS);
+	static final char[] DFA17_min = DFA.unpackEncodedStringToUnsignedChars(DFA17_minS);
+	static final char[] DFA17_max = DFA.unpackEncodedStringToUnsignedChars(DFA17_maxS);
+	static final short[] DFA17_accept = DFA.unpackEncodedString(DFA17_acceptS);
+	static final short[] DFA17_special = DFA.unpackEncodedString(DFA17_specialS);
+	static final short[][] DFA17_transition;
 
 	static {
-		int numStates = DFA22_transitionS.length;
-		DFA22_transition = new short[numStates][];
+		int numStates = DFA17_transitionS.length;
+		DFA17_transition = new short[numStates][];
 		for (int i=0; i<numStates; i++) {
-			DFA22_transition[i] = DFA.unpackEncodedString(DFA22_transitionS[i]);
+			DFA17_transition[i] = DFA.unpackEncodedString(DFA17_transitionS[i]);
 		}
 	}
 
-	protected class DFA22 extends DFA {
+	protected class DFA17 extends DFA {
 
-		public DFA22(BaseRecognizer recognizer) {
+		public DFA17(BaseRecognizer recognizer) {
 			this.recognizer = recognizer;
-			this.decisionNumber = 22;
-			this.eot = DFA22_eot;
-			this.eof = DFA22_eof;
-			this.min = DFA22_min;
-			this.max = DFA22_max;
-			this.accept = DFA22_accept;
-			this.special = DFA22_special;
-			this.transition = DFA22_transition;
+			this.decisionNumber = 17;
+			this.eot = DFA17_eot;
+			this.eof = DFA17_eof;
+			this.min = DFA17_min;
+			this.max = DFA17_max;
+			this.accept = DFA17_accept;
+			this.special = DFA17_special;
+			this.transition = DFA17_transition;
 		}
 		@Override
 		public String getDescription() {
-			return "1:1: Tokens : ( ARRAY | MAP | REQUIRED | ENUM | TYPE | LIB | PROJECT | SERVICE | EXCEPTION | INCLUDE | INTERFACE | THROWS | ID | INT | FLOAT | ASTART | ASTOP | START | END | POPEN | PCLOSE | EQUAL | COMMA | SEMICOLON | COLON | COMMENT | WS | HEX | STRING | CHAR );";
+			return "1:1: Tokens : ( ARRAY | MAP | REQUIRED | ENUM | TYPE | LIB | PROJECT | SERVICE | EXCEPTION | INCLUDE | INTERFACE | THROWS | VALIDATE | VALIDATION | NULL | EMPTY | FOR | OR | AND | ID | INT | DOTDOT | ASTART | ASTOP | START | END | POPEN | PCLOSE | EQUAL | COMMA | SEMICOLON | COLON | NOT | COMMENT | WS | HEX | STRING | CHAR );";
 		}
 	}
 

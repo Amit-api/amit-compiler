@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -22,6 +22,6 @@ public class FunctionReturn extends TypedItem {
 
 	protected FunctionReturn(String type, boolean isArray, boolean isMap,
 			Context context, Project project) {
-		super(type, NAME, true, false, isArray, isMap, context, project);
+		super(type, NAME, true, isArray, isMap, context, project);
 	}
 }

@@ -1,0 +1,9 @@
+project test;
+
+type Data {
+	array boolean x;
+}
+
+validation t1 for Data {
+	x [0..999];
+}

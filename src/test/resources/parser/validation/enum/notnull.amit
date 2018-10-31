@@ -1,0 +1,15 @@
+
+project test;
+
+enum Number {
+	One = 1,
+	Two = 2
+}
+
+type Data {
+	Number x;
+}
+
+validation t1 for Data {
+	x !null;
+}

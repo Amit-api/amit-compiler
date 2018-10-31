@@ -1,0 +1,13 @@
+project test;
+
+type NewType {
+	int v;
+}
+
+type Data {
+	array NewType x;
+}
+
+validation t1 for Data {
+	x[] "regex";
+}

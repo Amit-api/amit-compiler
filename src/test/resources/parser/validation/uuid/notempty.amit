@@ -1,0 +1,9 @@
+project test;
+
+type Data {
+	uuid x;
+}
+
+validation t1 for Data {
+	x !empty;
+}

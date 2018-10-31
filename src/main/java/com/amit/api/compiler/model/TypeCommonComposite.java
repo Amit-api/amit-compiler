@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -56,6 +56,15 @@ public class TypeCommonComposite extends Type {
 
 		return result;
 	}
+	
+	/**
+	 * return the memeber by the name
+	 * @param memeberName
+	 * @return
+	 */
+	public TypeCompositeMember getMember(String memeberName) {
+		return members.get(memeberName);
+	}
 
 	/**
 	 * return base type
@@ -88,15 +97,14 @@ public class TypeCommonComposite extends Type {
 	 * 
 	 * @param type
 	 * @param name
-	 * @param isRequired
 	 * @param isMap
 	 * @param isArray
 	 * @param context
 	 */
-	public void addMember(String type, String name, boolean isRequired,
-			boolean isArray, boolean isMap, Context context) {
+	public void addMember(String type, String name, boolean isArray,
+			boolean isMap, Context context) {
 		TypeCompositeMember member = new TypeCompositeMember(type, name,
-				isRequired, isArray, isMap, context, getProject());
+				isArray, isMap, context, getProject());
 
 		members.add(member);
 	}

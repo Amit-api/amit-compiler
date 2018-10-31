@@ -129,42 +129,6 @@ public class InterfaceTest extends TestBase {
 		assertEquals( "Exception1", fun.getThrowsExceptionNames().get( 0 ) );
 		assertEquals( "Exception2", fun.getThrowsExceptionNames().get( 1 ) );
 	}
-
-	@Test
-	public void testArgModifiers() throws Exception {
-		AmitParser parser = AmitParser.fromFile( path( "int-arg-modifiers.amit" ) );
-		Project project = parser.parse();
-		
-		assertEquals( 1, project.getInterfaces().size() );
-		
-		Interface interf = project.getInterfaces().get( 0 );
-		assertEquals( "ITest", interf.getName() );
-		assertEquals( 0, interf.getBaseInterfaceNames().size() );
-		assertEquals( 1, interf.getFunctions().size() );
-		
-		Function fun = interf.getFunctions().get( 0 );
-		assertEquals( "doStuf", fun.getName() );
-		
-		assertEquals( 3, fun.getArguments().size() );
-
-		FunctionArgument arg = fun.getArguments().get( 0 );
-		assertEquals( "int", arg.getTypeName() );
-		assertEquals( "a", arg.getName() );
-		assertFalse( arg.isArray() );
-		assertFalse( arg.isRequired() );
-
-		arg = fun.getArguments().get( 1 );
-		assertEquals( "int", arg.getTypeName() );
-		assertEquals( "c", arg.getName() );
-		assertFalse( arg.isArray() );
-		assertTrue( arg.isRequired() );
-		
-		arg = fun.getArguments().get( 2 );
-		assertEquals( "int", arg.getTypeName() );
-		assertEquals( "d", arg.getName() );
-		assertTrue( arg.isArray() );
-		assertFalse( arg.isRequired() );
-	}
 	
 	@SuppressWarnings("serial")
 	@Test

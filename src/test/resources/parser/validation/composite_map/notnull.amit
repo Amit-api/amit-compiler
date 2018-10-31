@@ -1,0 +1,14 @@
+
+project test;
+
+type NewType {
+	int v;
+}
+
+type Data {
+	map NewType x;
+}
+
+validation t1 for Data {
+	x !null;
+}

@@ -1,0 +1,64 @@
+project test;
+
+type A {
+	int a;
+	int b;
+}
+
+type B {
+	A a;	
+}
+
+type E {
+	int f;
+}
+
+type D {
+	int i;
+	int k;
+	C c;
+}
+
+type C {
+	C c;
+	E e;
+	A a;
+	B b;
+}
+
+type F {
+	B a;
+	E e; 
+}
+
+validation T1 for A {
+	a !null;
+}
+
+validation T2 for E {
+	f !null;
+}
+
+interface test {
+	void f_no_validation( int a, D d );
+	
+	void f_with_validation_circular( int a, D d) 
+		validate {
+			a !null;
+			T1;
+		};
+	 
+	 
+	 void f_with_validation_simple( A b, E e ) 
+	 	validate {
+	 		b !null;
+	 		T1;
+	 		T2;
+	 	};
+
+	 void f_with_validation_single( F e ) 
+	 	validate {
+	 		e !null;
+	 		T1;
+	 	};
+}

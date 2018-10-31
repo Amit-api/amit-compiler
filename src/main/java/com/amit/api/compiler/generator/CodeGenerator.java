@@ -124,6 +124,8 @@ public class CodeGenerator {
 				generate(project.getServices(), templateName, outFile, ret);
 			} else if (entity.equals("exception")) {
 				generate(project.getExceptions(), templateName, outFile, ret);
+			} else if( entity.equals("validation")) {
+				generate(project.getValidations(), templateName, outFile, ret);				
 			} else if (entity.equals("project")) {
 				process(null, templateName, outFile);
 				ret.add(outFile);

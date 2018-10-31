@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                     *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -20,18 +20,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.amit.api.compiler.model.tools.ValidatorChildrenFinder;
+
 /**
  * a function : returnType FunctionName( function args ) throws exceptions;
  */
 public class Function extends ProjectElement {
-	private UniqueCollection<FunctionArgument> arguments = new UniqueCollection<FunctionArgument>(
+	private final UniqueCollection<FunctionArgument> arguments = new UniqueCollection<FunctionArgument>(
 			"argument");
 	private FunctionReturn returnType;
-	private Set<String> throwsExceptions = new HashSet<String>();
-	private List<String> throwsExceptionsList = new ArrayList<String>();
+	private final Set<String> throwsExceptions = new HashSet<String>();
+	private final List<String> throwsExceptionsList = new ArrayList<String>();
+	private ValidationFieldConditionList fieldConfitions = new ValidationFieldConditionList();
+	private final Interface intr;
 
-	protected Function(String name, Context context, Project project) {
+	protected Function(String name, Context context, Interface intr,
+			Project project) {
 		super(name, context, project);
+		this.intr = intr;
+	}
+
+	/**
+	 * returns the function interface
+	 * 
+	 * @return
+	 */
+	public Interface getInterface() {
+		return intr;
 	}
 
 	/**
@@ -53,6 +68,15 @@ public class Function extends ProjectElement {
 	}
 
 	/**
+	 * return the argument conditions
+	 * 
+	 * @return
+	 */
+	public List<ValidationFieldCondition> getArgumentConditions() {
+		return fieldConfitions.values();
+	}
+
+	/**
 	 * returns throws exception name list
 	 * 
 	 * @return exception name list
@@ -62,11 +86,68 @@ public class Function extends ProjectElement {
 	}
 
 	/**
+	 * returns all the types required to be validated
+	 * 
+	 * @return
+	 */
+	public Set<String> getTypesToValidate() {
+		Set<String> validationTypes = fieldConfitions
+				.getValidationTypes(getProject());
+		ValidatorChildrenFinder finder = new ValidatorChildrenFinder(
+				getArguments(), validationTypes);
+		return finder.result();
+	}
+
+	/**
+	 * returns all the validations for the type
+	 * 
+	 * @param typeName
+	 * @return
+	 */
+	public List<Validation> getValidationsForTypeName(String typeName) {
+		Set<String> validationNames = fieldConfitions.getValidationNames();
+		Set<String> children = getProject().getCompositeTypeChildren(typeName);
+		children.add(typeName);
+		List<Validation> result = new ArrayList<Validation>();
+		for (String validationName : validationNames) {
+			Validation validation = getProject().getValidation(validationName);
+			if (children.contains(validation.getTypeName())) {
+				result.add(validation);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * creates a field validation condition
+	 * 
+	 * @param name
+	 * @param isMap
+	 * @param isArray
+	 * @param context
+	 * @return
+	 */
+	public ValidationFieldCondition createValidationFieldCondition(String name,
+			boolean isMap, boolean isArray, Context context) {
+		return fieldConfitions.add(new ValidationFieldCondition(name, isMap,
+				isArray, context, getProject()));
+	}
+
+	/**
+	 * returns the argument
+	 * 
+	 * @param argumentName
+	 * @return
+	 */
+	public FunctionArgument getArgument(String argumentName) {
+		return arguments.get(argumentName);
+	}
+
+	/**
 	 * create a function argument
 	 * 
 	 * @param type
 	 * @param name
-	 * @param isRequired
 	 * @param isMap
 	 * @param isArray
 	 * @param attr
@@ -74,11 +155,10 @@ public class Function extends ProjectElement {
 	 * @return
 	 */
 	public FunctionArgument createArgument(String type, String name,
-			boolean isRequired, boolean isArray, boolean isMap,
-			AttributeList attr, Context context) {
+			boolean isArray, boolean isMap, AttributeList attr, Context context) {
 
-		FunctionArgument arg = new FunctionArgument(type, name, isRequired,
-				isArray, isMap, context, getProject());
+		FunctionArgument arg = new FunctionArgument(type, name, isArray, isMap,
+				context, getProject());
 		arg.setAttributeList(attr);
 
 		arguments.add(arg);
@@ -130,6 +210,13 @@ public class Function extends ProjectElement {
 		super.validate();
 		validateArgs();
 		validateExceptions();
+		validateValidation();
+	}
+
+	private void validateValidation() throws ModuleElementException {
+		for (ValidationFieldCondition cond : fieldConfitions.values()) {
+			cond.validateMember(this);
+		}
 	}
 
 	private void validateArgs() throws ModuleElementException {

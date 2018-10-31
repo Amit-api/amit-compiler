@@ -66,62 +66,6 @@ public class CustomTypesTest extends TestBase {
 		assertEquals( "T1",type.getBaseTypeName() );		
 	}
 
-	@Test
-	public void testArgumentModifiers() throws Exception {
-		AmitParser parser = AmitParser.fromFile( path( "type-member-modifiers.amit" ) );
-		Project project = parser.parse();
-		
-		assertEquals( 1, project.getCompositeTypes().size() );
-		TypeComposite type = project.getCompositeTypes().get( 0 );
-		
-		assertEquals( "Modfiers", type.getName() );
-		assertNull( type.getBaseTypeName() );
-
-		assertEquals( 6, type.getMembers().size() );
-		
-		TypeCompositeMember member = type.getMembers().get( 0 );
-		assertEquals( "a", member.getName() );
-		assertEquals( "int", member.getTypeName() );
-		assertFalse( member.isArray() );
-		assertTrue( member.isRequired() );
-		assertFalse(member.isMap());
-		
-		member = type.getMembers().get( 1 );
-		assertEquals( "b", member.getName() );
-		assertEquals( "int", member.getTypeName() );
-		assertFalse( member.isArray() );
-		assertFalse( member.isRequired() );
-		assertFalse(member.isMap());
-
-		member = type.getMembers().get( 2 );
-		assertEquals( "c", member.getName() );
-		assertEquals( "string", member.getTypeName() );
-		assertTrue( member.isArray() );
-		assertFalse( member.isRequired() );
-		assertFalse(member.isMap());
-
-		member = type.getMembers().get( 3 );
-		assertEquals( "d", member.getName() );
-		assertEquals( "string", member.getTypeName() );
-		assertFalse( member.isArray() );
-		assertFalse( member.isRequired() );
-		assertTrue(member.isMap());
-
-		member = type.getMembers().get( 4 );
-		assertEquals( "e", member.getName() );
-		assertEquals( "string", member.getTypeName() );
-		assertTrue( member.isArray() );
-		assertTrue( member.isRequired() );
-		assertFalse(member.isMap());
-
-		member = type.getMembers().get( 5 );
-		assertEquals( "f", member.getName() );
-		assertEquals( "string", member.getTypeName() );
-		assertFalse( member.isArray() );
-		assertTrue( member.isRequired() );
-		assertTrue(member.isMap());
-	}
-
 	@Test( expected = ModuleElementException.class )
 	public void testUnknownType() throws Exception {
 		AmitParser parser = AmitParser.fromFile( path( "type-unknown-type.amit" ) );

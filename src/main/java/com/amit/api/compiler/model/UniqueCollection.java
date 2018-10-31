@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -22,60 +22,66 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * collection that ensures 
- * unique by name list of the ProjectElements
+ * collection that ensures unique by name list of the ProjectElements
  */
 public class UniqueCollection<T extends ProjectElement> implements Iterable<T> {
-	private Map<String,T> elements = new HashMap<String,T>();
+	private Map<String, T> elements = new HashMap<String, T>();
 	private List<T> elementList = new ArrayList<T>();
 	private String typeName;
-	
-	public UniqueCollection( String typeName ) {
-		if( typeName == null || typeName.isEmpty() ) {
-			throw new IllegalArgumentException( "typeName must be not null or empty" );
+
+	public UniqueCollection(String typeName) {
+		if (typeName == null || typeName.isEmpty()) {
+			throw new IllegalArgumentException(
+					"typeName must be not null or empty");
 		}
-		
+
 		this.typeName = typeName;
 	}
-	
+
 	/**
-	 * adds a element to the collection and exception is thrown when 
-	 * element 
-	 * @param element element 
-	 * @throws ModuleElementException thrown on error 
+	 * adds a element to the collection and exception is thrown when element
+	 * 
+	 * @param element
+	 *            element
+	 * @throws ModuleElementException
+	 *             thrown on error
 	 */
-	public void add( T element ) throws ModuleElementException {
-		if( element == null ) {
-			throw new IllegalArgumentException( "type must not be null" );
+	public void add(T element) throws ModuleElementException {
+		if (element == null) {
+			throw new IllegalArgumentException("type must not be null");
 		}
-		
-		if( elements.containsKey( element.getName() ) ) {
-			throw new ModuleElementException( String.format( "%s name is in use", typeName ), element );
+
+		if (elements.containsKey(element.getName())) {
+			throw new ModuleElementException(String.format("%s name is in use",
+					typeName), element);
 		}
-		
-		elements.put( element.getName() , element );
-		elementList.add( element );
+
+		elements.put(element.getName(), element);
+		elementList.add(element);
 	}
-	
+
 	/**
 	 * gets the element by name
-	 * @param name element name
+	 * 
+	 * @param name
+	 *            element name
 	 * @return element
 	 */
-	public T get( String name ) {
-		if( name == null || name.isEmpty() ) {
-			throw new IllegalArgumentException( "name must be not null or empty" );
+	public T get(String name) {
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException("name must be not null or empty");
 		}
-		
-		return elements.get( name );
+
+		return elements.get(name);
 	}
-	
+
 	/**
 	 * returns the read only list
+	 * 
 	 * @return read only element list
 	 */
 	public List<T> readonlyList() {
-		return Collections.unmodifiableList( elementList );
+		return Collections.unmodifiableList(elementList);
 	}
 
 	/**

@@ -37,6 +37,7 @@ statment [Project project]
 	| interface_statment [project]
 	| exception_statment [project]
 	| service_statment [project]
+	| validation_expression [project]
 	;
 
 service_statment [Project project]
@@ -81,8 +82,8 @@ function [Interface interf]
 	; 
 
 function_end [Function fun]
-	: POPEN function_args [fun] PCLOSE function_throws [fun] SEMICOLON
-	| POPEN PCLOSE function_throws [fun] SEMICOLON
+	: POPEN function_args [fun] PCLOSE function_throws [fun] validate_optional [fun] SEMICOLON
+	| POPEN PCLOSE function_throws [fun] validate_optional [fun] SEMICOLON
 	;
 
 function_throws [Function fun]
@@ -110,16 +111,13 @@ function_arg [Function fun]
 @init {
 	AttributeList attrList = fun.createAttributeList();
 }
-	: attributes [attrList] ID function_arg_end [$ID.text, false, false, false, attrList, fun] 
-	| attributes [attrList] ARRAY ID function_arg_end [$ID.text, false, true, false, attrList, fun]
-	| attributes [attrList] MAP ID function_arg_end [$ID.text, false, false, true, attrList, fun]
-	| attributes [attrList] REQUIRED ID function_arg_end [$ID.text, true, false, false, attrList, fun]
-	| attributes [attrList] REQUIRED ARRAY ID function_arg_end [$ID.text, true, true, false, attrList, fun]
-	| attributes [attrList] REQUIRED MAP ID function_arg_end [$ID.text, true, false, true, attrList, fun]
+	: attributes [attrList] ID function_arg_end [$ID.text, false, false, attrList, fun] 
+	| attributes [attrList] ARRAY ID function_arg_end [$ID.text, true, false, attrList, fun]
+	| attributes [attrList] MAP ID function_arg_end [$ID.text, false, true, attrList, fun]
 	;
 
-function_arg_end [String type, boolean isRequired, boolean isArray, boolean isMap, AttributeList attrList, Function fun]
-	: ID { fun.createArgument( type, $ID.text, isRequired, isArray, isMap, attrList, new Context( $ID ) ); }
+function_arg_end [String type, boolean isArray, boolean isMap, AttributeList attrList, Function fun]
+	: ID { fun.createArgument( type, $ID.text, isArray, isMap, attrList, new Context( $ID ) ); }
 	;
 
 exception_statment[Project project]
@@ -149,16 +147,13 @@ type_item [TypeCommonComposite type]
 @init {
 	AttributeList attrList = type.createAttributeList();
 }
-	: attributes [attrList] ID type_value[$ID.text, false, false, false, type]
-	| attributes [attrList] ARRAY ID type_value[$ID.text, false, true, false, type]
-	| attributes [attrList] MAP ID type_value[$ID.text, false, false, true, type]
-	| attributes [attrList] REQUIRED ID type_value[$ID.text, true, false, false, type]
-	| attributes [attrList] REQUIRED ARRAY ID type_value[$ID.text, true, true, false, type]
-	| attributes [attrList] REQUIRED MAP ID type_value[$ID.text, true, false, true, type]
+	: attributes [attrList] ID type_value[$ID.text, false, false, type]
+	| attributes [attrList] ARRAY ID type_value[$ID.text, true, false, type]
+	| attributes [attrList] MAP ID type_value[$ID.text, false, true, type]
 	;
 
-type_value [String memberType, boolean isRequired, boolean isArray, boolean isMap, TypeCommonComposite type]
-	: ID SEMICOLON { type.addMember( memberType, $ID.text, isRequired, isArray, isMap, new Context( $ID ) ); }
+type_value [String memberType, boolean isArray, boolean isMap, TypeCommonComposite type]
+	: ID SEMICOLON { type.addMember( memberType, $ID.text, isArray, isMap, new Context( $ID ) ); }
 	;
 			
 enum_statment [Project project]
@@ -195,9 +190,107 @@ attribute [AttributeList attrList]
 	
 attributes [AttributeList attrList]
 	: (attribute [attrList])*
-	;		
+	;
+	
+validation_expression [Project project] 
+@init {
+	AttributeList attrList = project.createAttributeList();
+}
+	: attributes [attrList] VALIDATION ID {
+		Validation validation = project.createValidation( $ID.text, attrList, new Context( $ID ) );
+	}
+	validation_expression_end [validation]
+	;
 
+validation_expression_end [Validation validation]
+	: FOR ID {
+		validation.setTypeName( $ID.text );
+	} START
+	(validation_field [validation])*
+	END
+	;
+	
+validation_field [Validation validation]
+	: ID validation_field_modifier [validation, $ID.text, new Context( $ID )]
+	;
+	
+validation_field_modifier [Validation validation, String name, Context context]
+	: {
+		ValidationFieldCondition c = validation.createValidationFieldCondition(name, false, false, context);
+	} (validate_condition [c])+ SEMICOLON
+	| ASTART ASTOP { 
+		ValidationFieldCondition c = validation.createValidationFieldCondition(name, false, true, context);
+	} (validate_condition [c])+ SEMICOLON
+	| START END {
+		ValidationFieldCondition c = validation.createValidationFieldCondition(name, true, false, context);	
+	} (validate_condition [c])+ SEMICOLON
+	;
+	
+validate_optional [Function fun]
+	:
+	| validate_statment [fun]
+	;
+	
+validate_statment [Function fun]
+	: VALIDATE START 
+	(validate_field [fun])*
+	END
+	;
+	
+validate_field [Function fun]
+	: ID validate_field_modifier [fun, $ID.text, new Context( $ID )]
+	;
+	
+validate_field_modifier [Function fun, String name, Context context]
+	: {
+		ValidationFieldCondition c = fun.createValidationFieldCondition(name, false, false, context);	
+	} validate_field_end [c]
+	| ASTART ASTOP {
+		ValidationFieldCondition c = fun.createValidationFieldCondition(name, false, true, context);	
+	} validate_field_end [c]
+	| START END {
+		ValidationFieldCondition c = fun.createValidationFieldCondition(name, true, false, context);	
+	} validate_field_end [c]
+	;
+	
+validate_field_end [ValidationFieldCondition v]
+	: SEMICOLON
+	| (validate_condition [v])+ SEMICOLON
+	;
+	
+validate_condition [ValidationFieldCondition v]
+	: NOT do_operator [v]
+	| range [v]
+	| regex [v]
+	;
 
+do_operator [ValidationFieldCondition v]
+	: NULL {v.notNull(new Context( $NULL ));}
+	| EMPTY {v.notEmpty(new Context( $EMPTY ));}
+	;
+	
+regex [ValidationFieldCondition v]
+	: STRING {v.regex($STRING.text, new Context( $STRING ));}
+	;
+		
+range [ValidationFieldCondition v]
+	: ASTART 
+	start_range [v]
+	DOTDOT
+	end_range [v]
+	ASTOP
+	;
+	
+start_range [ValidationFieldCondition v]
+	:
+	| INT {v.biggerOrEq($INT.text, new Context( $INT ));}
+	;
+	
+end_range [ValidationFieldCondition v]
+	: 
+	| INT {v.smallerOrEq($INT.text, new Context( $INT ));}
+	;
+	
 number_value
 	: INT
 	| HEX
@@ -240,18 +333,36 @@ INTERFACE : 'interface'
 THROWS : 'throws'
 	;
 	
+VALIDATE : 'validate'
+	;
+
+VALIDATION: 'validation'
+	;
+	
+NULL : 'null'
+	;
+	
+EMPTY : 'empty'
+	;	
+	
+FOR : 'for'
+	;	
+	
+OR : 'or'
+	;
+	
+AND : 'and'
+	;
+		
 ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
     ;
 
 INT :	'0'..'9'+
+	| '-'('0'..'9')+
     ;
 
-FLOAT
-    :   ('0'..'9')+ '.' ('0'..'9')* EXPONENT?
-    |   '.' ('0'..'9')+ EXPONENT?
-    |   ('0'..'9')+ EXPONENT
-    ;
-
+DOTDOT : '..'
+	;	
 
 ASTART	: '['
 	;
@@ -282,6 +393,9 @@ SEMICOLON
 	;
 	
 COLON	: ':'
+	;
+	
+NOT : '!'
 	;
 		
 COMMENT

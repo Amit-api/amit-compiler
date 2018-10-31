@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -35,7 +35,12 @@ public class Project {
 	private UniqueCollection<Service> services = new UniqueCollection<Service>(
 			"service");
 
-	private List<Interface> interfaces = new ArrayList<Interface>();
+	private UniqueCollection<Interface> interfaces = new UniqueCollection<Interface>(
+			"interface");
+
+	private UniqueCollection<Validation> validation = new UniqueCollection<Validation>(
+			"validation");
+
 	private List<TypeEnum> enums = new ArrayList<TypeEnum>();
 	private List<TypeComposite> compositeTypes = new ArrayList<TypeComposite>();
 	private List<TypeException> exceptionTypes = new ArrayList<TypeException>();
@@ -77,7 +82,7 @@ public class Project {
 	 * @return interface list
 	 */
 	public List<Interface> getInterfaces() {
-		return Collections.unmodifiableList(interfaces);
+		return interfaces.readonlyList();
 	}
 
 	/**
@@ -161,6 +166,15 @@ public class Project {
 			result.addAll(getExceptionTypeChildren(name));
 		}
 		return result;
+	}
+
+	/**
+	 * returns all the validators from the project
+	 * 
+	 * @return the validator lost
+	 */
+	public List<Validation> getValidations() {
+		return validation.readonlyList();
 	}
 
 	/**
@@ -302,6 +316,22 @@ public class Project {
 	}
 
 	/**
+	 * create a validation
+	 * 
+	 * @param name
+	 * @param attr
+	 * @param context
+	 * @return
+	 */
+	public Validation createValidation(String name, AttributeList attr,
+			Context context) {
+		Validation validator = new Validation(name, context, this);
+		validator.setAttributeList(attr);
+		addValidator(validator);
+		return validator;
+	}
+
+	/**
 	 * create an exception type
 	 * 
 	 * @param name
@@ -355,6 +385,7 @@ public class Project {
 
 	/**
 	 * create the function return element
+	 * 
 	 * @param type
 	 * @param isArray
 	 * @param isMap
@@ -364,6 +395,26 @@ public class Project {
 	public FunctionReturn createFunctionReturn(String type, boolean isArray,
 			boolean isMap, Context context) {
 		return new FunctionReturn(type, isArray, isMap, context, this);
+	}
+
+	/**
+	 * returns the interface by name
+	 * 
+	 * @param interfaceName
+	 * @return
+	 */
+	public Interface getInterface(String interfaceName) {
+		return interfaces.get(interfaceName);
+	}
+
+	/**
+	 * returns the validation by name
+	 * 
+	 * @param validationName
+	 * @return
+	 */
+	public Validation getValidation(String validationName) {
+		return validation.get(validationName);
 	}
 
 	/**
@@ -379,12 +430,17 @@ public class Project {
 
 		validateTypeCircularDependency(compositeTypes);
 		validateTypeCircularDependency(exceptionTypes);
-		validateInterfaceCircularDependency(interfaces);
+		validateInterfaceCircularDependency(interfaces.readonlyList());
 
 		findCompositeTypesChildren();
 		findExceptionTypesChildren();
 		findInterfaceChildren();
 		findInterfaceBaseChildren();
+	}
+
+	private void addValidator(Validation validator) {
+		validation.add(validator);
+		currentModule.add(validator);
 	}
 
 	private void addComposite(TypeComposite type) {
@@ -403,7 +459,6 @@ public class Project {
 	}
 
 	private void addInterface(Interface interf) {
-		addType(interf);
 		interfaces.add(interf);
 		currentModule.add(interf);
 	}
@@ -533,13 +588,14 @@ public class Project {
 	}
 
 	private void findInterfaceChildren() {
-		InterfaceChildrenFinder finder = new InterfaceChildrenFinder(interfaces);
+		InterfaceChildrenFinder finder = new InterfaceChildrenFinder(
+				interfaces.readonlyList());
 		interfaceChildred = finder.getAllChildren();
 	}
 
 	private void findInterfaceBaseChildren() {
 		InterfaceBaseChildrenFinder finder = new InterfaceBaseChildrenFinder(
-				interfaces);
+				interfaces.readonlyList());
 		interfaceBaseInterfaces = finder.getAllChildren();
 	}
 }

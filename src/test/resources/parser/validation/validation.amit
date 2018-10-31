@@ -1,0 +1,43 @@
+
+project test;
+
+type Point {
+	int x;
+	int y;
+}
+
+type Rect {
+	Point a;
+	Point b;
+	int area;
+}
+
+exception TestExeption {
+
+}
+
+validation t1 for Point {
+	x !null [0..100];
+	y !null [0..100];
+}
+
+validation t2 for Rect {
+	a !null;
+	b !null;
+	area !null [0..];
+}
+
+interface ValidatedInterface {
+	void intersect( string name, Point a, Rect r, array int ids, map int mp ) throws TestExeption
+		validate {
+			name !empty [0..10] "hello world.dskl";
+			a !null;
+			r !null;
+			ids !null;
+			ids[] !null [0..10];
+			mp !null;
+			mp{} !null [0..10];
+			t1;
+			t2;
+		};
+}

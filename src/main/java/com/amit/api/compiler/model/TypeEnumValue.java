@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -15,7 +15,7 @@
 package com.amit.api.compiler.model;
 
 /**
- * enum value, can be string or int type 
+ * enum value, can be string or int type
  */
 public class TypeEnumValue extends ProjectElement {
 	private Integer intValue;
@@ -23,37 +23,41 @@ public class TypeEnumValue extends ProjectElement {
 
 	/**
 	 * returns int value
+	 * 
 	 * @return int value
 	 */
 	public Integer getIntegerValue() {
 		return intValue;
 	}
-	
+
 	/**
 	 * returns string value
+	 * 
 	 * @return string value
 	 */
 	public String getStringValue() {
 		return stringValue;
 	}
-	
-	protected TypeEnumValue( String name, Integer intValue, Context context, Project project ) {
-		super( name, context, project );
-		
-		if( intValue == null ) {
-			throw new IllegalArgumentException( "intValue must be not null" );
+
+	protected TypeEnumValue(String name, Integer intValue, Context context,
+			Project project) {
+		super(name, context, project);
+
+		if (intValue == null) {
+			throw new IllegalArgumentException("intValue must be not null");
 		}
-		
+
 		this.intValue = intValue;
 	}
-	
-	protected TypeEnumValue( String name, String stringValue, Context context, Project project ) {
-		super( name, context, project );
 
-		if( stringValue == null ) {
-			throw new IllegalArgumentException( "stringValue must be not null" );
+	protected TypeEnumValue(String name, String stringValue, Context context,
+			Project project) {
+		super(name, context, project);
+
+		if (stringValue == null) {
+			throw new IllegalArgumentException("stringValue must be not null");
 		}
-		
+
 		this.stringValue = stringValue;
 	}
 }

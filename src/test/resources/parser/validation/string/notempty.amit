@@ -1,0 +1,9 @@
+project test;
+
+type Data {
+	string x;
+}
+
+validation t1 for Data {
+	x !empty;
+}

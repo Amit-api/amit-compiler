@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -20,7 +20,6 @@ package com.amit.api.compiler.model;
 public class TypedItem extends ProjectElement {
 	private String typeName;
 	private boolean isArray = false;
-	private boolean isRequired = false;
 	private boolean canBeVoid = false;
 	private boolean isMap = false;
 
@@ -51,18 +50,8 @@ public class TypedItem extends ProjectElement {
 		return isMap;
 	}
 
-	/**
-	 * return true if member is required
-	 * 
-	 * @return true or false
-	 */
-	public boolean isRequired() {
-		return isRequired;
-	}
-
 	protected TypedItem(String type, String name, boolean canBeVoid,
-			boolean isRequired, boolean isArray, boolean isMap,
-			Context context, Project project) {
+			boolean isArray, boolean isMap, Context context, Project project) {
 		super(name, context, project);
 
 		if (type == null || type.isEmpty()) {
@@ -71,7 +60,6 @@ public class TypedItem extends ProjectElement {
 
 		this.typeName = type;
 		this.canBeVoid = canBeVoid;
-		this.isRequired = isRequired;
 		this.isArray = isArray;
 		this.isMap = isMap;
 	}

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -15,8 +15,8 @@
 package com.amit.api.compiler.model;
 
 public class FunctionArgument extends TypedItem {
-	protected FunctionArgument(String type, String name, boolean isRequired,
-			boolean isArray, boolean isMap, Context context, Project project) {
-		super(type, name, false, isRequired, isArray, isMap, context, project);
+	protected FunctionArgument(String type, String name, boolean isArray,
+			boolean isMap, Context context, Project project) {
+		super(type, name, false, isArray, isMap, context, project);
 	}
 }

@@ -1,0 +1,10 @@
+
+project test;
+
+type Data {
+	long x;
+}
+
+validation t1 for Data {
+	x !null;
+}
