@@ -12,35 +12,55 @@
  * See the License for the specific language governing permissions and        *
  * limitations under the License.                                             *
  ******************************************************************************/
-package com.amit.api.compiler.parser;
+package com.amit.api.compiler.parser.validation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.net.URISyntaxException;
 
 import org.junit.Test;
 
+import com.amit.api.compiler.model.Module;
+import com.amit.api.compiler.model.ModuleElementException;
 import com.amit.api.compiler.model.Project;
-import com.amit.api.compiler.model.Service;
+import com.amit.api.compiler.parser.AmitParser;
+import com.amit.api.compiler.parser.TestBase;
 
-public class ServiceTest extends TestBase {
+public class ValidationStringArrayTest extends TestBase {
+	@Test
+	public void notnull() throws Exception {
+		AmitParser parser = AmitParser.fromFile(path("notnull.amit"));
+		Project project = parser.parse();
+
+		Module module = project.getProjectModule();
+		assertNotNull(module);
+	}
 
 	@Test
-	public void testSimple() throws Exception {
-		AmitParser parser = AmitParser.fromFile( path( "service-simple.amit" ) );
+	public void notempty() throws Exception {
+		AmitParser parser = AmitParser.fromFile(path("notempty.amit"));
 		Project project = parser.parse();
-		
-		assertEquals( 1, project.getServices().size() );
-	
-		Service service = project.getServices().get( 0 );
-		assertEquals( "MyService", service.getName() );
-		assertEquals( "/hello/me", service.getAttributeValue( "path" ) );
-		assertEquals( 2, service.getBaseInterfaceNames().size() );
-		assertEquals( "I1", service.getBaseInterfaceNames().get( 0 ) );
-		assertEquals( "I2", service.getBaseInterfaceNames().get( 1 ) );
+
+		Module module = project.getProjectModule();
+		assertNotNull(module);
+	}
+
+	@Test
+	public void range() throws Exception {
+		AmitParser parser = AmitParser.fromFile(path("range.amit"));
+		Project project = parser.parse();
+
+		Module module = project.getProjectModule();
+		assertNotNull(module);
+	}
+
+	@Test(expected=ModuleElementException.class)
+	public void regex() throws Exception {
+		AmitParser parser = AmitParser.fromFile(path("regex.amit"));
+		parser.parse();
 	}
 	
-	private String path( String name ) throws URISyntaxException {
-		return pathGlobal( "parser/service/" + name );
+	private String path(String name) throws URISyntaxException {
+		return pathGlobal("parser/validation/string_array/" + name);
 	}
 }

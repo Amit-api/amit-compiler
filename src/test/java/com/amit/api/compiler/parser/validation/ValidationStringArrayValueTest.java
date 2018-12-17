@@ -12,9 +12,9 @@
  * See the License for the specific language governing permissions and        *
  * limitations under the License.                                             *
  ******************************************************************************/
-package com.amit.api.compiler.parser;
+package com.amit.api.compiler.parser.validation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.net.URISyntaxException;
 
@@ -22,23 +22,48 @@ import org.junit.Test;
 
 import com.amit.api.compiler.model.Module;
 import com.amit.api.compiler.model.Project;
+import com.amit.api.compiler.parser.AmitParser;
+import com.amit.api.compiler.parser.TestBase;
 
-public class ModuleTest extends TestBase {
+public class ValidationStringArrayValueTest extends TestBase {
+	@Test
+	public void notnull() throws Exception {
+		AmitParser parser = AmitParser.fromFile(path("notnull.amit"));
+		Project project = parser.parse();
+
+		Module module = project.getProjectModule();
+		assertNotNull(module);
+	}
 
 	@Test
-	public void tesProjecttAttributes() throws Exception {
-		AmitParser parser = AmitParser.fromFile( path( "project-attr.amit" ) );
+	public void notempty() throws Exception {
+		AmitParser parser = AmitParser.fromFile(path("notempty.amit"));
+		Project project = parser.parse();
+
+		Module module = project.getProjectModule();
+		assertNotNull(module);
+	}
+
+	@Test
+	public void range() throws Exception {
+		AmitParser parser = AmitParser.fromFile(path("range.amit"));
 		Project project = parser.parse();
 		
 		Module module = project.getProjectModule();
-		
-		assertNotNull( module );
-		assertEquals( "attributes", module.getName() );
-		assertEquals( "who cares", module.getAttributeValue( "csharp_package" ) );
-		assertEquals( "com.project.au", module.getAttributeValue( "java_package" ) );
+		assertNotNull(module);
 	}
 
-	private String path( String name ) throws URISyntaxException {
-		return pathGlobal( "parser/module/" + name );
-	}	
+	@Test
+	public void regex() throws Exception {
+		AmitParser parser = AmitParser.fromFile(path("regex.amit"));
+		Project project = parser.parse();
+
+		
+		Module module = project.getProjectModule();
+		assertNotNull(module);
+	}
+
+	private String path(String name) throws URISyntaxException {
+		return pathGlobal("parser/validation/string_array_value/" + name);
+	}
 }

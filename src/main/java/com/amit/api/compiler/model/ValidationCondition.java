@@ -68,6 +68,12 @@ public class ValidationCondition extends ProjectElement {
 			break;
 
 		case REGEX:
+			if (typedItem.isArray() || typedItem.isMap()) {
+				if (!isElement) {
+					break;
+				}
+			}
+			
 			if (typeName.equals(PrimitiveTypeNames.STRING)) {
 				return;
 			}

@@ -1,0 +1,10 @@
+
+project test;
+
+type Data {
+	array string x;
+}
+
+validation t1 for Data {
+	x !null;
+}

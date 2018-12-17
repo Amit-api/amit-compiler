@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright 20014-2015 Alexandru Motriuc                                     *
+ * Copyright 2014-2018 Alexandru Motriuc                                      *
  *                                                                            *
  ******************************************************************************
  * Licensed under the Apache License, Version 2.0 (the "License");            *
@@ -39,6 +39,7 @@ public class CodeGenerator {
 	private String outputPath;
 	private Project project;
 	private Configuration cfg;
+	private GeneratedFileList generatedFiles;
 
 	public CodeGenerator(Project project, String templatePath, String outputPath)
 			throws Exception {
@@ -49,6 +50,7 @@ public class CodeGenerator {
 			String outputPath) throws Exception {
 		this.outputPath = outputPath;
 		this.project = project;
+		this.generatedFiles = new GeneratedFileList(Paths.get(outputPath));
 
 		cfg = new Configuration(Configuration.VERSION_2_3_21);
 
@@ -64,11 +66,13 @@ public class CodeGenerator {
 	}
 
 	public void generate() throws IOException, TemplateException {
-		for(File file: Paths.get(outputPath).toFile().listFiles()) 
-		    if (!file.isDirectory()) 
-		        file.delete();
-		
-		process(null, "start.ftl", "start.out");
+		try {
+			process(null, "start.ftl", "start.out");
+			// delete start.out on success
+			Paths.get(outputPath, "start.out").toFile().delete();
+		} finally {
+			generatedFiles.save();
+		}
 	}
 
 	public void process(Object obj, String templateFileName, String outFileName)
@@ -124,8 +128,8 @@ public class CodeGenerator {
 				generate(project.getServices(), templateName, outFile, ret);
 			} else if (entity.equals("exception")) {
 				generate(project.getExceptions(), templateName, outFile, ret);
-			} else if( entity.equals("validation")) {
-				generate(project.getValidations(), templateName, outFile, ret);				
+			} else if (entity.equals("validation")) {
+				generate(project.getValidations(), templateName, outFile, ret);
 			} else if (entity.equals("project")) {
 				process(null, templateName, outFile);
 				ret.add(outFile);
@@ -146,6 +150,7 @@ public class CodeGenerator {
 				throws IOException, TemplateException {
 			for (ProjectElement element : elements) {
 				String fileName = String.format(outFile, element.getName());
+				generatedFiles.addFile(Paths.get(fileName));
 				process(element, templateName, fileName);
 				ret.add(String.format("generated: %s, file: %s",
 						element.getName(), fileName));
