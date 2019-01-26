@@ -35,19 +35,40 @@ public class CustomTypesTest extends TestBase {
 		assertEquals( 1, project.getCompositeTypes().size() );
 		TypeComposite type = project.getCompositeTypes().get( 0 );
 		
-		assertEquals( "Point", type.getName() );
+		assertEquals( "Primitive", type.getName() );
 		assertNull( type.getBaseTypeName() );
 		
-		assertEquals( 2, type.getMembers().size() );
+		assertEquals( 7, type.getMembers().size() );
 		
 		TypeCompositeMember m = type.getMembers().get( 0 );
 		assertEquals( "int", m.getTypeName() );
-		assertEquals( "x", m.getName() );
+		assertEquals( "theInt", m.getName() );
 		
 		m = type.getMembers().get( 1 );
-		assertEquals( "int", m.getTypeName() );
-		assertEquals( "y", m.getName() );
+		assertEquals( "long", m.getTypeName() );
+		assertEquals( "theLong", m.getName() );
+
+		m = type.getMembers().get( 2 );
+		assertEquals( "boolean", m.getTypeName() );
+		assertEquals( "theBool", m.getName() );
+
+		m = type.getMembers().get( 3 );
+		assertEquals( "double", m.getTypeName() );
+		assertEquals( "theDouble", m.getName() );
+
+		m = type.getMembers().get( 4 );
+		assertEquals( "string", m.getTypeName() );
+		assertEquals( "theString", m.getName() );
+
+		m = type.getMembers().get( 5 );
+		assertEquals( "datetime", m.getTypeName() );
+		assertEquals( "theDate", m.getName() );
+
+		m = type.getMembers().get( 6 );
+		assertEquals( "uuid", m.getTypeName() );
+		assertEquals( "theUuid", m.getName() );
 	}
+	
 
 	@Test
 	public void testBaseType() throws Exception {

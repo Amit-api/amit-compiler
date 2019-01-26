@@ -3,7 +3,12 @@
  */
 project test;
 
-type Point {
-	int x;
-	int y;
+type Primitive {
+	int theInt;
+	long theLong;
+	boolean theBool;
+	double theDouble;
+	string theString;
+	datetime theDate;
+	uuid theUuid;
 }
